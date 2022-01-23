@@ -11,11 +11,11 @@ output:
 ---
 
 ```{=html}
-<!-- More information in R Markdown can be found at:
+<!-- More information in R Markdown can be found at:/media/eric/Data/IIT/CS422/homwork/cs422/cs422_hw
 1. https://www.ssc.wisc.edu/sscc/pubs/RFR/RFR_RMarkdown.html  This is 
    the place to start since it is a short tutorial.
 2. https://rmarkdown.rstudio.com/index.html This contains a longer 
-   tutorial.  Take a look at the cheatsheet in 
+   tutorial.  Take a look at the cheatsheet in /media/eric/Data/IIT/CS422/homwork/cs422/cs422_hw
    https://rmarkdown.rstudio.com/lesson-15.html, it is a concise 
    reference of R Markdown on two pages.
 <-->
@@ -24,12 +24,12 @@ output:
 
 ### (NOT GRADED, TO BE USED AS TEMPLATE FOR OTHER HOMEWORKS)
 
-### Due Date: Tuesday, Jan 22 2019 11:59:59 PM Chicago Time
+### Due Date: Tuesday, Jan 28 2022 11:59:59 PM Chicago Time
 
 ### Part 1-A
 
 ```{r}
-setwd("/media/eric/Data/IIT/CS422/homwork/cs422/hw0")
+setwd("/media/eric/Data/IIT/CS422/cs422_hw/")
 data(cars)
 cars
 ```
