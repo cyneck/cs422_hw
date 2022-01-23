@@ -2,12 +2,12 @@
 title: "CS 422"
 author: "Xingli Li, Illinois Institute of Technology"
 output:
-  html_document:
-    toc: yes
-    df_print: paged
   html_notebook:
     toc: yes
     toc_float: yes
+  html_document:
+    toc: yes
+    df_print: paged
 ---
 
 ```{=html}
