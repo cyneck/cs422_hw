@@ -1,0 +1,66 @@
+---
+title: "CS 422"
+output: html_notebook
+toc: yes
+toc_float: yes
+author: "Xingli Li, Illinois Institute of Technology"
+---
+
+```{=html}
+<!-- More information in R Markdown can be found at:/media/eric/Data/IIT/CS422/homwork/cs422/cs422_hw
+1. https://www.ssc.wisc.edu/sscc/pubs/RFR/RFR_RMarkdown.html  This is 
+   the place to start since it is a short tutorial.
+2. https://rmarkdown.rstudio.com/index.html This contains a longer 
+   tutorial.  Take a look at the cheatsheet in /media/eric/Data/IIT/CS422/homwork/cs422/cs422_hw
+   https://rmarkdown.rstudio.com/lesson-15.html, it is a concise 
+   reference of R Markdown on two pages.
+<-->
+```
+## Homework 0
+
+### (NOT GRADED, TO BE USED AS TEMPLATE FOR OTHER HOMEWORKS)
+
+### Due Date: Tuesday, Jan 28 2022 11:59:59 PM Chicago Time
+
+### Part 1-A
+
+```{r}
+setwd("/cloud/project")
+data(cars)
+cars
+```
+
+### Part 1-B
+
+```{r}
+plot(cars, main="The Cars Dataset")
+
+v <- c(7,12,28,3,41)
+t <- c(14,7,6,19,3)
+plot(v,type = "o",col = "red", xlab = "Month", ylab = "Rain fall", main = "Rain fall chart")
+# using lines() function can draw multi-plot in a plot.
+lines(t, type = "o", col = "blue")
+```
+
+### Part 1-C (Summary)
+
+```{r}
+summary(cars)
+```
+
+### Part 1-D
+
+```{r}
+summ <- summary(cars)
+max.speed.str <- summ[,1][6]
+max.speed.str <- strsplit(max.speed.str, ":")
+max.speed <- max.speed.str[[1]][2]
+
+min.dist.str <- summ[,2][1]
+min.dist.str <- strsplit(min.dist.str, ":  ")
+min.dist <- min.dist.str[[1]][2]
+
+str <- paste0("Maximum speed is ", max.speed, ", and minimum distance is ", 
+              min.dist)
+str
+```
