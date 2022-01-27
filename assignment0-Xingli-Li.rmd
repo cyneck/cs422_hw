@@ -29,7 +29,7 @@ output:
 ### Part 1-A
 
 ```{r}
-setwd("/media/eric/Data/IIT/CS422/cs422_hw/")
+setwd("/cloud/project")
 data(cars)
 cars
 ```
