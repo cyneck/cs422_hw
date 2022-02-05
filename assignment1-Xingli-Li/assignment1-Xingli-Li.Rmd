@@ -1,0 +1,39 @@
+---
+title: "CS 422"
+author: "Xingli Li, Illinois Institute of Technology"
+output: html_notebook
+toc: yes
+toc_float: yes
+---
+
+## Homework 1
+
+### Part 2.1-i
+
+```{r }
+```
+
+### Part 2.2-ii
+
+You can also embed plots, for example:
+
+```{r }
+
+```
+
+### Part 2.2-iii
+
+```{r }
+
+```
+
+### Part 2.2-iv
+
+```{r}
+
+```
+
+### Part 2.2-v
+
+```{r }
+```
