@@ -7,8 +7,13 @@ Xingli Li, Illinois Institute of Technology
 ### Question 1.1
 
 ---
-#### Exercise 1
+#### 1. Discuss whether or not each of the following activities is a data mining task.
+
 a. Dividing the customers of a company according to their gender.
+
+```
+Answer: 
+```
 
 b. Dividing the customers of a company according to their profitability.
 
@@ -27,7 +32,8 @@ h. Monitoring seismic waves for earthquake activities.
 i. Extracting the frequencies of a sound wave.
 
 ---
-#### Exercise 3
+#### 3. For each of the following data sets, explain whether or not data privacy is
+an important issue.
 a. Census data collected from 1900–1950.
 
 b. IP addresses and visit times of web users who visit your website.
@@ -38,6 +44,11 @@ d. Names and addresses of people from the telephone book.
 
 e. Names and email addresses collected from the Web.
 
+```
+Answer: 
+```
+
+
 
 ### Question 1.2
 
@@ -46,9 +57,47 @@ e. Names and email addresses collected from the Web.
 Classify the following attributes as binary, discrete, or continuous. 
 Also classify them as qualitative (nominal or ordinal) or quantitative (interval or ratio). 
 Some cases may have more than one interpretation, 
-so briefly indicate your reasoning if you think there may be some ambiguity
+so briefly indicate your reasoning if you think there may be some ambiguity.
 
+Example: Age in years. Answer: Discrete, quantitative, ratio
+a. Time in terms of AM or PM.
+b. Brightness as measured by a light meter.
+c. Brightness as measured by people’s judgments.
+d. Angles as measured in degrees between 0 and 360.
+e. Bronze, Silver, and Gold medals as awarded at the Olympics.
+f. Height above sea level.
+g. Number of patients in a hospital.
+h. ISBN numbers for books. (Look up the format on the Web.)
+i. Ability to pass light in terms of the following values: opaque, translucent,
+transparent.
+j. Military rank.Example: Age in years. Answer: Discrete, quantitative, ratio
+a. Time in terms of AM or PM.
+b. Brightness as measured by a light meter.
+c. Brightness as measured by people’s judgments.
+d. Angles as measured in degrees between 0 and 360.
+e. Bronze, Silver, and Gold medals as awarded at the Olympics.
+f. Height above sea level.
+g. Number of patients in a hospital.
+h. ISBN numbers for books. (Look up the format on the Web.)
+i. Ability to pass light in terms of the following values: opaque, translucent,
+transparent.
+j. Military rank.
+k. Distance from the center of campus.
+l. Density of a substance in grams per cubic centimeter.
+m. Coat check number. (When you attend an event, you can often give your
+coat to someone who, in turn, gives you a number that you can use to
+claim your coat when you leave.)
+k. Distance from the center of campus.
+l. Density of a substance in grams per cubic centimeter.
+m. Coat check number. (When you attend an event, you can often give your
+coat to someone who, in turn, gives you a number that you can use to
+claim your coat when you leave.)
+
+```
 Answer:
+```
+
+
 
 ---
 #### Exercise 3
@@ -72,12 +121,22 @@ Answer:
  b. What can you say about the attribute type of the original product 
  satisfaction attribute?
 
+```
+Answer:
+```
+
+
+
 ---
 #### Exercise 7
 Which of the following quantities is likely to show more temporal autocorrelation: 
 daily rainfall or daily temperature? Why?
 
+```
 Answer:
+```
+
+
 
 
 ---
@@ -93,4 +152,8 @@ Answer:
  d. Are outliers always noise objects? 
 
  e. Can noise make a typical value into an unusual one, or vice versa?
- 
+
+```
+Answer:
+```
+
