@@ -8,32 +8,129 @@ toc_float: yes
 
 ## Homework 1
 
+set work space path.
+
+```{r}
+setwd("/media/eric/Data/IIT/CS422/cs422_hw/assignment1-Xingli-Li")
+```
+
 ### Part 2.1-i
 
+Read the dataset into a R dataframe; call the dataframe 'data.df'. Pay attention to the first seven lines of the dataset. These contain comments as indicated by the '#' character in dataset file. When reading the dataset, ignore the lines that contain comments. (See the manual page for read.csv() and find out the parameter that will allow you to ignore comments.)
+
 ```{r }
+data.df <- read.csv(file = "us-covid.csv",encoding="UTF-8", comment.char = "#")
+
+# filter(data.df,row_number() == 1:7L)
+# head(data.df,3)
+
+data.df %>% as_tibble() %>% slice(1:7)
 ```
 
 ### Part 2.2-ii
 
-You can also embed plots, for example:
+You will notice that the last column of the dataset has many "N/A" values (Not Applicable). Drop this column so that the data.df dataframe now contains only eight columns, or attributes. The remaining analysis will be done on the dataframe with eight columns.
 
 ```{r }
+data.df[,9] <- NULL
 
+data.df
 ```
 
 ### Part 2.2-iii
 
-```{r }
+Sort the dataframe:
 
+(a) Sort the dataframe by **descending** order of total cases, then print the **top** six entries.
+
+(b) Sort the dataframe by **descending** tmp_filteredorder of total cases, then print the **bottom** six entries.
+
+```{r }
+# by column name order
+data.df.ordered <- data.df[order(data.df$total_cases),]
+
+# by column index order
+# data.df.ordered <- data.df[order(data.df[,3]),]
+# data.df.ordered <- arrange(data.df,data.df[,3])
+
+#print(head(data.df.ordered,6))
+#print(tail(data.df.ordered,6))
+
+print(data.df.ordered[1:6,])
+print(data.df.ordered[(nrow(data.df.ordered)-5):nrow(data.df.ordered),])
 ```
 
 ### Part 2.2-iv
 
-```{r}
+Create a correlation visualization using the pairs.panels() API from the R library psych. Note that the first two columns can be excluded from correlation analysis. Plot the correlation and use it to answer the following questions:
 
+(a) Why should we exclude the first two columns from correlation analysis?
+
+        First, neither of the first twon columns are computable data types.
+        Then, the "state" column represent entity, the "level" column of each entity is same value, which is pointless.
+
+(b) Which pair of columns have the highest correlation?
+
+        The "total_cases" and "total_deaths" column have the highest correlation.
+
+(c) Which pair of columns has the lowest correlation?
+
+        The "cases_last_7_days" and "case_rate_per_100K" column have lowest correlation.
+
+```{r}
+# install and load psych package command as follows:
+# install.package("psych")
+# library("psych")
+
+data.df.selected <- data.df[,3:ncol(data.df)]
+
+ress <- cor(data.df.selected)
+
+# Create a correlation visualization.
+pairs.panels(data.df.selected)
 ```
 
 ### Part 2.2-v
 
+Focus on confirmed cases, probable cases, and total deaths.
+
+(a) Draw a plot of confirmed+probable cases (on the X-axis) against the total deaths (on the Y-axis). Label the plot appropriately.
+
+(b) As you see the plot, there appears to be an anomaly. Looking at the data, briefly describe the anomaly.
+
+(c) Print out the state name, total deaths, confirmed cases, probable cases and total cases of all such states that show this anomaly.
+
 ```{r }
+
+new_table <- data.frame(
+    cases = data.df.selected["confirmed"] + data.df.selected["probable"],
+    total_deaths = data.df.selected["total_deaths"]
+)
+
+plot.default(new_table,type = "p",
+             main = "Tendency",
+             xlab = "confirmed+probable cases",
+             ylab = "total_deaths")
+```
+
+```{r}
+
+tmp_data.df.ordered <- data.df[order(data.df$confirmed),]
+tmp_table <- data.frame(
+    cases = tmp_data.df.ordered["confirmed"] + tmp_data.df.ordered["probable"],
+    total_deaths = tmp_data.df.ordered["total_deaths"]
+)
+
+tmp_filtered <- tmp_table[tmp_table$confirmed>0,]
+
+print(tmp_filtered)
+
+maxdata=max(tmp_filtered["total_deaths"])
+
+filter(tmp_filtered, total_deaths == maxdata)
+
+plot.default(tmp_filtered[1:2],type = "p",
+             main = "Tendency",
+             xlab = "confirmed+probable cases",
+             ylab = "total_deaths")
 ```
