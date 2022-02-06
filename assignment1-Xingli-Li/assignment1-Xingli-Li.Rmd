@@ -32,7 +32,9 @@ data.df %>% as_tibble() %>% slice(1:7)
 You will notice that the last column of the dataset has many "N/A" values (Not Applicable). Drop this column so that the data.df dataframe now contains only eight columns, or attributes. The remaining analysis will be done on the dataframe with eight columns.
 
 ```{r }
-data.df[,9] <- NULL
+# data.df[,9] <- NULL
+
+data.df[,-9]
 
 data.df
 ```
@@ -125,12 +127,10 @@ tmp_filtered <- tmp_table[tmp_table$confirmed>0,]
 
 print(tmp_filtered)
 
-maxdata=max(tmp_filtered["total_deaths"])
-
-filter(tmp_filtered, total_deaths == maxdata)
-
 plot.default(tmp_filtered[1:2],type = "p",
              main = "Tendency",
              xlab = "confirmed+probable cases",
              ylab = "total_deaths")
+
+which(tmp_filtered$confirmed==1| tmp_filtered$confirmed==3)
 ```
