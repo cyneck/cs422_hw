@@ -11,17 +11,21 @@ toc_float: yes
 set work space and install dependent package.
 
 ```{r}
+
 base_path <- getwd()
 setwd(base_path)
 
-#install.packages("magrittr")
-#library("magrittr")
+# install.packages("magrittr")
+# library("magrittr")
 
-#install.packages("dplyr")
-#library("dplyr")
+# install.packages("corrplot")
+# library(corrplot)
 
-#install.packages("psych")
-#library("psych")
+# install.packages("dplyr")
+# library("dplyr")
+
+# install.packages("psych")
+# library("psych")
 ```
 
 ### Part 2.1-i
@@ -29,6 +33,7 @@ setwd(base_path)
 Read the dataset into a R dataframe; call the dataframe 'data.df'. Pay attention to the first seven lines of the dataset. These contain comments as indicated by the '#' character in dataset file. When reading the dataset, ignore the lines that contain comments. (See the manual page for read.csv() and find out the parameter that will allow you to ignore comments.)
 
 ```{r }
+
 data.df <- read.csv(file = "us-covid.csv",encoding="UTF-8", comment.char = "#")
 
 # filter(data.df,row_number() == 1:7L)
@@ -42,8 +47,8 @@ You will notice that the last column of the dataset has many "N/A" values (Not A
 
 ```{r }
 
-# data.df[,-9]
-data.df[,9] <- NULL
+data.df = data.df[,-9]
+#data.df[,9] <- NULL
 
 data.df
 ```
@@ -57,6 +62,7 @@ Sort the dataframe:
 (b) Sort the dataframe by **descending** tmp_filteredorder of total cases, then print the **bottom** six entries.
 
 ```{r }
+
 # by column name order
 data.df.ordered <- data.df[order(data.df$total_cases),]
 
@@ -89,15 +95,13 @@ Create a correlation visualization using the pairs.panels() API from the R libra
         The "cases_last_7_days" and "case_rate_per_100K" column have lowest correlation.
 
 ```{r}
+
 data.df.selected <- data.df[,3:ncol(data.df)]
 
-# install and load psych package command as follows:
-# install.package("psych")
-# library("psych")
 ress <- cor(data.df.selected)
 
-# Create a correlation visualization.
-pairs.panels(data.df.selected)
+# Create a correlation visualization.# 
+pairs.panels(ress)
 ```
 
 ### Part 2.2-v
@@ -121,23 +125,20 @@ plot.default(new_table,type = "p",
              main = "Tendency",
              xlab = "confirmed+probable cases",
              ylab = "total_deaths")
+
 ```
 
-```{r}
+    Answer about the b question:
 
-tmp_data.df.ordered <- data.df[order(data.df$confirmed),]
-tmp_table <- data.frame(
-    cases = tmp_data.df.ordered["confirmed"] + tmp_data.df.ordered["probable"],
-    total_deaths = tmp_data.df.ordered["total_deaths"]
-)
+       The confirmed + probable cases number is zero, but total deaths number is not zero, which is unreasonable.
 
-tmp_filtered <- tmp_table[tmp_table$confirmed>0,]
+```{r }
 
-print(tmp_filtered)
+# filter anomaly data
+data_filtered_anom <- data.df[data.df$confirmed < data.df$total_deaths |
+                              (data.df$confirmed + data.df$probable) < data.df$total_deaths |
+                              data.df$total_cases < data.df$total_deaths,]
 
-plot.default(tmp_filtered[1:2],type = "p",
-             main = "Tendency",
-             xlab = "confirmed+probable cases",
-             ylab = "total_deaths")
+print(data_filtered_anom[c("state","confirmed","probable","total_deaths","total_cases")])
 
 ```
