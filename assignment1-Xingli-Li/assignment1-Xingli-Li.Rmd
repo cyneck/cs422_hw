@@ -8,7 +8,7 @@ toc_float: yes
 
 ## Homework 1
 
-set work space path.
+set work space and install dependent package.
 
 ```{r}
 base_path <- getwd()
@@ -32,8 +32,8 @@ Read the dataset into a R dataframe; call the dataframe 'data.df'. Pay attention
 data.df <- read.csv(file = "us-covid.csv",encoding="UTF-8", comment.char = "#")
 
 # filter(data.df,row_number() == 1:7L)
-# data.df %>% as_tibble() %>% slice(1:7)
-head(data.df,7)
+#data.df %>% as_tibble() %>% slice(1:7)
+print(head(data.df,7))
 ```
 
 ### Part 2.2-ii
