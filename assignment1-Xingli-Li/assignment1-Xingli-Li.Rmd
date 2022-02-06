@@ -118,19 +118,19 @@ Focus on confirmed cases, probable cases, and total deaths.
 
 new_table <- data.frame(
     cases = data.df.selected["confirmed"] + data.df.selected["probable"],
-    total_deaths = data.df.selected["total_deaths"]
-)
+    total_deaths = data.df.selected["total_deaths"])
 
 plot.default(new_table,type = "p",
              main = "Tendency",
              xlab = "confirmed+probable cases",
-             ylab = "total_deaths")
+
+                          ylab = "total_deaths")
 
 ```
 
-    Answer about the b question:
+    Answer to the b question: 
 
-       The confirmed + probable cases number is zero, but total deaths number is not zero, which is unreasonable.
+      The confirmed + probable cases number is zero, but total deaths number is not zero, which is unreasonable.
 
 ```{r }
 
