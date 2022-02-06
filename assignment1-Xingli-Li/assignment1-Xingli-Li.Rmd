@@ -11,7 +11,17 @@ toc_float: yes
 set work space path.
 
 ```{r}
-setwd("/media/eric/Data/IIT/CS422/cs422_hw/assignment1-Xingli-Li")
+base_path <- getwd()
+setwd(base_path)
+
+#install.packages("magrittr")
+#library("magrittr")
+
+#install.packages("dplyr")
+#library("dplyr")
+
+#install.packages("psych")
+#library("psych")
 ```
 
 ### Part 2.1-i
@@ -22,19 +32,18 @@ Read the dataset into a R dataframe; call the dataframe 'data.df'. Pay attention
 data.df <- read.csv(file = "us-covid.csv",encoding="UTF-8", comment.char = "#")
 
 # filter(data.df,row_number() == 1:7L)
-# head(data.df,3)
-
-data.df %>% as_tibble() %>% slice(1:7)
+# data.df %>% as_tibble() %>% slice(1:7)
+head(data.df,7)
 ```
 
 ### Part 2.2-ii
 
-You will notice that the last column of the dataset has many "N/A" values (Not Applicable). Drop this column so that the data.df dataframe now contains only eight columns, or attributes. The remaining analysis will be done on the dataframe with eight columns.
+You will notice that the last column of the dataset has many "N/A" values (Not Applicable). Drop this column so that the data.df dataframe now contains only eight columns, or attributes. The remaining analysis will be doprint(data.df)ne on the dataframe with eight columns.
 
 ```{r }
-# data.df[,9] <- NULL
 
-data.df[,-9]
+# data.df[,-9]
+data.df[,9] <- NULL
 
 data.df
 ```
@@ -80,12 +89,11 @@ Create a correlation visualization using the pairs.panels() API from the R libra
         The "cases_last_7_days" and "case_rate_per_100K" column have lowest correlation.
 
 ```{r}
+data.df.selected <- data.df[,3:ncol(data.df)]
+
 # install and load psych package command as follows:
 # install.package("psych")
 # library("psych")
-
-data.df.selected <- data.df[,3:ncol(data.df)]
-
 ress <- cor(data.df.selected)
 
 # Create a correlation visualization.
@@ -132,5 +140,4 @@ plot.default(tmp_filtered[1:2],type = "p",
              xlab = "confirmed+probable cases",
              ylab = "total_deaths")
 
-which(tmp_filtered$confirmed==1| tmp_filtered$confirmed==3)
 ```
