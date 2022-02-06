@@ -123,8 +123,7 @@ new_table <- data.frame(
 plot.default(new_table,type = "p",
              main = "Tendency",
              xlab = "confirmed+probable cases",
-
-                          ylab = "total_deaths")
+             ylab = "total_deaths")
 
 ```
 
