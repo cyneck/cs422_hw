@@ -12,55 +12,55 @@ Xingli Li, Illinois Institute of Technology
 a. Dividing the customers of a company according to their gender.
 
 ```
-no
+No,this is a simple database query.
 ```
 
 b. Dividing the customers of a company according to their profitability.
 
 ```
-yes
+No, this is a simple numerical calculation.
 ```
 
 c. Computing the total sales of a company.
 
 ```
-yes
+No, this is a simple numerical calculation.
 ```
 
 d. Sorting a student database based on student identification numbers.
 
 ```
-yes
+No,this is a simple sort of data.
 ```
 
 e. Predicting the outcomes of tossing a (fair) pair of dice.
 
 ```
-yes
+No, this is a probability problem.
 ```
 
 f. Predicting the future stock price of a company using historical records.
 
 ```
-yes
+Yes.
 ```
 
 g. Monitoring the heart rate of a patient for abnormalities.
 
 ```
-yes
+Yes.
 ```
 
 h. Monitoring seismic waves for earthquake activities.
 
 ```
-yes
+Yes.
 ```
 
 i. Extracting the frequencies of a sound wave.
 
 ```
-yes
+No,this is signal processing.
 ```
 
 
