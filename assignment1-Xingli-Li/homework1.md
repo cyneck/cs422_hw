@@ -18,7 +18,7 @@ No,this is a simple database query.
 b. Dividing the customers of a company according to their profitability.
 
 ```
-No, this is a simple numerical calculation.
+No, this is a simple numerical calculation.s
 ```
 
 c. Computing the total sales of a company.
@@ -71,31 +71,36 @@ No,this is signal processing.
 a. Census data collected from 1900–1950.
 
 ```
-For example, the age of the population, the company served, the home address, etc., which can provide a lot of important information.
+NO.
+Census data are statistics published on government websites.
 ```
 
 b. IP addresses and visit times of web users who visit your website.
 
 ```
-We don't particularly know the people who visit the website, but we can mine more valuable information through the location corresponding to the IP address, the number of visits to the website, the length of stay, and the content of the website itself.
+Yes.
+We don't particularly know the people who visit the website, but we can mine more valuable information through the location corresponding to the IP address, the number of visits to the website, the duration of stay, and the content of the website itself.
 ```
 
 c. Images from Earth-orbiting satellites.
 
 ```
-In fact, earth orbiting satellites can collect geographic information of some countries and use it for the bad side in the military and political field.
+No,
+In fact, earth orbiting satellites can collect geographic information of some countries and use it for the bad side in the military and political field, but it is beneficial to scientific exploration. So the data is an important issue.
 ```
 
 d. Names and addresses of people from the telephone book.
 
 ```
+Yes.
 Through the names in the phone book, we can infer the user's gender, even the person's age of birth. The address information is related to the house price information. Indirectly, we can infer the income level and social status. Through the mobile phone number, we can retrieve the user's social account and other information from the Internet big data. These information are actually very important and sensitive.
 ```
 
 e. Names and email addresses collected from the Web.
 
 ```
-Using the Internet search engine, we can search out more relation people's names and e-mail address information, leave traces in the social network, and there may be some messages and articles from users to indirectly infer people's interests and hobbies.
+No.
+Using the Internet search engine, we can search out a lot of names and e-mail address information. Most of them are open and convenient for communication.
 ```
 
 
@@ -174,14 +179,13 @@ discrete, qualitative, ordinal
 k. Distance from the center of campus.
 
 ```
-continuous, quantitative, interval/ratio
-(this is relative distance.from other observation point to the center point, which is interval. The comparison from each observation point to the center point can be the ratio.)
+continuous, quantitative, interval
 ```
 
 l. Density of a substance in grams per cubic centimeter.
 
 ```
-discrete，quantitative，ratio
+continuous，quantitative，ratio
 ```
 
 m. Coat check number. (When you attend an event, you can often give your coat to someone who, in turn, gives you a number that you can use to claim your coat when you leave.)
