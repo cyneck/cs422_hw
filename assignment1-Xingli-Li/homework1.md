@@ -12,55 +12,55 @@ Xingli Li, Illinois Institute of Technology
 a. Dividing the customers of a company according to their gender.
 
 ```
-Answer: 不是
+no
 ```
 
 b. Dividing the customers of a company according to their profitability.
 
 ```
-answer： 是
+yes
 ```
 
 c. Computing the total sales of a company.
 
 ```
-answer：不是
+yes
 ```
 
 d. Sorting a student database based on student identification numbers.
 
 ```
-answer： 不是
+yes
 ```
 
 e. Predicting the outcomes of tossing a (fair) pair of dice.
 
 ```
-answer： 是
+yes
 ```
 
 f. Predicting the future stock price of a company using historical records.
 
 ```
-answer： 是
+yes
 ```
 
 g. Monitoring the heart rate of a patient for abnormalities.
 
 ```
-answer： 是
+yes
 ```
 
 h. Monitoring seismic waves for earthquake activities.
 
 ```
-answer：是
+yes
 ```
 
 i. Extracting the frequencies of a sound wave.
 
 ```
-answer：是
+yes
 ```
 
 
@@ -71,31 +71,31 @@ answer：是
 a. Census data collected from 1900–1950.
 
 ```
-是，比如人口的年龄，工作单位，家庭住址等，可以挖掘出很多重要信息。
+For example, the age of the population, the company served, the home address, etc., which can provide a lot of important information.
 ```
 
 b. IP addresses and visit times of web users who visit your website.
 
 ```
-是的，我们不是特别了解访问网站的人，但是通过ip地址对应的位置，访问网站次数，停留时长等信息，以及网站本身运营的内容，我们可以挖掘更多有价值的信息。
+We don't particularly know the people who visit the website, but we can mine more valuable information through the location corresponding to the IP address, the number of visits to the website, the length of stay, and the content of the website itself.
 ```
 
 c. Images from Earth-orbiting satellites.
 
 ```
-是的，地球轨道卫星的一些功能，其实是可以对一些国家地理信息采集，在军事政治领域用于不好的一面的。
+In fact, earth orbiting satellites can collect geographic information of some countries and use it for the bad side in the military and political field.
 ```
 
 d. Names and addresses of people from the telephone book.
 
 ```
-通过电话本中的名字，我们可以推测用户性别，甚至是人的出生年代，地址信息跟房价信息相关联，间接的可以推断出收入水平，社会地位，通过手机号我们能从互联网大数据中，检索出用户的社交帐号等信息，这些信息实际上都很重要敏感。
+Through the names in the phone book, we can infer the user's gender, even the person's age of birth. The address information is related to the house price information. Indirectly, we can infer the income level and social status. Through the mobile phone number, we can retrieve the user's social account and other information from the Internet big data. These information are actually very important and sensitive.
 ```
 
 e. Names and email addresses collected from the Web.
 
 ```
-Answer: 利用互联网搜索引擎，我们可以搜索出人名，以及人的电子邮件地址信息，在社交网络中留下痕迹，可能会有用户的一些留言，文章，间接的推断出人的兴趣爱好。
+Using the Internet search engine, we can search out more relation people's names and e-mail address information, leave traces in the social network, and there may be some messages and articles from users to indirectly infer people's interests and hobbies.
 ```
 
 
@@ -144,7 +144,7 @@ discrete，qualitative，ordinal
 f. Height above sea level.
 
 ```
-continuous，quantitative，interval/ratio
+continuous，quantitative，interval
 ```
 
 g. Number of patients in a hospital.
@@ -175,6 +175,7 @@ k. Distance from the center of campus.
 
 ```
 continuous, quantitative, interval/ratio
+(this is relative distance.from other observation point to the center point, which is interval. The comparison from each observation point to the center point can be the ratio.)
 ```
 
 l. Density of a substance in grams per cubic centimeter.
@@ -212,13 +213,14 @@ discrete， qualitative，nominal
  a. Who is right, the marketing director or his boss? If you answered,  his boss, what would you do to fix the measure of satisfaction?
 
 ```
-老板对，因为两者比较要放到同一个尺度下比较，这样子是比较合理的，我们可以用产品的多方面的满意度（百分比）方式比较，这样子也方便公司提高产品设计和质量。
+Boss is right. 
+Because with the increase of product sales, the custmers complaint rate will gradually appear and increase. We can quantitatively measure the product experience with the satisfaction (percentage) of products in many aspects, which is also convenient for subsidiaries to improve product design and quality.
 ```
 
  b. What can you say about the attribute type of the original product  satisfaction attribute?
 
 ```
-我觉得没有意义。卖的好的产品，用户多，曝光度就高，要满足不同群体客户需求，不满意的用户可能也会变多。
+I think it's worthless. Products sell well,and have more custmers and higher exposure. To meet the needs of different groups of customers, there may be more dissatisfied custmers.
 ```
 
 
@@ -228,9 +230,8 @@ discrete， qualitative，nominal
 Which of the following quantities is likely to show more temporal autocorrelation: daily rainfall or daily temperature? Why?
 
 ```
-Answer: 
-每日温度更自相关。
-因为每天的温度都是有规律变化的，随着太阳的东升西落而变;每天降雨是跟季节相关的，而且有很大不确定性。
+Daily temperature is more autocorrelated.
+Because the temperature changes regularly every day, with the sun rising in the East and setting in the West; Daily rainfall is seasonally related and has great uncertainty.
 ```
 
 
@@ -243,30 +244,30 @@ Answer:
  a. Is noise ever interesting or desirable? Outliers? 
 
 ```
-噪声不是令人感兴趣的，但是离群点，是个性不同的，我们可能更有兴趣研究。
+No, noise is not interesting, but outliers are different personalities, and we may be more interested in research.
 ```
 
  b. Can noise objects be outliers? 
 
 ```
-可能，噪声通常是外部干扰，数据的失真可能就是离群掉造成。
+Maybe，noise is usually external interference, and data distortion may be caused by outliers.
 ```
 
  c. Are noise objects always outliers? 
 
 ```
-不是
+No.
 ```
 
  d. Are outliers always noise objects? 
 
 ```
-不是。离群点不一定会对系统造成干扰，但是噪声一定会。
+No. Outliers do not necessarily cause interference to the system, but noise will.
 ```
 
  e. Can noise make a typical value into an unusual one, or vice versa?
 
 ```
-都可以。具体数值存在不确定性。
+Both, the specific value is uncertain.
 ```
 
