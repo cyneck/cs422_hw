@@ -64,7 +64,6 @@ train.df dataframe and test your trained model on the test.df dataframe.
 
 (a) From the training dataset, create a model using all the predictors
     except name to predict mpg.
-<!-- -->
 
 (i) Why is using name as a predictor not a reasonable thing to do?
 
@@ -96,14 +95,11 @@ $ RSS= \sum\_{i = i }\^{} ( y_i - \hat{y_i} )\^ 2 $
      follow a Gaussian distribution? What can you say about the
      distribution of the residuals?
 
-<!-- -->
-
 (b) Using the regression model you have created in (a), your aim is to
     narrow down the features to the 3 attributes will act as the best
     predictors for regressing on mpg. To do so, start with all
     predictors in the model; then:
 
-<!-- -->
 (i) Determine which predictors are statistically significant and which
     are not. Eliminate those that are not statistically significant and
     create a new model using only those 3 predictors that you believe
@@ -123,8 +119,6 @@ $ RSS= \sum\_{i = i }\^{} ( y_i - \hat{y_i} )\^ 2 $
 (v) Comparing the summaries of the model produced in (a) and in (b),
     including residual analysis of each model. Which model do you think
     is better, and why?
-    
-<!-- -->
 
 (c) Using the predict() method, fit the test dataset to the model you
      created in (b) and perform the analysis below.
@@ -152,7 +146,7 @@ Prediction Response Lower Upper Matches
 56.23 56.10 55.11 57.21 1 
 35.10 34.19 34.98 38.38 0
 ...
-<!-- -->
+
 
 Total observations correctly predicted: XX (Hint: To compute Matches,
 you must use the apply() function on the above data frame.) (e) Follow
@@ -174,7 +168,7 @@ Prediction Response Lower Upper Matches
 56.23 56.10 50.54 62.20 1 
 35.10 34.19 29.92 40.44 1
 ...
-<!-- -->
+
 
 Total observations correctly predicted: XX (Hint: To compute Matches,
 you must use the apply() function on the above data frame.)
@@ -202,12 +196,12 @@ Prediction Response Lower Upper Matches
 56.23 56.10 50.54 62.20 1 
 35.10 34.19 29.92 40.44 1
 ...
-<!-- -->
+
 
 Total observations correctly predicted: XX 
 
 (f) Comment on the results of (d) and (e): 
-<!-- -->
+
 (i) Which of (d) or (e) results in more matches? 
-<!-- -->
+
 (ii) Why? (1 -- 2 sentences.)
