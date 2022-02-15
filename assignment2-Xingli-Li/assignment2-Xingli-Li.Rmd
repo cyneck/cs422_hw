@@ -2,6 +2,8 @@
 title: "CS 422"
 author: "Xingli Li, Illinois Institute of Technology"
 output: html_notebook
+toc: yes
+toc_float: yes
 ---
 
 ## Homework 2
@@ -25,15 +27,11 @@ setwd(getwd())
 # library("psych")
 
 #install.packages("ISLR")
-#library("ISLR")
+library("ISLR")
 
 ```
 
 ### Part 2.1
-
-Install package ISLR. This package contains a dataset called Auto.
-
-In this problem, you will tackle multi-variate linear regression using the Auto dataset from Problem 2.2. You will set aside a portion of this dataset (5%) for testing, and use the remaining portion (95%) to train your OLS model. To divide the dataset into training and testing sets, issue the following commands exactly as shown:
 
 ```{r }
 set.seed(1122)
@@ -42,39 +40,36 @@ train.df <- Auto[index,]
 test.df <- Auto[-index,]
 ```
 
-The set.seed() command seeds the pseudo-random number generator for reproducibility. The sample() command picks 352 random numbers between 1 and the total number of rows in the Auto dataset, without replacement. These numbers correspond to the indices of the Auto dataset, and all observations at these indices constitute the training dataset (the third line of code above). The remaining numbers (note the use of -index in the fourth line of code above) correspond to indices not chosen through random sampling, and thus, they become the test set of the dataset. Once you have divided your dataset as shown above, you will train on the train.df dataframe and test your trained model on the test.df dataframe.
-
 （a） From the training dataset, create a model using all the predictors except name to predict mpg.
 
 ```{r }
-#install.packages("car")
-#library("car")
-
 x <- train.df[,2:8]
-y <-  train.df[,1]
+y <- train.df[,'mpg']
 
-model.lm <- lm(y ~ .,x)
-
-model.lm <- lm(y ~ x2+x3,x)
-
+model <- lm(y ~ ., data= x)
 
 ```
 
 （i） Why is using name as a predictor not a reasonable thing to do?
 
-```{=html}
-Because the name is text data, and it represent each entity object ,not is feature attribute.
-```
+        Because the name is text data, and it represent each entity object ,not is feature attribute.
+
 （ii）Print the summary of the regression model, and comment on how well the model fits the data by studying the R2, RSE and RMSE. To do so, first print out the values of R2, RSE, and RMSE as follows:
 
 ```{r }
 
-summary(model.lm)
+model.index <- summary(model)
 
-print("R-sq value is ")
-print("Adjusted R-sq value ")
-print("RSE is ")
-print("RMSE is ")
+y_hat <- predict(model)
+model.index.rss <- sum( (y - y_hat)^2 )
+model.index.rse <- sqrt( model.index.rss / (NROW(y)-NCOL(x)-1) )
+model.index.rmse <- sqrt( model.index.rss / NROW(y) )
+
+sprintf("R-sq value is: %f", model.index$r.squared)
+sprintf("Adjusted R-sq value: %f",model.index$adj.r.squared)
+sprintf("RSE is: %f",model.index.rse)
+sprintf("RMSE is: %f",model.index.rmse)
+
 ```
 
 Hint: You can extract the values of R2 and adjusted R2 from the object returned to you by the summary() method. You will need to write R code to get the values of RSE and RMSE. Recall that:
@@ -84,7 +79,7 @@ RSE= \sqrt{ \frac{1}{n-p-1} RSS }
 $$
 
 $$
-RMSE= \sqrt[]{\frac{\sum { (y_i - \hat{y_i} )^2 }}{N} RSS }
+RMSE= \sqrt[]{\frac{\sum { (y_i - \hat{y_i} )^2 }}{N} }
 $$
 
 $$
@@ -95,11 +90,18 @@ $$
 
 ```{r}
 
+plot(model,1)
+abline(0,0)
 ```
 
 （iv)）Plot a histogram of the residuals of the model. Does the histogram follow a Gaussian distribution? What can you say about the distribution of the residuals?
 
 ```{r}
+
+hist(model$residuals,
+     xlab = "Model Residuals",
+     ylab = "Frequency",
+     main = "Histogram of model fitted")
 ```
 
 （b）Using the regression model you have created in (a), your aim is to narrow down the features to the 3 attributes will act as the best predictors for regressing on mpg. To do so, start with all predictors in the model; then:
@@ -162,7 +164,6 @@ Total observations correctly predicted: XX
 (Hint: To compute Matches, you must use the apply() function on the above data frame.)
 
 ```{r}
-```{r}
 print("Total observations correctly predicted:")
 ```
 
@@ -172,8 +173,10 @@ print("Total observations correctly predicted:")
 
 （ii） Why? (1 -- 2 sentences.)
 
+```{r}
 
 print("Total observations correctly predicted: ")
+
 ```
 
 （e） Follow the same instructions in (d) except this time, you will be using a prediction interval.
@@ -200,19 +203,6 @@ print("Total observations correctly predicted:")
 
 （f） Comment on the results of (d) and (e):
 
-```
-
-```
-
 （g） Which of (d) or (e) results in more matches?
 
-```
-
-```
-
 （ii） Why? (1 -- 2 sentences.)
-
-```
-
-```
-
