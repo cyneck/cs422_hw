@@ -105,8 +105,6 @@ hist(model$residuals,
      ylab = "Frequency",
      main = "Histogram of model fitted")
 
-# The residuals of the model follow a Gaussian distribution.
-
 qqnorm(model$residuals,col="red")
 qqline(model$residuals,col="black") 
 
@@ -114,42 +112,80 @@ nortest <- shapiro.test(model$residuals)
 print(nortest)
 sprintf("the residuals of the model follow Gaussian distribution: %s", 
         nortest$p.value > 0.05)
+
 # The p-value represents the probability of following a normal distribution.
 # Generally, 0.05 is the standard. If it is greater than 0.05, it means that it conforms to the normal distribution
 ```
 
 #### （b）Using the regression model you have created in (a), your aim is to narrow down the features to the 3 attributes will act as the best predictors for regressing on mpg. To do so, start with all predictors in the model; then:
 
-```{r}
-```
-
 （i）Determine which predictors are statistically significant and which are not. Eliminate those that are not statistically significant and create a new model using only those 3 predictors that you believe are statistically significant.
 
 ```{r}
 
+# cylinders","displacement","horsepower","weight","acceleration","year","origin"
 
+x <- train.df[,c("weight","year","origin")]
+y <- train.df[,'mpg']
+model2 <- lm(y ~ . , data= x)
 ```
 
-（ii）Print the summary of(ii) Why? (1 -- 2 sentences.) the regression model created in (b)(i) and comment on how well the model fits the data by studying the R2 , RSE and RMSE. (Print out the values of R2 , RSE, and RMSE.)
+（ii）Print the summary of the regression model created in (b)(i) and comment on how well the model fits the data by studying the R2 , RSE and RMSE. (Print out the values of R2 , RSE, and RMSE.)
 
 ```{r}
 
+model2.index <- summary(model2)
+y_hat <- predict(model2)
+model2.index.rss <- sum( (y - y_hat)^2 )
+model2.index.rse <- sqrt( model2.index.rss / (NROW(y)-NCOL(x)-1) )
+model2.index.rmse <- sqrt( model2.index.rss / NROW(y) )
 
+sprintf("R-sq value is: %f", model2.index$r.squared)
+sprintf("Adjusted R-sq value: %f",model2.index$adj.r.squared)
+sprintf("RSE is: %f",model2.index.rse)
+sprintf("RMSE is: %f",model2.index.rmse)
 ```
 
 （iii）Plot the residuals of the model.
 
 ```{r}
+
+plot(model2,1)
+abline(0,0)
 ```
 
 （iv）Plot a histogram of the residuals of the model. Does the histogram follow a Gaussian distribution? What can you say about the distribution of the residuals?
 
+      The residuals of the model apparently follow a Gaussian distribution from the Normal 
+    Q-Q Plot, because this qqplot curve looks like a straight line. But using shapiro.test() evaluation, this residual data does not conform to a Gaussian distribution.
+
 ```{r}
+
+hist(model2$residuals,
+     xlab = "Model Residuals",
+     ylab = "Frequency",
+     main = "Histogram of model2 fitted ")
+
+qqnorm(model2$residuals,col="red")
+qqline(model2$residuals,col="black") 
+
+nortest <- shapiro.test(model2$residuals)
+print(nortest)
+sprintf("the residuals of the model follow Gaussian distribution: %s", 
+        nortest$p.value > 0.05)
 ```
 
 （v）Comparing the summaries of the model produced in (a) and in (b), including residual analysis of each model. Which model do you think is better, and why?
 
 ```{r}
+
+print("------------------------model report-----------------")
+model.index <- summary(model)
+model.index
+
+print("------------------------model2 report-----------------")
+model2.index <- summary(model2)
+model2.index 
 ```
 
 #### （c）Using the predict() method, fit the test dataset to the model you created in (b) and perform the analysis below.
@@ -157,12 +193,19 @@ sprintf("the residuals of the model follow Gaussian distribution: %s",
 To best assist you with the analysis, create a new data frame as follows: get the predictions (fitted values) and put them in a new dataframe as a column vector. Put the test response variable as the second column vector in the new dataframe.
 
 ```{r}
+
+x_test <- test.df[,c("weight","year","origin")]
+y_test <- test.df[,'mpg']
+y_hat_test <- predict(model2,x_test)
+
+y_test
+y_hat_test
+
+indx <- which.min(test.df$mpg)
+test.df[indx,]
 ```
 
 #### （d）Count how many of the fitted values matched the mpg in the test dataset at a 95% confidence level by creating confidence intervals. To be considered a match, the response value of each observation in in the test dataset should be in the CI created by predict(). Note that we have the ground truth in our test dataset, so we can count the matches as one measure of accuracy.
-
-```{r}
-```
 
 To help facilitate this counting, add a column (called Matches) in the data frame you created above that contains 1 if the response value was in the CI, and 0 otherwise. To find out the total observations correctly predicted in our test dataset, simply count the number of 1's in the Matches column. Print this data frame, and following it, print the number of 1's in the Matches column. Your output should look like:
 
@@ -180,8 +223,12 @@ Total observations correctly predicted: XX
 
 ```{r}
 
-print("Total observations correctly predicted: ")
+predict.lm(model2, data.frame(weight=5000,year=80,origin=1), interval="confidence")
 
+# add column "count"
+
+true.count = 1
+sprintf("Total observations correctly predicted: %s",true.count)
 ```
 
 #### （e） Follow the same instructions in (d) except this time, you will be using a prediction interval.
@@ -203,7 +250,10 @@ Prediction Response Lower Upper Matches
 Total observations correctly predicted: XX
 
 ```{r}
-print("Total observations correctly predicted:")
+
+# add column "prediction interval"
+true.count = 1
+sprintf("Total observations correctly predicted: %s",true.count)
 ```
 
 #### （f） Comment on the results of (d) and (e):
