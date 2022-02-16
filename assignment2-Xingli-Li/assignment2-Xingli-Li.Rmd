@@ -40,7 +40,7 @@ train.df <- Auto[index,]
 test.df <- Auto[-index,]
 ```
 
-（a） From the training dataset, create a model using all the predictors except name to predict mpg.
+#### （a） From the training dataset, create a model using all the predictors except name to predict mpg.
 
 ```{r }
 x <- train.df[,2:8]
@@ -96,15 +96,29 @@ abline(0,0)
 
 （iv)）Plot a histogram of the residuals of the model. Does the histogram follow a Gaussian distribution? What can you say about the distribution of the residuals?
 
+       The residuals of the model apparently follow a Gaussian distribution from the Normal Q-Q Plot, because this qqplot curve looks like a straight line. But using shapiro.test() evaluation, this residual data does not conform to a Gaussian distribution.
+
 ```{r}
 
 hist(model$residuals,
      xlab = "Model Residuals",
      ylab = "Frequency",
      main = "Histogram of model fitted")
+
+# The residuals of the model follow a Gaussian distribution.
+
+qqnorm(model$residuals,col="red")
+qqline(model$residuals,col="black") 
+
+nortest <- shapiro.test(model$residuals)
+print(nortest)
+sprintf("the residuals of the model follow Gaussian distribution: %s", 
+        nortest$p.value > 0.05)
+# The p-value represents the probability of following a normal distribution.
+# Generally, 0.05 is the standard. If it is greater than 0.05, it means that it conforms to the normal distribution
 ```
 
-（b）Using the regression model you have created in (a), your aim is to narrow down the features to the 3 attributes will act as the best predictors for regressing on mpg. To do so, start with all predictors in the model; then:
+#### （b）Using the regression model you have created in (a), your aim is to narrow down the features to the 3 attributes will act as the best predictors for regressing on mpg. To do so, start with all predictors in the model; then:
 
 ```{r}
 ```
@@ -112,11 +126,15 @@ hist(model$residuals,
 （i）Determine which predictors are statistically significant and which are not. Eliminate those that are not statistically significant and create a new model using only those 3 predictors that you believe are statistically significant.
 
 ```{r}
+
+
 ```
 
 （ii）Print the summary of(ii) Why? (1 -- 2 sentences.) the regression model created in (b)(i) and comment on how well the model fits the data by studying the R2 , RSE and RMSE. (Print out the values of R2 , RSE, and RMSE.)
 
 ```{r}
+
+
 ```
 
 （iii）Plot the residuals of the model.
@@ -134,17 +152,14 @@ hist(model$residuals,
 ```{r}
 ```
 
-（c）Using the predict() method, fit the test dataset to the model you created in (b) and perform the analysis below.
-
-```{r}
-```
+#### （c）Using the predict() method, fit the test dataset to the model you created in (b) and perform the analysis below.
 
 To best assist you with the analysis, create a new data frame as follows: get the predictions (fitted values) and put them in a new dataframe as a column vector. Put the test response variable as the second column vector in the new dataframe.
 
 ```{r}
 ```
 
-（d）Count how many of the fitted values matched the mpg in the test dataset at a 95% confidence level by creating confidence intervals. To be considered a match, the response value of each observation in in the test dataset should be in the CI created by predict(). Note that we have the ground truth in our test dataset, so we can count the matches as one measure of accuracy.
+#### （d）Count how many of the fitted values matched the mpg in the test dataset at a 95% confidence level by creating confidence intervals. To be considered a match, the response value of each observation in in the test dataset should be in the CI created by predict(). Note that we have the ground truth in our test dataset, so we can count the matches as one measure of accuracy.
 
 ```{r}
 ```
@@ -164,22 +179,12 @@ Total observations correctly predicted: XX
 (Hint: To compute Matches, you must use the apply() function on the above data frame.)
 
 ```{r}
-print("Total observations correctly predicted:")
-```
-
-（f） Comment on the results of (d) and (e):
-
-（g） Which of (d) or (e) results in more matches?
-
-（ii） Why? (1 -- 2 sentences.)
-
-```{r}
 
 print("Total observations correctly predicted: ")
 
 ```
 
-（e） Follow the same instructions in (d) except this time, you will be using a prediction interval.
+#### （e） Follow the same instructions in (d) except this time, you will be using a prediction interval.
 
 Count how many of the fitted values matched the mpg in the test dataset at a 95% confidence level by creating prediction intervals. To be considered a match, the response value of each observation in in the test dataset should be in the prediction interval created by predict(). Note that we have the ground truth in our test dataset, so we can count the matches as one measure of accuracy.
 
@@ -201,8 +206,8 @@ Total observations correctly predicted: XX
 print("Total observations correctly predicted:")
 ```
 
-（f） Comment on the results of (d) and (e):
+#### （f） Comment on the results of (d) and (e):
 
-（g） Which of (d) or (e) results in more matches?
+（i） Which of (d) or (e) results in more matches?
 
 （ii） Why? (1 -- 2 sentences.)
