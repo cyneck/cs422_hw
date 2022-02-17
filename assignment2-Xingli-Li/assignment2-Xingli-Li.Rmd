@@ -24,7 +24,7 @@ setwd(getwd())
 # library("dplyr")
 
 # install.packages("psych")
-# library("psych")
+library("psych")
 
 #install.packages("ISLR")
 library("ISLR")
@@ -47,7 +47,6 @@ x <- train.df[,2:8]
 y <- train.df[,'mpg']
 
 model <- lm(y ~ ., data= x)
-
 ```
 
 （i） Why is using name as a predictor not a reasonable thing to do?
@@ -96,7 +95,7 @@ abline(0,0)
 
 （iv)）Plot a histogram of the residuals of the model. Does the histogram follow a Gaussian distribution? What can you say about the distribution of the residuals?
 
-       The residuals of the model apparently follow a Gaussian distribution from the Normal Q-Q Plot, because this qqplot curve looks like a straight line. But using shapiro.test() evaluation, this residual data does not conform to a Gaussian distribution.
+        This qqplot curve looks like a straight line, the residuals of the model seemingly follow a Gaussian distribution from the Normal Q-Q Plot. But using shapiro.test() evaluation, this residual data does not conform to a Gaussian distribution.
 
 ```{r}
 
@@ -110,6 +109,7 @@ qqline(model$residuals,col="black")
 
 nortest <- shapiro.test(model$residuals)
 print(nortest)
+
 sprintf("the residuals of the model follow Gaussian distribution: %s", 
         nortest$p.value > 0.05)
 
@@ -123,7 +123,7 @@ sprintf("the residuals of the model follow Gaussian distribution: %s",
 
 ```{r}
 
-# cylinders","displacement","horsepower","weight","acceleration","year","origin"
+# "cylinders","displacement","horsepower","weight","acceleration","year","origin"
 
 x <- train.df[,c("weight","year","origin")]
 y <- train.df[,'mpg']
@@ -156,8 +156,7 @@ abline(0,0)
 
 （iv）Plot a histogram of the residuals of the model. Does the histogram follow a Gaussian distribution? What can you say about the distribution of the residuals?
 
-      The residuals of the model apparently follow a Gaussian distribution from the Normal 
-    Q-Q Plot, because this qqplot curve looks like a straight line. But using shapiro.test() evaluation, this residual data does not conform to a Gaussian distribution.
+      Using shapiro.test() evaluation, this residual data does not conform to a Gaussian distribution.
 
 ```{r}
 
@@ -177,18 +176,14 @@ sprintf("the residuals of the model follow Gaussian distribution: %s",
 
 （v）Comparing the summaries of the model produced in (a) and in (b), including residual analysis of each model. Which model do you think is better, and why?
 
+     I think first model is better.
+
 ```{r}
-
-print("------------------------model report-----------------")
-model.index <- summary(model)
-model.index
-
-print("------------------------model2 report-----------------")
-model2.index <- summary(model2)
-model2.index 
+# analysis of variance, was used to compare the two models
+anova(model,model2)
 ```
 
-#### （c）Using the predict() method, fit the test dataset to the model you created in (b) and perform the analysis below.
+#### （c）Using the predict() method, fit the test dataset to the model you created in (b) and perform the analysis below.y_hat_test
 
 To best assist you with the analysis, create a new data frame as follows: get the predictions (fitted values) and put them in a new dataframe as a column vector. Put the test response variable as the second column vector in the new dataframe.
 
@@ -196,13 +191,11 @@ To best assist you with the analysis, create a new data frame as follows: get th
 
 x_test <- test.df[,c("weight","year","origin")]
 y_test <- test.df[,'mpg']
-y_hat_test <- predict(model2,x_test)
 
-y_test
-y_hat_test
+y_hat_test <- predict(model2, x_test)
 
-indx <- which.min(test.df$mpg)
-test.df[indx,]
+test.dataframe <- data.frame( Prediction = y_hat_test,
+                              Response= y_test )
 ```
 
 #### （d）Count how many of the fitted values matched the mpg in the test dataset at a 95% confidence level by creating confidence intervals. To be considered a match, the response value of each observation in in the test dataset should be in the CI created by predict(). Note that we have the ground truth in our test dataset, so we can count the matches as one measure of accuracy.
@@ -223,17 +216,45 @@ Total observations correctly predicted: XX
 
 ```{r}
 
-predict.lm(model2, data.frame(weight=5000,year=80,origin=1), interval="confidence")
+#coef(model2)
+#confint(model2)
 
-# add column "count"
+predict.cfd <- predict.lm(model2, x_test, interval="confidence",level = 0.95)
 
-true.count = 1
+test.dataframe$Lower <- predict.cfd[,"lwr"]
+
+test.dataframe$Upper <- predict.cfd[,"upr"]
+
+test.dataframe$Matches <- 0
+
+func <- function(df){
+  prediction <- df[1]
+  lwr <- df[3]
+  ipr <- df[4]
+  if (prediction> lwr & prediction < ipr){
+      df[5] <- 1
+  }
+  else{
+      df[5] <- 0
+  }
+}
+
+matchcount <- apply( test.dataframe ,1, func)
+
+test.dataframe$Matches <- matchcount
+
+true.count <- sum(test.dataframe["Matches"])
+
 sprintf("Total observations correctly predicted: %s",true.count)
 ```
 
 #### （e） Follow the same instructions in (d) except this time, you will be using a prediction interval.
 
-Count how many of the fitted values matched the mpg in the test dataset at a 95% confidence level by creating prediction intervals. To be considered a match, the response value of each observation in in the test dataset should be in the prediction interval created by predict(). Note that we have the ground truth in our test dataset, so we can count the matches as one measure of accuracy.
+y_hat_test \<- predict(model2, x_test)
+
+test.dataframe \<- data.frame( Prediction = y_hat_test,
+
+Response= y_test )Count how many of the fitted values matched the mpg in the test dataset at a 95% confidence level by creating prediction intervals. To be considered a match, the response value of each observation in in the test dataset should be in the prediction interval created by predict(). Note that we have the ground truth in our test dataset, so we can count the matches as one measure of accuracy.
 
 To help facilitate this counting, add a column (called Matches) in the data frame you created above that contains 1 if the response value was in the CI, and 0 otherwise. To find out the total observations correctly predicted in our test dataset, simply count the number of 1's in the Matches column.
 
@@ -252,7 +273,32 @@ Total observations correctly predicted: XX
 ```{r}
 
 # add column "prediction interval"
-true.count = 1
+predict.cfd <- predict.lm(model2, x_test, interval="confidence",level = 0.95)
+
+test.dataframe$Lower <- predict.cfd[,"lwr"]
+
+test.dataframe$Upper <- predict.cfd[,"upr"]
+
+test.dataframe$Matches <- 0
+
+func <- function(df){
+  prediction <- df[1]
+  lwr <- df[3]
+  ipr <- df[4]
+  if (prediction> lwr & prediction < ipr){
+      df[5] <- 1
+  }
+  else{
+      df[5] <- 0
+  }
+}
+
+matchcount <- apply( test.dataframe ,1, func)
+
+test.dataframe$Matches <- matchcount
+
+true.count <- sum(test.dataframe["Matches"])
+
 sprintf("Total observations correctly predicted: %s",true.count)
 ```
 
