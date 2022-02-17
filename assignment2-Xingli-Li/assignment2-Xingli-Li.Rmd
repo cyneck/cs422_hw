@@ -305,4 +305,8 @@ sprintf("Total observations correctly predicted: %s",true.count)
 
 （i） Which of (d) or (e) results in more matches?
 
+        (e)
+
 （ii） Why? (1 -- 2 sentences.)
+
+          (e) the accuracy of prediction is high, and the confidence interval shows the degree that the real value of this parameter has a certain probability of falling around the measurement results. The accuracy can better reflect the prediction performance of the model.
