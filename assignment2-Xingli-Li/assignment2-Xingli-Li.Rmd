@@ -228,10 +228,10 @@ test.dataframe$Upper <- predict.cfd[,"upr"]
 test.dataframe$Matches <- 0
 
 func <- function(df){
-  prediction <- df[1]
+  response <- df[2]
   lwr <- df[3]
   ipr <- df[4]
-  if (prediction> lwr & prediction < ipr){
+  if (response> lwr & response < ipr){
       df[5] <- 1
   }
   else{
@@ -243,18 +243,16 @@ matchcount <- apply( test.dataframe ,1, func)
 
 test.dataframe$Matches <- matchcount
 
-true.count <- sum(test.dataframe["Matches"])
+print(test.dataframe)
+
+true.count <- sum(test.dataframe$Matches)
 
 sprintf("Total observations correctly predicted: %s",true.count)
 ```
 
 #### （e） Follow the same instructions in (d) except this time, you will be using a prediction interval.
 
-y_hat_test \<- predict(model2, x_test)
-
-test.dataframe \<- data.frame( Prediction = y_hat_test,
-
-Response= y_test )Count how many of the fitted values matched the mpg in the test dataset at a 95% confidence level by creating prediction intervals. To be considered a match, the response value of each observation in in the test dataset should be in the prediction interval created by predict(). Note that we have the ground truth in our test dataset, so we can count the matches as one measure of accuracy.
+Count how many of the fitted values matched the mpg in the test dataset at a 95% confidence level by creating prediction intervals. To be considered a match, the response value of each observation in in the test dataset should be in the prediction interval created by predict(). Note that we have the ground truth in our test dataset, so we can count the matches as one measure of accuracy.
 
 To help facilitate this counting, add a column (called Matches) in the data frame you created above that contains 1 if the response value was in the CI, and 0 otherwise. To find out the total observations correctly predicted in our test dataset, simply count the number of 1's in the Matches column.
 
@@ -272,8 +270,7 @@ Total observations correctly predicted: XX
 
 ```{r}
 
-# add column "prediction interval"
-predict.cfd <- predict.lm(model2, x_test, interval="confidence",level = 0.95)
+predict.cfd <- predict.lm(model2, x_test, interval="prediction",level = 0.95)
 
 test.dataframe$Lower <- predict.cfd[,"lwr"]
 
@@ -282,10 +279,10 @@ test.dataframe$Upper <- predict.cfd[,"upr"]
 test.dataframe$Matches <- 0
 
 func <- function(df){
-  prediction <- df[1]
+  response <- df[2]
   lwr <- df[3]
   ipr <- df[4]
-  if (prediction> lwr & prediction < ipr){
+  if (response> lwr & response < ipr){
       df[5] <- 1
   }
   else{
@@ -297,7 +294,9 @@ matchcount <- apply( test.dataframe ,1, func)
 
 test.dataframe$Matches <- matchcount
 
-true.count <- sum(test.dataframe["Matches"])
+print(test.dataframe)
+
+true.count <- sum(test.dataframe$Matches)
 
 sprintf("Total observations correctly predicted: %s",true.count)
 ```
