@@ -1,0 +1,27 @@
+---
+title: "CS 422 Homework 3"
+author: "Xingli Li"
+date: "2022/2/22"
+output: html_document
+toc: yes
+toc_float: yes
+---
+
+## Homework 3
+
+set work space and install dependent package.
+
+```{r}
+
+setwd(getwd())
+
+
+```
+
+```{r}
+
+
+```
+
+
+### Part 2.1
