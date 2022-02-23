@@ -1,10 +1,7 @@
 ---
 title: "CS 422 Homework 3"
 author: "Xingli Li"
-date: "2022/2/22"
-output:
-  html_document: default
-  pdf_document: default
+output: html_notebook
 toc: yes
 toc_float: yes
 ---
@@ -13,13 +10,13 @@ toc_float: yes
 
 set work space and install dependent package.
 
-```{r include = FALSE}
+```{r}
 
 setwd(getwd())
 
 library(rpart)  #classification and regression trees
 library(rpart.plot)
-library(partykit) #treeplots
+#library(partykit) #treeplots
 ```
 
 Building Decision Tree on the Iris Dataset
@@ -48,7 +45,7 @@ model <- rpart(Species ~ ., data = df.train, method="class")
 # plot method of the partykit package.
 # plot(as.party(model))
 
-rules <- rpart.rules(model,cover = TRUE)
+rpart.rules(model,cover = TRUE)
 
 ## printcp() will tell you how much CP value is divided into each layer and what the average relative error is.
 printcp(model)
