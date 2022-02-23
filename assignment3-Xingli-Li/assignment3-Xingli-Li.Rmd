@@ -10,7 +10,6 @@ toc_float: yes
 ## Homework 3
 
 set work space and install dependent package.
-
 ```{r include = FALSE}
 
 setwd(getwd())
