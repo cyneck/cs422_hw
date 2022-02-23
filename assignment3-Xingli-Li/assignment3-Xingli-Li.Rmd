@@ -18,6 +18,7 @@ setwd(getwd())
 library(rpart)  #classification and regression trees
 library(rpart.plot)
 library(partykit) #treeplots
+
 ```
 
 Building Decision Tree on the Iris Dataset
@@ -35,40 +36,89 @@ df.train.y <- df.train[,5]
 
 ```{r }
 
-## xval: 10 fold cross validation
-## minsplit: the minimum number of branch nodes. If it is greater than or equal to 20, the node will continue to divide, otherwise it will stop.
-## minbucket：Minimum samples of leaf nodes. 
+## rpart.control对树进行一些设置  
+## xval是10折交叉验证  
+## minsplit是最小分支节点数，这里指大于等于20，那么该节点会继续分划下去，否则停止  
+## minbucket：叶子节点最小样本数  
+## maxdepth：树的深度  
+
+# ct <- rpart.control(xval=10, minsplit=20, cp=0.1)  
 
 model <- rpart(Species ~ ., data = df.train, method="class")
 
 #summary(model)
 
-# plot method of the partykit package.
-plot(as.party(model))
+## rpart包提供了复杂度损失修剪的修剪方法，printcp会告诉分裂到每一层，cp是多少，平均相对误差是多少，交叉验证的估计误差（“xerror”列），以及标准误差(“xstd”列)，平均相对误差=xerror±xstd 
+printcp(model)
 
+plot(as.party(model.pruned))
 rules <- rpart.rules(model,cover = TRUE)
 
-## printcp() will tell you how much CP value is divided into each layer and what the average relative error is.
-printcp(model)
-# cp: complexity parameter of the node.
-# nsplit: Number of tree splits.
-# rel error: Relative error = xerror ± xstd.
-# xerror: Estimation error of cross validation.
-# xstd: Standard deviation of cross validation process.
+# cp全称为complexity parameter，
+# 指某个点的成本复杂性参数，对每一步拆,模型的拟合优度必须提高的程度。
+# nsplit: 树分裂的次数
+# rel error: 表示相对误差xerror±xstd
+# xerror: 交叉验证的估计误差
+# xstd: 交叉验证过程的标准差
+
+# 树的规模和相对误差之间的关系
+plotcp(model)
 ```
 
 ```{r}
-# Drawing decision classification tree
+# 绘图决策分类树
 rpart.plot(model, extra=104, fallen.leaves=T, type=4,
            main="Iris Dataset Decision Tree") 
 
-## chose the value of CP with the smallest xerror.
+## 通过上面的分析来确定cp的值  
+## 选择具有最小xerror的cp的值
 cp <- model$cptable[which.min(model$cptable[,"xerror"]),"CP"]
                     
-## Pruning
+## 减枝操作
 model.pruned <- prune(model, cp= cp)  
 
-# Redrawn
+# 重新绘图
 rpart.plot(model.pruned, extra=104, fallen.leaves=T, type=4, 
            main="Iris Dataset Decision Tree")
 ```
+
+### Problem 1.1-(a)
+
+How many levels are there in the decision tree?
+
+        There are 3 levels in the decision tree.
+
+### Problem 1.1-(b)
+
+What is the default class label associated with each vertex?
+
+      Level 1, Vertex 1: Default class label is setosa.
+      Level 2, Vertex 2: Default class label is setosa.
+      Level 2, Vertex 3: Default class label is versicolor.
+      Level 3, Vertex 4: Default class label is versicolor.
+      Level 3, Vertex 5: Default class label is virginica.
+
+### Problem 1.1-(c)
+
+Starting from the root node, what is the name of the first attribute used for a decision, and what are the split points? Your answer should be of the form:
+
+Level N, split on attribute: \<attribute name>.
+
+Split points: \< X.X left subtree, \>= X.X right subtree ...
+
+    Level 1, split on attribute: Petal.Length. 
+             Split points: <2.5 left subtree,  >=2.5 right subtree
+    Level 2, split on attribute: Petal.Width. 
+             Split points: <1.8 left subtree,  >=1.8 right subtree
+
+### Problem 1.1-(d)
+
+Each vertex has three lines.
+
+（i） At each vertex, what do the three numbers in the middle line signify?
+
+    They present the proportion of the number of corresponding Iris species after each time split.
+
+（ii） At each vertex, what does the last line signify?
+
+    Total proportion of Iris species corresponding to the leaf vertx.
