@@ -2,7 +2,9 @@
 title: "CS 422 Homework 3"
 author: "Xingli Li"
 date: "2022/2/22"
-output: html_document
+output:
+  html_document: default
+  pdf_document: default
 toc: yes
 toc_float: yes
 ---
@@ -44,7 +46,7 @@ model <- rpart(Species ~ ., data = df.train, method="class")
 #summary(model)
 
 # plot method of the partykit package.
-plot(as.party(model))
+# plot(as.party(model))
 
 rules <- rpart.rules(model,cover = TRUE)
 
@@ -63,12 +65,11 @@ rpart.plot(model, extra=104, fallen.leaves=T, type=4,
            main="Iris Dataset Decision Tree") 
 
 ## chose the value of CP with the smallest xerror.
-cp <- model$cptable[which.min(model$cptable[,"xerror"]),"CP"]
+# cp <- model$cptable[which.min(model$cptable[,"xerror"]),"CP"]
                     
 ## Pruning
-model.pruned <- prune(model, cp= cp)  
+#model.pruned <- prune(model, cp= cp)  
 
 # Redrawn
-rpart.plot(model.pruned, extra=104, fallen.leaves=T, type=4, 
-           main="Iris Dataset Decision Tree")
+# rpart.plot(model.pruned, extra=104, fallen.leaves=T, type=4, main="Iris Dataset Decision Tree")
 ```
