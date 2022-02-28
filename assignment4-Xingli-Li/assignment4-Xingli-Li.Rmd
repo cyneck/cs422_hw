@@ -22,3 +22,72 @@ library(rpart)  #classification and regression trees
 library(rpart.plot)
 #library(partykit) #treeplots
 ```
+
+### Part 2.1-a
+```{}
+
+```
+### Part 2.1-b
+```{}
+
+```
+
+### Part 2.1-c-i
+```{}
+
+```
+
+### Part 2.1-c-ii
+```{}
+
+```
+
+### Part 2.1-c-iii
+```{}
+
+```
+
+### Part 2.1-c-iv
+```{}
+
+```
+
+### Part 2.1-d
+```{}
+
+```
+
+### Part 2.1-e-i
+```{}
+
+```
+
+### Part 2.1-e-ii
+```{}
+
+```
+
+### Part 2.1-e-iii-i
+```{}
+
+```
+
+### Part 2.1-e-iii-ii
+```{}
+
+```
+
+### Part 2.1-e-iii-iii
+```{}
+
+```
+
+### Part 2.1-e-iii-iv
+```{}
+
+```
+
+### Part 2.1-f
+```{}
+
+```
