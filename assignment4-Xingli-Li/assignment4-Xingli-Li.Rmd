@@ -1,0 +1,24 @@
+---
+title: "CS 422 Homework 4"
+author: "Xingli Li"
+output:
+  html_notebook:
+    toc: yes
+    toc_float: yes
+  html_document:
+    toc: yes
+    df_print: paged
+---
+
+## Homework 4
+
+set work space and install dependent package.
+
+```{r}
+
+setwd(getwd())
+
+library(rpart)  #classification and regression trees
+library(rpart.plot)
+#library(partykit) #treeplots
+```
