@@ -20,74 +20,219 @@ setwd(getwd())
 
 library(rpart)  #classification and regression trees
 library(rpart.plot)
-#library(partykit) #treeplots
 ```
 
 ### Part 2.1-a
-```{}
+
+```{r}
+
+df.test <- read.csv(file = "/media/eric/Data/IIT/CS422/cs422_hw/assignment4-Xingli-Li/adult-test.csv", encoding = "UTF-8")
+df.train <- read.csv(file = "/media/eric/Data/IIT/CS422/cs422_hw/assignment4-Xingli-Li/adult-train.csv", encoding = "UTF-8")
+
+NROW(df.test)
+NROW(df.train)
+typeof(df.test)
+col.names <- names(df.test)
+
+print(col.names)
+
+for (col in col.names) {
+  if (sum(df.test[col] == "?") > 0) {
+    # The column contain '?' in test data set.
+    print(paste("the column '", col, "' in test data"))
+  }
+  if (sum(df.train[col] == "?") > 0) {
+    # The column contain '?' in train data set.
+    print(paste("the column '", col, "' in train data"))
+    df.train[-which(df.train[col] == '?'),]
+  }
+}
+
+df.test.cleaned <- df.test[-which(df.test['workclass'] == '?'
+                                   |
+                                   df.test['occupation'] == '?'
+                                   |
+                                   df.test['native_country'] == '?'),]
+NROW(df.test.cleaned)
+
+df.train.cleaned <- df.train[-which(df.train['workclass'] == '?'
+                                   |
+                                   df.train['occupation'] == '?'
+                                   |
+                                   df.train['native_country'] == '?'),]
+NROW(df.train.cleaned)
+
+df.test.cleaned <- data.frame(df.test.cleaned[,1:14],
+                              income=ifelse(df.test.cleaned$income=="<=50K",0, 1))
+
+df.train.cleaned <- data.frame(df.train.cleaned[,1:14],
+                               income=ifelse(df.train.cleaned$income=="<=50K",0, 1))
 
 ```
-### Part 2.1-b
-```{}
 
+### Part 2.1-b-i
+
+```{r}
+
+
+my_tree <- rpart(income ~ ., data = df.train.cleaned, method="class")
+
+printcp(my_tree)
+summary(my_tree)
+
+plotcp(my_tree)
+# Drawing decision classification tree
+rpart.plot(my_tree, extra=104, fallen.leaves=T, type=4,
+           main="Decision Tree") 
+
+library(partykit) #treeplots
+# plot method of the partykit package.
+plot(as.party(my_tree))
 ```
+
+    "capital_gain education relationship"
+
+### Part 2.1-b-ii
+
+    The first split is done on "relationship" predictor.
+
+    the predicted class of the first node is "<=50k".
+
+    the distribution of observations at first node is:
+    observations: <=50K   >50K
+    class counts: 22653   7508
+    probabilities: 0.751  0.249
 
 ### Part 2.1-c-i
-```{}
 
+```{r}
+#install.package(caret)
+library(caret)
+
+X <- df.test.cleaned[,1:14]
+y <- df.test.cleaned$income
+
+# predict the test dataset
+y_hat <- predict(my_tree, newdata = X,type = "class")
+
+confuseMatrix <-table(y, y_hat)
+print(confuseMatrix)
+
+
+sprintf(paste("recall: ",round(recall(confuseMatrix), digit = 3)))
+
+
+print(paste("precision:",round(precision(confuseMatrix), digit = 3)))
+
+
+print(paste("F1 value:",round(F_meas(confuseMatrix), digit = 3)))
+
+
+print(paste("sensitivity:",round(sensitivity(confuseMatrix), digit = 3)))
+
+
+print(paste("specificity:",round(specificity(confuseMatrix), digit = 3)))
+
+
+balanced_accuracy = mean( c(sensitivity(confuseMatrix),specificity(confuseMatrix)))
+
+print(paste("balanced_accuracy:",round(balanced_accuracy, digit = 3) ))
 ```
 
 ### Part 2.1-c-ii
-```{}
 
+```{r}
+
+# Balanced error rate = 1.0 – balanced accuracy
+balanced_error_rate <- 1.0 - balanced_accuracy
+print(paste("balanced error rate:",round(balanced_error_rate,digits = 3)))
+
+# what?
 ```
 
 ### Part 2.1-c-iii
-```{}
 
+```{r}
+
+
+# what? sensitivity ,specificity
+
+# sensitivity: The true positive rate is the sensitivity
+
+# specificity: The false positive rate is 1-specificity
 ```
 
 ### Part 2.1-c-iv
-```{}
 
+```{r}
+pre <- predict(my_tree, newdata = X,type = "class")
+# 将预测概率prob和实际结果y放在一个数据框中
+data <- data.frame(prob=pre,obs=y)
+# 按预测概率从低到高排序
+data <- data[order(data$prob),]
+n <- nrow(data)
+tpr <- fpr <- rep(0,n)
+# 根据不同的临界值threshold来计算TPR和FPR，之后绘制成图
+for (i in 1:n) {
+    threshold <- data$prob[i]
+    tp <- sum(data$prob > threshold & data$obs == 1)
+    fp <- sum(data$prob > threshold & data$obs == 0)
+    tn <- sum(data$prob < threshold & data$obs == 0)
+    fn <- sum(data$prob < threshold & data$obs == 1)
+    tpr[i] <- tp/(tp+fn) # 真正率
+    fpr[i] <- fp/(tn+fp) # 假正率
+}
+plot(fpr,tpr,type='l')
+abline(a=0,b=1)
 ```
 
 ### Part 2.1-d
-```{}
 
+```{r}
+
+# 复杂度分析
 ```
 
 ### Part 2.1-e-i
-```{}
 
+```{r}
+set.seed(1122)
 ```
 
 ### Part 2.1-e-ii
-```{}
 
+```{r}
+
+sample()
 ```
 
 ### Part 2.1-e-iii-i
-```{}
 
+```{r}
+
+# Training and fitting, confusematrix
+
+#  balanced_accuracy
 ```
 
 ### Part 2.1-e-iii-ii
-```{}
 
+```{r}
+# balanced_error_rate
 ```
 
 ### Part 2.1-e-iii-iii
-```{}
-
+```{r}
+# sensitivity,Specificity
 ```
 
 ### Part 2.1-e-iii-iv
-```{}
-
+```{r}
+# ROC curve, what is the AUC?
 ```
 
 ### Part 2.1-f
-```{}
+```
+# compare and comment  in the balanced accuracy, sensitivity, specificity, positive predictive value and AUC.
 
 ```
