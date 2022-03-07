@@ -18,8 +18,15 @@ set work space and install dependent package.
 
 setwd(getwd())
 
+#install.packages(rpart)
 library(rpart)  #classification and regression trees
 library(rpart.plot)
+#install.packages(caret)
+library(caret)
+#install.packages(partykit)
+library(partykit) #treeplots
+#install.packages(ROCR)
+library(ROCR)
 ```
 
 ### Part 2.1-a
@@ -44,7 +51,6 @@ for (col in col.names) {
   if (sum(df.train[col] == "?") > 0) {
     # The column contain '?' in train data set.
     print(paste("the column '", col, "' in train data"))
-    df.train[-which(df.train[col] == '?'),]
   }
 }
 
@@ -53,20 +59,23 @@ df.test.cleaned <- df.test[-which(df.test['workclass'] == '?'
                                    df.test['occupation'] == '?'
                                    |
                                    df.test['native_country'] == '?'),]
-NROW(df.test.cleaned)
+print(paste("test data set total:",NROW(df.test.cleaned)))
 
 df.train.cleaned <- df.train[-which(df.train['workclass'] == '?'
                                    |
                                    df.train['occupation'] == '?'
                                    |
                                    df.train['native_country'] == '?'),]
-NROW(df.train.cleaned)
 
-df.test.cleaned <- data.frame(df.test.cleaned[,1:14],
-                              income=ifelse(df.test.cleaned$income=="<=50K",0, 1))
+print(paste("train data set total:", NROW(df.train.cleaned)))
 
-df.train.cleaned <- data.frame(df.train.cleaned[,1:14],
-                               income=ifelse(df.train.cleaned$income=="<=50K",0, 1))
+
+# string to number
+# df.test.cleaned <- data.frame(df.test.cleaned[,1:14],
+#                              income=ifelse(df.test.cleaned$income=="<=50K",0, 1))
+#
+# df.train.cleaned <- data.frame(df.train.cleaned[,1:14],
+#                               income=ifelse(df.train.cleaned$income=="<=50K",0, 1))
 
 ```
 
@@ -74,23 +83,24 @@ df.train.cleaned <- data.frame(df.train.cleaned[,1:14],
 
 ```{r}
 
-
 my_tree <- rpart(income ~ ., data = df.train.cleaned, method="class")
 
-printcp(my_tree)
 summary(my_tree)
 
 plotcp(my_tree)
+
+# plot method of the partykit package.
+plot(as.party(my_tree))
+
 # Drawing decision classification tree
 rpart.plot(my_tree, extra=104, fallen.leaves=T, type=4,
            main="Decision Tree") 
 
-library(partykit) #treeplots
-# plot method of the partykit package.
-plot(as.party(my_tree))
 ```
 
-    "capital_gain education relationship"
+    capital_gain;
+    education;
+    relationship
 
 ### Part 2.1-b-ii
 
@@ -106,17 +116,18 @@ plot(as.party(my_tree))
 ### Part 2.1-c-i
 
 ```{r}
-#install.package(caret)
-library(caret)
 
-X <- df.test.cleaned[,1:14]
-y <- df.test.cleaned$income
+X.test <- df.test.cleaned[,1:14]
+y.test <- df.test.cleaned$income
 
 # predict the test dataset
-y_hat <- predict(my_tree, newdata = X,type = "class")
+y_hat <- predict(my_tree, newdata = X.test,type = "class")
 
-confuseMatrix <-table(y, y_hat)
+confuseMatrix <-table(y_hat,y.test)
 print(confuseMatrix)
+
+# confusion matrix function
+confusionMatrix(y_hat, as.factor(y.test))
 
 
 sprintf(paste("recall: ",round(recall(confuseMatrix), digit = 3)))
@@ -126,12 +137,6 @@ print(paste("precision:",round(precision(confuseMatrix), digit = 3)))
 
 
 print(paste("F1 value:",round(F_meas(confuseMatrix), digit = 3)))
-
-
-print(paste("sensitivity:",round(sensitivity(confuseMatrix), digit = 3)))
-
-
-print(paste("specificity:",round(specificity(confuseMatrix), digit = 3)))
 
 
 balanced_accuracy = mean( c(sensitivity(confuseMatrix),specificity(confuseMatrix)))
@@ -146,93 +151,218 @@ print(paste("balanced_accuracy:",round(balanced_accuracy, digit = 3) ))
 # Balanced error rate = 1.0 – balanced accuracy
 balanced_error_rate <- 1.0 - balanced_accuracy
 print(paste("balanced error rate:",round(balanced_error_rate,digits = 3)))
-
-# what?
 ```
 
 ### Part 2.1-c-iii
 
 ```{r}
-
-
-# what? sensitivity ,specificity
+# sensitivity ,specificity
 
 # sensitivity: The true positive rate is the sensitivity
 
 # specificity: The false positive rate is 1-specificity
+
+print(paste("sensitivity:",round(sensitivity(confuseMatrix), digit = 3)))
+
+print(paste("specificity:",round(specificity(confuseMatrix), digit = 3)))
+
 ```
 
 ### Part 2.1-c-iv
 
 ```{r}
-pre <- predict(my_tree, newdata = X,type = "class")
-# 将预测概率prob和实际结果y放在一个数据框中
-data <- data.frame(prob=pre,obs=y)
-# 按预测概率从低到高排序
-data <- data[order(data$prob),]
-n <- nrow(data)
-tpr <- fpr <- rep(0,n)
-# 根据不同的临界值threshold来计算TPR和FPR，之后绘制成图
-for (i in 1:n) {
-    threshold <- data$prob[i]
-    tp <- sum(data$prob > threshold & data$obs == 1)
-    fp <- sum(data$prob > threshold & data$obs == 0)
-    tn <- sum(data$prob < threshold & data$obs == 0)
-    fn <- sum(data$prob < threshold & data$obs == 1)
-    tpr[i] <- tp/(tp+fn) # 真正率
-    fpr[i] <- fp/(tn+fp) # 假正率
-}
-plot(fpr,tpr,type='l')
-abline(a=0,b=1)
+pred.rocr <- predict(my_tree, newdata = X.test, type = "prob")[,2]
+
+f.pred <- prediction(pred.rocr, y.test)
+f.perf <- performance(f.pred, "tpr", "fpr")
+plot(f.perf, colorize=T, lwd=3)
+abline(0,1)
+```
+
+```{r}
+
+auc <- performance(f.pred, measure = "auc")
+
+print(paste("The AUC of the ROC curve is:",round(auc@y.values[[1]],digits = 3)))
 ```
 
 ### Part 2.1-d
 
 ```{r}
+## printcp() will tell you how much CP value is divided into each layer and what the average relative error is.
+printcp(my_tree)
 
-# 复杂度分析
+plotcp(my_tree)
+
+cp <- my_tree$cptable[which.min(my_tree$cptable[,"xerror"]), "CP"]
+
 ```
+
+```{r}
+
+# cp: complexity parameter of the node.
+# nsplit: Number of tree splits.
+# rel error: Relative error = xerror ± xstd.
+# xerror: Estimation error of cross validation.
+# xstd: Standard deviation of cross validation process.
+
+print(paste("The CP is complexity parameter of the node, the CP of the model",cp))
+```
+
+Pruning:
+
+```{r }
+
+model.pruned <- prune(my_tree, cp=cp)
+
+# Redrawn
+rpart.plot(model.pruned, extra=104, fallen.leaves=T, type=4, main="Decision Tree pruned")
+
+```
+
+```{r}
+
+pruned.pred <- predict(model.pruned, X.test, type="class")
+
+confusionMatrix(pruned.pred, as.factor(y.test))
+
+confusionMatrix(y_hat, as.factor(y.test))
+
+#compare_models(my_tree, model.pruned)
+```
+
+From comparing, the effect is not improved.
 
 ### Part 2.1-e-i
 
 ```{r}
-set.seed(1122)
+
+count.smaller <- sum(df.train.cleaned$income=="<=50K")
+count.bigger <- sum(df.train.cleaned$income==">50K")
+
+print("In the training dataset,")
+print(paste("th observations of the class “<=50K” are:",count.smaller))
+print(paste("th observations of the class “>50K” are:",count.bigger))
 ```
 
 ### Part 2.1-e-ii
 
 ```{r}
+set.seed(1122)
 
-sample()
+df.train.smaller <- df.train.cleaned[df.train.cleaned$income=="<=50K",]
+df.train.bigger <- df.train.cleaned[df.train.cleaned$income ==">50K",]
+
+new.df.train.smaller <- df.train.smaller[sample(nrow(df.train.smaller),
+                                               count.bigger,replace = FALSE),]
+
+new.df.train <- rbind(new.df.train.smaller, df.train.bigger)
+
 ```
 
 ### Part 2.1-e-iii-i
 
 ```{r}
 
-# Training and fitting, confusematrix
+# Training
+my_tree_new <- rpart(income ~ ., data = new.df.train, method="class")
 
-#  balanced_accuracy
+summary(my_tree_new)
+
+printcp(my_tree_new)
+
+plotcp(my_tree_new)
+
+```
+
+```{r}
+
+# predict the test dataset
+y_hat_new <- predict(my_tree_new, newdata = X.test,type = "class")
+
+# confusion matrix function
+confusMatrix_new <-confusionMatrix(y_hat_new, as.factor(y.test))
+print(confusMatrix_new)
+
+# Drawing decision classification tree
+rpart.plot(my_tree_new, extra=104, fallen.leaves=T, type=4, main="Decision Tree")
+
+```
+
+```{r}
+
+print(paste("Balanced Accuracy of the new model in the test data set is:",
+            round(confusMatrix_new$byClass["Balanced Accuracy"],digits = 3)))
 ```
 
 ### Part 2.1-e-iii-ii
 
 ```{r}
 # balanced_error_rate
+print(paste("Balanced error rate of the new model in the test data set is:",
+           round(1.0 - confusMatrix_new$byClass["Balanced Accuracy"],digits = 3)))
 ```
 
 ### Part 2.1-e-iii-iii
+
 ```{r}
 # sensitivity,Specificity
+
+print(paste("Sensitivity of the new model in the test data set is:",
+           round(confusMatrix_new$byClass["Sensitivity"],digits = 3)))
+
+print(paste("Specificity of the new model in the test data set is:",
+           round(confusMatrix_new$byClass["Specificity"],digits = 3)))
 ```
 
 ### Part 2.1-e-iii-iv
+
 ```{r}
 # ROC curve, what is the AUC?
+
+pred.rocr <- predict(my_tree_new, newdata = X.test, type = "prob")[,2]
+
+f.pred <- prediction(pred.rocr, y.test)
+f.perf <- performance(f.pred, "tpr", "fpr")
+plot(f.perf, colorize=T, lwd=3)
+abline(0,1)
+```
+
+```{r}
+
+auc_new <- performance(f.pred, measure = "auc")
+
+
+print(paste("The AUC of the ROC curve is:",round(auc_new@y.values[[1]],digits = 3)))
 ```
 
 ### Part 2.1-f
-```
-# compare and comment  in the balanced accuracy, sensitivity, specificity, positive predictive value and AUC.
 
+```{r}
+
+print(paste("The test data size of the class '<=50K' is:",NROW(df.test.cleaned[df.test.cleaned$income=="<=50K",])))
+print(paste("The test data size of the class '>50K' is:",NROW(df.test.cleaned[df.test.cleaned$income==">50K",])))
+
+
+confusionMatrix(y_hat, as.factor(y.test))
+
+confusionMatrix(y_hat_new, as.factor(y.test))
+
+print(paste("the auc of the before treatment is:",round(auc@y.values[[1]],digits = 3)))
+
+print(paste("the auc of the after treatment is:",round(auc_new@y.values[[1]],digits = 3)))
 ```
+
+Balanced Accuracy is increased,
+
+Sensitivity is decrease,
+
+Specificity is increased,
+
+Positive predictive value is increased,
+
+AUC is increased a little.
+
+Sensitivity is true positive rate, which means a model correctly predicts the proportion of positive samples.
+
+Because positive samples are too more than negitive samples , it was overestimated before treatment, current Sensitivity is reasonable value.
