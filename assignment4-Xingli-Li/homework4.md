@@ -77,8 +77,6 @@ IGain(a,a2) = 0.991-0.984= 0.007
 
 c. For a3 , which is a continuous attribute, compute the information gain for every possible split.
 
-
-
 | a3          | 1.0   | 3.0   | 4.0   | 5.0   | 5.0   | 6.0   | 7.0   | 7.0   |
 | ----------- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- |
 | class label | +     | -     | +     | -     | -     | +     | +     | -     |
@@ -183,12 +181,47 @@ $(\frac{2n}{3}* \frac{2}{3}+ \frac{n}{3} * \frac{1}{3})*\frac{1}{n} = 0.556$
 Error rate = 0.556
 ```
 
-
-
 ### Problem 1.3
 
 Multiclass classification 
 
 Using the confusion matrix from multiclass.Rmd notebook (from Lecture 7), create a binary-class confusion
-matrix using the “one-vs-many” strategy for each class. Then, for each class, compute the sensitivity, specificity
-and precision to two decimal places. Show all work, including the binary class confusion matrices.
+matrix using the “one-vs-many” strategy for each class. Then, for each class, compute the sensitivity, specificity and precision to two decimal places. Show all work, including the binary class confusion matrices.
+
+
+
+Prediction   setosa versicolor virginica
+  setosa         10          0         0
+  versicolor      0         10         1
+  virginica       0          0         9
+
+
+
+Confusion Matrix and Statistics:
+
+|                      | setosa | versicolor, virginica |
+| -------------------- | ------ | --------------------- |
+| setosa               | 10     | 0                     |
+| versicolor,virginica | 0      | 20                    |
+
+```
+
+```
+
+|                   | setosa，versicolor | virginica |
+| ----------------- | ----------------- | --------- |
+| setosa，versicolor | 20                | 1         |
+| virginica         | 0                 | 9         |
+
+```
+
+```
+
+|                  | versicolor | virginica，setosa |
+| ---------------- | ---------- | ---------------- |
+| versicolor       | 10         | 10               |
+| virginica，setosa | 0          | 10               |
+
+```
+
+```
