@@ -185,43 +185,41 @@ Error rate = 0.556
 
 Multiclass classification 
 
-Using the confusion matrix from multiclass.Rmd notebook (from Lecture 7), create a binary-class confusion
-matrix using the “one-vs-many” strategy for each class. Then, for each class, compute the sensitivity, specificity and precision to two decimal places. Show all work, including the binary class confusion matrices.
+Using the confusion matrix from multiclass.Rmd notebook (from Lecture 7), create a binary-class confusion matrix using the “one-vs-many” strategy for each class. Then, for each class, compute the sensitivity, specificity and precision to two decimal places. Show all work, including the binary class confusion matrices.
 
 
 
-Prediction   setosa versicolor virginica
-  setosa         10          0         0
-  versicolor      0         10         1
-  virginica       0          0         9
+Confusion Matrix and Statistics:   （row: prediction; column: actual ）
 
-
-
-Confusion Matrix and Statistics:
-
-|                      | setosa | versicolor, virginica |
-| -------------------- | ------ | --------------------- |
-| setosa               | 10     | 0                     |
-| versicolor,virginica | 0      | 20                    |
+|                          | setosa (-) | versicolor, virginica  (+) |
+| ------------------------ | ---------- | -------------------------- |
+| setosa (-)               | 10 (TN)    | 0 (FN)                     |
+| versicolor,virginica (+) | 0 (FP)     | 20 (TP)                    |
 
 ```
-
+sensitivity = TPR = TP/(TP+FN) = 1.0
+specificity = TNR = RN/(TN+FP) = 1.0
+precision = TP/(TP+FP) = 1.0
 ```
 
-|                   | setosa，versicolor | virginica |
-| ----------------- | ----------------- | --------- |
-| setosa，versicolor | 20                | 1         |
-| virginica         | 0                 | 9         |
+|                      | setosa，versicolor(+) | virginica(-) |
+| -------------------- | -------------------- | ------------ |
+| setosa，versicolor(+) | 20 (TP)              | 1 (FP)       |
+| virginica(-)         | 0 (FN)               | 9 (TN)       |
 
 ```
-
+sensitivity = 1.00
+specificity = 0.90
+precision =  20/21 = 0.95
 ```
 
-|                  | versicolor | virginica，setosa |
-| ---------------- | ---------- | ---------------- |
-| versicolor       | 10         | 10               |
-| virginica，setosa | 0          | 10               |
+|                     | versicolor(-) | virginica，setosa(+) |
+| ------------------- | ------------- | ------------------- |
+| versicolor(-)       | 10 (TN)       | 0 (FN)              |
+| virginica，setosa(+) | 1 (FP)        | 19 (TP)             |
 
 ```
-
+sensitivity = 0.95
+specificity = 1.00
+precision = 19/20 = 0.95
 ```
