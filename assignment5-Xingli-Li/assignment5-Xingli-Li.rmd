@@ -1,0 +1,49 @@
+---
+title: "CS 422 Homework 5"
+author: "Xingli Li"
+output:
+  html_notebook:
+    toc: yes
+    toc_float: yes
+  html_document:
+    toc: yes
+    df_print: paged
+---
+
+## Homework 5
+
+### Part 2
+
+set work space and install dependent package.
+```{r}
+setwd(getwd())
+
+library(rpart)  #classification and regression trees
+library(rpart.plot)
+#install.packages(caret)
+library(caret)
+#install.packages(partykit)
+library(partykit) #treeplots
+#install.packages(ROCR)
+library(ROCR)
+```
+
+### 2.1-(1)
+```{r}
+
+```
+
+### 2.1-(2)-(a)
+```{r}
+
+```
+
+### 2.1-(2)-(b)
+```{r}
+
+```
+
+### 2.1-(2)-(c)
+```{r}
+
+```
