@@ -127,7 +127,7 @@ confuseMatrix <-table(y_hat,y.test)
 print(confuseMatrix)
 
 # confusion matrix function
-confusionMatrix(y_hat, as.factor(y.test))
+confx <-confusionMatrix(y_hat, as.factor(y.test))
 
 
 sprintf(paste("recall: ",round(recall(confuseMatrix), digit = 3)))

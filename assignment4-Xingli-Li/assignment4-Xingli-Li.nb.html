@@ -2589,7 +2589,9 @@ window.initializeCodeFolding = function(show) {
     showCodeButton.append(showCodeText);
     showCodeButton
         .attr('data-toggle', 'collapse')
+        .attr('data-bs-toggle', 'collapse') // BS5
         .attr('data-target', '#' + id)
+        .attr('data-bs-target', '#' + id)   // BS5
         .attr('aria-expanded', showThis)
         .attr('aria-controls', id);
 
@@ -2679,6 +2681,7 @@ if (window.hljs) {
 
 
 
+
 <style type="text/css">
 #rmd-source-code {
   display: none;
@@ -2709,6 +2712,9 @@ button.code-folding-btn:focus {
 }
 summary {
   display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
 }
 pre code {
   padding: 0;
@@ -2891,7 +2897,7 @@ div.tocify {
 <div id="header">
 
 <div class="btn-group pull-right float-right">
-<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
 <ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
 <li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
 <li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
@@ -2961,9 +2967,9 @@ NROW(df.test)</code></pre>
 
 print(col.names)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiIFsxXSBcImFnZVwiICAgICAgICAgICAgXCJ3b3JrY2xhc3NcIiAgICAgIFwiZm5sd2d0XCIgICAgICAgICBcImVkdWNhdGlvblwiICAgICAgXCJlZHVjYXRpb25fbnVtXCIgIFwibWFyaXRhbF9zdGF0dXNcIiBcIm9jY3VwYXRpb25cIiAgICAgXCJyZWxhdGlvbnNoaXBcIiAgIFwicmFjZVwiICAgICAgICAgICBcInNleFwiICAgICAgICAgICAgXCJjYXBpdGFsX2dhaW5cIiAgXG5bMTJdIFwiY2FwaXRhbF9sb3NzXCIgICBcImhvdXJzX3Blcl93ZWVrXCIgXCJuYXRpdmVfY291bnRyeVwiIFwiaW5jb21lXCIgICAgICAgIFxuIn0= -->
-<pre><code> [1] &quot;age&quot;            &quot;workclass&quot;      &quot;fnlwgt&quot;         &quot;education&quot;      &quot;education_num&quot;  &quot;marital_status&quot; &quot;occupation&quot;     &quot;relationship&quot;   &quot;race&quot;           &quot;sex&quot;            &quot;capital_gain&quot;  
-[12] &quot;capital_loss&quot;   &quot;hours_per_week&quot; &quot;native_country&quot; &quot;income&quot;        </code></pre>
+<!-- rnb-output-begin eyJkYXRhIjoiIFsxXSBcImFnZVwiICAgICAgICAgICAgXCJ3b3JrY2xhc3NcIiAgICAgIFwiZm5sd2d0XCIgICAgICAgICBcImVkdWNhdGlvblwiICAgICAgXCJlZHVjYXRpb25fbnVtXCIgIFwibWFyaXRhbF9zdGF0dXNcIiBcIm9jY3VwYXRpb25cIiAgICAgXCJyZWxhdGlvbnNoaXBcIiAgIFwicmFjZVwiICAgICAgICAgIFxuWzEwXSBcInNleFwiICAgICAgICAgICAgXCJjYXBpdGFsX2dhaW5cIiAgIFwiY2FwaXRhbF9sb3NzXCIgICBcImhvdXJzX3Blcl93ZWVrXCIgXCJuYXRpdmVfY291bnRyeVwiIFwiaW5jb21lXCIgICAgICAgIFxuIn0= -->
+<pre><code> [1] &quot;age&quot;            &quot;workclass&quot;      &quot;fnlwgt&quot;         &quot;education&quot;      &quot;education_num&quot;  &quot;marital_status&quot; &quot;occupation&quot;     &quot;relationship&quot;   &quot;race&quot;          
+[10] &quot;sex&quot;            &quot;capital_gain&quot;   &quot;capital_loss&quot;   &quot;hours_per_week&quot; &quot;native_country&quot; &quot;income&quot;        </code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZm9yIChjb2wgaW4gY29sLm5hbWVzKSB7XG4gIGlmIChzdW0oZGYudGVzdFtjb2xdID09IFwiP1wiKSA+IDApIHtcbiAgICAjIFRoZSBjb2x1bW4gY29udGFpbiAnPycgaW4gdGVzdCBkYXRhIHNldC5cbiAgICBwcmludChwYXN0ZShcInRoZSBjb2x1bW4gJ1wiLCBjb2wsIFwiJyBpbiB0ZXN0IGRhdGFcIikpXG4gIH1cbiAgaWYgKHN1bShkZi50cmFpbltjb2xdID09IFwiP1wiKSA+IDApIHtcbiAgICAjIFRoZSBjb2x1bW4gY29udGFpbiAnPycgaW4gdHJhaW4gZGF0YSBzZXQuXG4gICAgcHJpbnQocGFzdGUoXCJ0aGUgY29sdW1uICdcIiwgY29sLCBcIicgaW4gdHJhaW4gZGF0YVwiKSlcbiAgfVxufVxuYGBgIn0= -->
 <pre class="r"><code>for (col in col.names) {
@@ -3030,32 +3036,32 @@ my_tree &lt;- rpart(income ~ ., data = df.train.cleaned, method=&quot;class&quot
 
 summary(my_tree)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiQ2FsbDpcbnJwYXJ0KGZvcm11bGEgPSBpbmNvbWUgfiAuLCBkYXRhID0gZGYudHJhaW4uY2xlYW5lZCwgbWV0aG9kID0gXCJjbGFzc1wiKVxuICBuPSAzMDE2MSBcblxuICAgICAgICBDUCBuc3BsaXQgcmVsIGVycm9yICB4ZXJyb3IgICAgICB4c3RkXG4xIDAuMTI5OTk1ICAgICAgMCAgIDEuMDAwMDAgMS4wMDAwMCAwLjAxMDAwMThcbjIgMC4wNjQxOTggICAgICAyICAgMC43NDAwMSAwLjc0MDAxIDAuMDA4OTY3MFxuMyAwLjAzNzI5NCAgICAgIDMgICAwLjY3NTgxIDAuNjc1ODEgMC4wMDg2NTI3XG40IDAuMDEwMDAwICAgICAgNCAgIDAuNjM4NTIgMC42Mzg1MiAwLjAwODQ1NzRcblxuVmFyaWFibGUgaW1wb3J0YW5jZVxuICByZWxhdGlvbnNoaXAgbWFyaXRhbF9zdGF0dXMgICBjYXBpdGFsX2dhaW4gICAgICBlZHVjYXRpb24gIGVkdWNhdGlvbl9udW0gICAgICAgICAgICBzZXggICAgIG9jY3VwYXRpb24gICAgICAgICAgICBhZ2UgaG91cnNfcGVyX3dlZWsgXG4gICAgICAgICAgICAyNCAgICAgICAgICAgICAyMyAgICAgICAgICAgICAxMCAgICAgICAgICAgICAgOSAgICAgICAgICAgICAgOSAgICAgICAgICAgICAgOCAgICAgICAgICAgICAgNyAgICAgICAgICAgICAgNSAgICAgICAgICAgICAgMyBcblxuTm9kZSBudW1iZXIgMTogMzAxNjEgb2JzZXJ2YXRpb25zLCAgICBjb21wbGV4aXR5IHBhcmFtPTAuMTI5OTlcbiAgcHJlZGljdGVkIGNsYXNzPTw9NTBLICBleHBlY3RlZCBsb3NzPTAuMjQ4OTMgIFAobm9kZSkgPTFcbiAgICBjbGFzcyBjb3VudHM6IDIyNjUzICA3NTA4XG4gICBwcm9iYWJpbGl0aWVzOiAwLjc1MSAwLjI0OSBcbiAgbGVmdCBzb249MiAoMTYyOTIgb2JzKSByaWdodCBzb249MyAoMTM4Njkgb2JzKVxuICBQcmltYXJ5IHNwbGl0czpcbiAgICAgIHJlbGF0aW9uc2hpcCAgIHNwbGl0cyBhcyAgUkxMTExSLCBpbXByb3ZlPTIyNzcuMiwgKDAgbWlzc2luZylcbiAgICAgIG1hcml0YWxfc3RhdHVzIHNwbGl0cyBhcyAgTFJSTExMTCwgaW1wcm92ZT0yMjQ0LjQsICgwIG1pc3NpbmcpXG4gICAgICBjYXBpdGFsX2dhaW4gICA8IDUxMTkgICB0byB0aGUgbGVmdCwgIGltcHJvdmU9MTU0MC44LCAoMCBtaXNzaW5nKVxuICAgICAgZWR1Y2F0aW9uICAgICAgc3BsaXRzIGFzICBMTExMTExMTExSUkxSTFJMLCBpbXByb3ZlPTExOTMuOCwgKDAgbWlzc2luZylcbiAgICAgIGVkdWNhdGlvbl9udW0gIDwgMTIuNSAgIHRvIHRoZSBsZWZ0LCAgaW1wcm92ZT0xMTkzLjgsICgwIG1pc3NpbmcpXG4gIFN1cnJvZ2F0ZSBzcGxpdHM6XG4gICAgICBtYXJpdGFsX3N0YXR1cyBzcGxpdHMgYXMgIExSUkxMTEwsIGFncmVlPTAuOTkzLCBhZGo9MC45ODQsICgwIHNwbGl0KVxuICAgICAgc2V4ICAgICAgICAgICAgc3BsaXRzIGFzICBMUiwgYWdyZWU9MC42OTEsIGFkaj0wLjMyOCwgKDAgc3BsaXQpXG4gICAgICBhZ2UgICAgICAgICAgICA8IDMzLjUgICB0byB0aGUgbGVmdCwgIGFncmVlPTAuNjQ1LCBhZGo9MC4yMjksICgwIHNwbGl0KVxuICAgICAgb2NjdXBhdGlvbiAgICAgc3BsaXRzIGFzICBMTFJSUkxMTExSUkxMUiwgYWdyZWU9MC42MjAsIGFkaj0wLjE3NSwgKDAgc3BsaXQpXG4gICAgICBob3Vyc19wZXJfd2VlayA8IDQzLjUgICB0byB0aGUgbGVmdCwgIGFncmVlPTAuNjA0LCBhZGo9MC4xMzgsICgwIHNwbGl0KVxuXG5Ob2RlIG51bWJlciAyOiAxNjI5MiBvYnNlcnZhdGlvbnMsICAgIGNvbXBsZXhpdHkgcGFyYW09MC4wMzcyOTRcbiAgcHJlZGljdGVkIGNsYXNzPTw9NTBLICBleHBlY3RlZCBsb3NzPTAuMDY5NjY2ICBQKG5vZGUpID0wLjU0MDE3XG4gICAgY2xhc3MgY291bnRzOiAxNTE1NyAgMTEzNVxuICAgcHJvYmFiaWxpdGllczogMC45MzAgMC4wNzAgXG4gIGxlZnQgc29uPTQgKDE1OTkyIG9icykgcmlnaHQgc29uPTUgKDMwMCBvYnMpXG4gIFByaW1hcnkgc3BsaXRzOlxuICAgICAgY2FwaXRhbF9nYWluICAgPCA3MDczLjUgdG8gdGhlIGxlZnQsICBpbXByb3ZlPTQ5MS44MiwgKDAgbWlzc2luZylcbiAgICAgIGVkdWNhdGlvbiAgICAgIHNwbGl0cyBhcyAgTExMTExMTExMTFJMUkxSTCwgaW1wcm92ZT0xNDMuMDAsICgwIG1pc3NpbmcpXG4gICAgICBlZHVjYXRpb25fbnVtICA8IDEzLjUgICB0byB0aGUgbGVmdCwgIGltcHJvdmU9MTQzLjAwLCAoMCBtaXNzaW5nKVxuICAgICAgb2NjdXBhdGlvbiAgICAgc3BsaXRzIGFzICBMTExSTExMTExSUkxMTCwgaW1wcm92ZT0xMTcuMDIsICgwIG1pc3NpbmcpXG4gICAgICBob3Vyc19wZXJfd2VlayA8IDQyLjUgICB0byB0aGUgbGVmdCwgIGltcHJvdmU9MTA3Ljk5LCAoMCBtaXNzaW5nKVxuXG5Ob2RlIG51bWJlciAzOiAxMzg2OSBvYnNlcnZhdGlvbnMsICAgIGNvbXBsZXhpdHkgcGFyYW09MC4xMjk5OVxuICBwcmVkaWN0ZWQgY2xhc3M9PD01MEsgIGV4cGVjdGVkIGxvc3M9MC40NTk1MSAgUChub2RlKSA9MC40NTk4M1xuICAgIGNsYXNzIGNvdW50czogIDc0OTYgIDYzNzNcbiAgIHByb2JhYmlsaXRpZXM6IDAuNTQwIDAuNDYwIFxuICBsZWZ0IHNvbj02ICg5NzE5IG9icykgcmlnaHQgc29uPTcgKDQxNTAgb2JzKVxuICBQcmltYXJ5IHNwbGl0czpcbiAgICAgIGVkdWNhdGlvbiAgICAgc3BsaXRzIGFzICBMTExMTExMTExSUkxSTFJMLCBpbXByb3ZlPTkwMC4wNiwgKDAgbWlzc2luZylcbiAgICAgIGVkdWNhdGlvbl9udW0gPCAxMi41ICAgdG8gdGhlIGxlZnQsICBpbXByb3ZlPTkwMC4wNiwgKDAgbWlzc2luZylcbiAgICAgIG9jY3VwYXRpb24gICAgc3BsaXRzIGFzICBMUkxSTExMTExSUlJSTCwgaW1wcm92ZT04NDEuNDAsICgwIG1pc3NpbmcpXG4gICAgICBjYXBpdGFsX2dhaW4gIDwgNTA5NS41IHRvIHRoZSBsZWZ0LCAgaW1wcm92ZT02OTguNjMsICgwIG1pc3NpbmcpXG4gICAgICBjYXBpdGFsX2xvc3MgIDwgMTc4Mi41IHRvIHRoZSBsZWZ0LCAgaW1wcm92ZT0yNDAuNjksICgwIG1pc3NpbmcpXG4gIFN1cnJvZ2F0ZSBzcGxpdHM6XG4gICAgICBlZHVjYXRpb25fbnVtICA8IDEyLjUgICB0byB0aGUgbGVmdCwgIGFncmVlPTEuMDAwLCBhZGo9MS4wMDAsICgwIHNwbGl0KVxuICAgICAgb2NjdXBhdGlvbiAgICAgc3BsaXRzIGFzICBMTExSTExMTExSTExMTCwgYWdyZWU9MC43OTIsIGFkaj0wLjMwNiwgKDAgc3BsaXQpXG4gICAgICBjYXBpdGFsX2dhaW4gICA8IDc0OTMgICB0byB0aGUgbGVmdCwgIGFncmVlPTAuNzE3LCBhZGo9MC4wNTQsICgwIHNwbGl0KVxuICAgICAgbmF0aXZlX2NvdW50cnkgc3BsaXRzIGFzICBMTFJMTExMTFJSTExMTFJMTFJSTExMUkxMTExMUkxMTExSUkxMTExMLCBhZ3JlZT0wLjcwOSwgYWRqPTAuMDI3LCAoMCBzcGxpdClcbiAgICAgIGNhcGl0YWxfbG9zcyAgIDwgMTg5NC41IHRvIHRoZSBsZWZ0LCAgYWdyZWU9MC43MDYsIGFkaj0wLjAxOCwgKDAgc3BsaXQpXG5cbk5vZGUgbnVtYmVyIDQ6IDE1OTkyIG9ic2VydmF0aW9uc1xuICBwcmVkaWN0ZWQgY2xhc3M9PD01MEsgIGV4cGVjdGVkIGxvc3M9MC4wNTI4MzkgIFAobm9kZSkgPTAuNTMwMjJcbiAgICBjbGFzcyBjb3VudHM6IDE1MTQ3ICAgODQ1XG4gICBwcm9iYWJpbGl0aWVzOiAwLjk0NyAwLjA1MyBcblxuTm9kZSBudW1iZXIgNTogMzAwIG9ic2VydmF0aW9uc1xuICBwcmVkaWN0ZWQgY2xhc3M9PjUwSyAgIGV4cGVjdGVkIGxvc3M9MC4wMzMzMzMgIFAobm9kZSkgPTAuMDA5OTQ2NlxuICAgIGNsYXNzIGNvdW50czogICAgMTAgICAyOTBcbiAgIHByb2JhYmlsaXRpZXM6IDAuMDMzIDAuOTY3IFxuXG5Ob2RlIG51bWJlciA2OiA5NzE5IG9ic2VydmF0aW9ucywgICAgY29tcGxleGl0eSBwYXJhbT0wLjA2NDE5OFxuICBwcmVkaWN0ZWQgY2xhc3M9PD01MEsgIGV4cGVjdGVkIGxvc3M9MC4zNDE4ICBQKG5vZGUpID0wLjMyMjI0XG4gICAgY2xhc3MgY291bnRzOiAgNjM5NyAgMzMyMlxuICAgcHJvYmFiaWxpdGllczogMC42NTggMC4zNDIgXG4gIGxlZnQgc29uPTEyICg5MjE5IG9icykgcmlnaHQgc29uPTEzICg1MDAgb2JzKVxuICBQcmltYXJ5IHNwbGl0czpcbiAgICAgIGNhcGl0YWxfZ2FpbiAgPCA1MDk1LjUgdG8gdGhlIGxlZnQsICBpbXByb3ZlPTQzMi4wOCwgKDAgbWlzc2luZylcbiAgICAgIG9jY3VwYXRpb24gICAgc3BsaXRzIGFzICBSTExSTExMTExSUlJSTCwgaW1wcm92ZT0yMzAuODMsICgwIG1pc3NpbmcpXG4gICAgICBlZHVjYXRpb24gICAgIHNwbGl0cyBhcyAgTExMTExMTFJSLS1SLUwtUiwgaW1wcm92ZT0xNjQuMzYsICgwIG1pc3NpbmcpXG4gICAgICBlZHVjYXRpb25fbnVtIDwgOC41ICAgIHRvIHRoZSBsZWZ0LCAgaW1wcm92ZT0xNjQuMzYsICgwIG1pc3NpbmcpXG4gICAgICBhZ2UgICAgICAgICAgIDwgMzUuNSAgIHRvIHRoZSBsZWZ0LCAgaW1wcm92ZT0xMzEuMTgsICgwIG1pc3NpbmcpXG5cbk5vZGUgbnVtYmVyIDc6IDQxNTAgb2JzZXJ2YXRpb25zXG4gIHByZWRpY3RlZCBjbGFzcz0+NTBLICAgZXhwZWN0ZWQgbG9zcz0wLjI2NDgyICBQKG5vZGUpID0wLjEzNzU5XG4gICAgY2xhc3MgY291bnRzOiAgMTA5OSAgMzA1MVxuICAgcHJvYmFiaWxpdGllczogMC4yNjUgMC43MzUgXG5cbk5vZGUgbnVtYmVyIDEyOiA5MjE5IG9ic2VydmF0aW9uc1xuICBwcmVkaWN0ZWQgY2xhc3M9PD01MEsgIGV4cGVjdGVkIGxvc3M9MC4zMDcwOCAgUChub2RlKSA9MC4zMDU2NlxuICAgIGNsYXNzIGNvdW50czogIDYzODggIDI4MzFcbiAgIHByb2JhYmlsaXRpZXM6IDAuNjkzIDAuMzA3IFxuXG5Ob2RlIG51bWJlciAxMzogNTAwIG9ic2VydmF0aW9uc1xuICBwcmVkaWN0ZWQgY2xhc3M9PjUwSyAgIGV4cGVjdGVkIGxvc3M9MC4wMTggIFAobm9kZSkgPTAuMDE2NTc4XG4gICAgY2xhc3MgY291bnRzOiAgICAgOSAgIDQ5MVxuICAgcHJvYmFiaWxpdGllczogMC4wMTggMC45ODIgXG4ifQ== -->
+<!-- rnb-output-begin eyJkYXRhIjoiQ2FsbDpcbnJwYXJ0KGZvcm11bGEgPSBpbmNvbWUgfiAuLCBkYXRhID0gZGYudHJhaW4uY2xlYW5lZCwgbWV0aG9kID0gXCJjbGFzc1wiKVxuICBuPSAzMDE2MSBcblxuICAgICAgICAgIENQIG5zcGxpdCByZWwgZXJyb3IgICAgeGVycm9yICAgICAgICB4c3RkXG4xIDAuMTI5OTk0NjcgICAgICAwIDEuMDAwMDAwMCAxLjAwMDAwMDAgMC4wMTAwMDE3OTNcbjIgMC4wNjQxOTgxOSAgICAgIDIgMC43NDAwMTA3IDAuNzQwMDEwNyAwLjAwODk2Njk2OVxuMyAwLjAzNzI5MzU1ICAgICAgMyAwLjY3NTgxMjUgMC42NzU4MTI1IDAuMDA4NjUyNzE2XG40IDAuMDEwMDAwMDAgICAgICA0IDAuNjM4NTE4OSAwLjYzODUxODkgMC4wMDg0NTczOTJcblxuVmFyaWFibGUgaW1wb3J0YW5jZVxuICByZWxhdGlvbnNoaXAgbWFyaXRhbF9zdGF0dXMgICBjYXBpdGFsX2dhaW4gICAgICBlZHVjYXRpb24gIGVkdWNhdGlvbl9udW0gICAgICAgICAgICBzZXggICAgIG9jY3VwYXRpb24gICAgICAgICAgICBhZ2UgaG91cnNfcGVyX3dlZWsgXG4gICAgICAgICAgICAyNCAgICAgICAgICAgICAyMyAgICAgICAgICAgICAxMCAgICAgICAgICAgICAgOSAgICAgICAgICAgICAgOSAgICAgICAgICAgICAgOCAgICAgICAgICAgICAgNyAgICAgICAgICAgICAgNSAgICAgICAgICAgICAgMyBcblxuTm9kZSBudW1iZXIgMTogMzAxNjEgb2JzZXJ2YXRpb25zLCAgICBjb21wbGV4aXR5IHBhcmFtPTAuMTI5OTk0N1xuICBwcmVkaWN0ZWQgY2xhc3M9PD01MEsgIGV4cGVjdGVkIGxvc3M9MC4yNDg5MzA3ICBQKG5vZGUpID0xXG4gICAgY2xhc3MgY291bnRzOiAyMjY1MyAgNzUwOFxuICAgcHJvYmFiaWxpdGllczogMC43NTEgMC4yNDkgXG4gIGxlZnQgc29uPTIgKDE2MjkyIG9icykgcmlnaHQgc29uPTMgKDEzODY5IG9icylcbiAgUHJpbWFyeSBzcGxpdHM6XG4gICAgICByZWxhdGlvbnNoaXAgICBzcGxpdHMgYXMgIFJMTExMUiwgaW1wcm92ZT0yMjc3LjE2NCwgKDAgbWlzc2luZylcbiAgICAgIG1hcml0YWxfc3RhdHVzIHNwbGl0cyBhcyAgTFJSTExMTCwgaW1wcm92ZT0yMjQ0LjM5OCwgKDAgbWlzc2luZylcbiAgICAgIGNhcGl0YWxfZ2FpbiAgIDwgNTExOSAgIHRvIHRoZSBsZWZ0LCAgaW1wcm92ZT0xNTQwLjgyNSwgKDAgbWlzc2luZylcbiAgICAgIGVkdWNhdGlvbiAgICAgIHNwbGl0cyBhcyAgTExMTExMTExMUlJMUkxSTCwgaW1wcm92ZT0xMTkzLjc2OSwgKDAgbWlzc2luZylcbiAgICAgIGVkdWNhdGlvbl9udW0gIDwgMTIuNSAgIHRvIHRoZSBsZWZ0LCAgaW1wcm92ZT0xMTkzLjc2OSwgKDAgbWlzc2luZylcbiAgU3Vycm9nYXRlIHNwbGl0czpcbiAgICAgIG1hcml0YWxfc3RhdHVzIHNwbGl0cyBhcyAgTFJSTExMTCwgYWdyZWU9MC45OTMsIGFkaj0wLjk4NCwgKDAgc3BsaXQpXG4gICAgICBzZXggICAgICAgICAgICBzcGxpdHMgYXMgIExSLCBhZ3JlZT0wLjY5MSwgYWRqPTAuMzI4LCAoMCBzcGxpdClcbiAgICAgIGFnZSAgICAgICAgICAgIDwgMzMuNSAgIHRvIHRoZSBsZWZ0LCAgYWdyZWU9MC42NDUsIGFkaj0wLjIyOSwgKDAgc3BsaXQpXG4gICAgICBvY2N1cGF0aW9uICAgICBzcGxpdHMgYXMgIExMUlJSTExMTFJSTExSLCBhZ3JlZT0wLjYyMCwgYWRqPTAuMTc1LCAoMCBzcGxpdClcbiAgICAgIGhvdXJzX3Blcl93ZWVrIDwgNDMuNSAgIHRvIHRoZSBsZWZ0LCAgYWdyZWU9MC42MDQsIGFkaj0wLjEzOCwgKDAgc3BsaXQpXG5cbk5vZGUgbnVtYmVyIDI6IDE2MjkyIG9ic2VydmF0aW9ucywgICAgY29tcGxleGl0eSBwYXJhbT0wLjAzNzI5MzU1XG4gIHByZWRpY3RlZCBjbGFzcz08PTUwSyAgZXhwZWN0ZWQgbG9zcz0wLjA2OTY2NjA5ICBQKG5vZGUpID0wLjU0MDE2NzhcbiAgICBjbGFzcyBjb3VudHM6IDE1MTU3ICAxMTM1XG4gICBwcm9iYWJpbGl0aWVzOiAwLjkzMCAwLjA3MCBcbiAgbGVmdCBzb249NCAoMTU5OTIgb2JzKSByaWdodCBzb249NSAoMzAwIG9icylcbiAgUHJpbWFyeSBzcGxpdHM6XG4gICAgICBjYXBpdGFsX2dhaW4gICA8IDcwNzMuNSB0byB0aGUgbGVmdCwgIGltcHJvdmU9NDkxLjgyMjQsICgwIG1pc3NpbmcpXG4gICAgICBlZHVjYXRpb24gICAgICBzcGxpdHMgYXMgIExMTExMTExMTExSTFJMUkwsIGltcHJvdmU9MTQyLjk5NjEsICgwIG1pc3NpbmcpXG4gICAgICBlZHVjYXRpb25fbnVtICA8IDEzLjUgICB0byB0aGUgbGVmdCwgIGltcHJvdmU9MTQyLjk5NjEsICgwIG1pc3NpbmcpXG4gICAgICBvY2N1cGF0aW9uICAgICBzcGxpdHMgYXMgIExMTFJMTExMTFJSTExMLCBpbXByb3ZlPTExNy4wMTUwLCAoMCBtaXNzaW5nKVxuICAgICAgaG91cnNfcGVyX3dlZWsgPCA0Mi41ICAgdG8gdGhlIGxlZnQsICBpbXByb3ZlPTEwNy45OTQxLCAoMCBtaXNzaW5nKVxuXG5Ob2RlIG51bWJlciAzOiAxMzg2OSBvYnNlcnZhdGlvbnMsICAgIGNvbXBsZXhpdHkgcGFyYW09MC4xMjk5OTQ3XG4gIHByZWRpY3RlZCBjbGFzcz08PTUwSyAgZXhwZWN0ZWQgbG9zcz0wLjQ1OTUxNCAgUChub2RlKSA9MC40NTk4MzIyXG4gICAgY2xhc3MgY291bnRzOiAgNzQ5NiAgNjM3M1xuICAgcHJvYmFiaWxpdGllczogMC41NDAgMC40NjAgXG4gIGxlZnQgc29uPTYgKDk3MTkgb2JzKSByaWdodCBzb249NyAoNDE1MCBvYnMpXG4gIFByaW1hcnkgc3BsaXRzOlxuICAgICAgZWR1Y2F0aW9uICAgICBzcGxpdHMgYXMgIExMTExMTExMTFJSTFJMUkwsIGltcHJvdmU9OTAwLjA1NzUsICgwIG1pc3NpbmcpXG4gICAgICBlZHVjYXRpb25fbnVtIDwgMTIuNSAgIHRvIHRoZSBsZWZ0LCAgaW1wcm92ZT05MDAuMDU3NSwgKDAgbWlzc2luZylcbiAgICAgIG9jY3VwYXRpb24gICAgc3BsaXRzIGFzICBMUkxSTExMTExSUlJSTCwgaW1wcm92ZT04NDEuMzk5OSwgKDAgbWlzc2luZylcbiAgICAgIGNhcGl0YWxfZ2FpbiAgPCA1MDk1LjUgdG8gdGhlIGxlZnQsICBpbXByb3ZlPTY5OC42MzMzLCAoMCBtaXNzaW5nKVxuICAgICAgY2FwaXRhbF9sb3NzICA8IDE3ODIuNSB0byB0aGUgbGVmdCwgIGltcHJvdmU9MjQwLjY5MjgsICgwIG1pc3NpbmcpXG4gIFN1cnJvZ2F0ZSBzcGxpdHM6XG4gICAgICBlZHVjYXRpb25fbnVtICA8IDEyLjUgICB0byB0aGUgbGVmdCwgIGFncmVlPTEuMDAwLCBhZGo9MS4wMDAsICgwIHNwbGl0KVxuICAgICAgb2NjdXBhdGlvbiAgICAgc3BsaXRzIGFzICBMTExSTExMTExSTExMTCwgYWdyZWU9MC43OTIsIGFkaj0wLjMwNiwgKDAgc3BsaXQpXG4gICAgICBjYXBpdGFsX2dhaW4gICA8IDc0OTMgICB0byB0aGUgbGVmdCwgIGFncmVlPTAuNzE3LCBhZGo9MC4wNTQsICgwIHNwbGl0KVxuICAgICAgbmF0aXZlX2NvdW50cnkgc3BsaXRzIGFzICBMTFJMTExMTFJSTExMTFJMTFJSTExMUkxMTExMUkxMTExSUkxMTExMLCBhZ3JlZT0wLjcwOSwgYWRqPTAuMDI3LCAoMCBzcGxpdClcbiAgICAgIGNhcGl0YWxfbG9zcyAgIDwgMTg5NC41IHRvIHRoZSBsZWZ0LCAgYWdyZWU9MC43MDYsIGFkaj0wLjAxOCwgKDAgc3BsaXQpXG5cbk5vZGUgbnVtYmVyIDQ6IDE1OTkyIG9ic2VydmF0aW9uc1xuICBwcmVkaWN0ZWQgY2xhc3M9PD01MEsgIGV4cGVjdGVkIGxvc3M9MC4wNTI4Mzg5MiAgUChub2RlKSA9MC41MzAyMjExXG4gICAgY2xhc3MgY291bnRzOiAxNTE0NyAgIDg0NVxuICAgcHJvYmFiaWxpdGllczogMC45NDcgMC4wNTMgXG5cbk5vZGUgbnVtYmVyIDU6IDMwMCBvYnNlcnZhdGlvbnNcbiAgcHJlZGljdGVkIGNsYXNzPT41MEsgICBleHBlY3RlZCBsb3NzPTAuMDMzMzMzMzMgIFAobm9kZSkgPTAuMDA5OTQ2NjJcbiAgICBjbGFzcyBjb3VudHM6ICAgIDEwICAgMjkwXG4gICBwcm9iYWJpbGl0aWVzOiAwLjAzMyAwLjk2NyBcblxuTm9kZSBudW1iZXIgNjogOTcxOSBvYnNlcnZhdGlvbnMsICAgIGNvbXBsZXhpdHkgcGFyYW09MC4wNjQxOTgxOVxuICBwcmVkaWN0ZWQgY2xhc3M9PD01MEsgIGV4cGVjdGVkIGxvc3M9MC4zNDE4MDQ3ICBQKG5vZGUpID0wLjMyMjIzNzNcbiAgICBjbGFzcyBjb3VudHM6ICA2Mzk3ICAzMzIyXG4gICBwcm9iYWJpbGl0aWVzOiAwLjY1OCAwLjM0MiBcbiAgbGVmdCBzb249MTIgKDkyMTkgb2JzKSByaWdodCBzb249MTMgKDUwMCBvYnMpXG4gIFByaW1hcnkgc3BsaXRzOlxuICAgICAgY2FwaXRhbF9nYWluICA8IDUwOTUuNSB0byB0aGUgbGVmdCwgIGltcHJvdmU9NDMyLjA3ODYsICgwIG1pc3NpbmcpXG4gICAgICBvY2N1cGF0aW9uICAgIHNwbGl0cyBhcyAgUkxMUkxMTExMUlJSUkwsIGltcHJvdmU9MjMwLjgyNzcsICgwIG1pc3NpbmcpXG4gICAgICBlZHVjYXRpb24gICAgIHNwbGl0cyBhcyAgTExMTExMTFJSLS1SLUwtUiwgaW1wcm92ZT0xNjQuMzYyNSwgKDAgbWlzc2luZylcbiAgICAgIGVkdWNhdGlvbl9udW0gPCA4LjUgICAgdG8gdGhlIGxlZnQsICBpbXByb3ZlPTE2NC4zNjI1LCAoMCBtaXNzaW5nKVxuICAgICAgYWdlICAgICAgICAgICA8IDM1LjUgICB0byB0aGUgbGVmdCwgIGltcHJvdmU9MTMxLjE3NjAsICgwIG1pc3NpbmcpXG5cbk5vZGUgbnVtYmVyIDc6IDQxNTAgb2JzZXJ2YXRpb25zXG4gIHByZWRpY3RlZCBjbGFzcz0+NTBLICAgZXhwZWN0ZWQgbG9zcz0wLjI2NDgxOTMgIFAobm9kZSkgPTAuMTM3NTk0OVxuICAgIGNsYXNzIGNvdW50czogIDEwOTkgIDMwNTFcbiAgIHByb2JhYmlsaXRpZXM6IDAuMjY1IDAuNzM1IFxuXG5Ob2RlIG51bWJlciAxMjogOTIxOSBvYnNlcnZhdGlvbnNcbiAgcHJlZGljdGVkIGNsYXNzPTw9NTBLICBleHBlY3RlZCBsb3NzPTAuMzA3MDgzMiAgUChub2RlKSA9MC4zMDU2NTk2XG4gICAgY2xhc3MgY291bnRzOiAgNjM4OCAgMjgzMVxuICAgcHJvYmFiaWxpdGllczogMC42OTMgMC4zMDcgXG5cbk5vZGUgbnVtYmVyIDEzOiA1MDAgb2JzZXJ2YXRpb25zXG4gIHByZWRpY3RlZCBjbGFzcz0+NTBLICAgZXhwZWN0ZWQgbG9zcz0wLjAxOCAgUChub2RlKSA9MC4wMTY1Nzc3XG4gICAgY2xhc3MgY291bnRzOiAgICAgOSAgIDQ5MVxuICAgcHJvYmFiaWxpdGllczogMC4wMTggMC45ODIgXG4ifQ== -->
 <pre><code>Call:
 rpart(formula = income ~ ., data = df.train.cleaned, method = &quot;class&quot;)
   n= 30161 
 
-        CP nsplit rel error  xerror      xstd
-1 0.129995      0   1.00000 1.00000 0.0100018
-2 0.064198      2   0.74001 0.74001 0.0089670
-3 0.037294      3   0.67581 0.67581 0.0086527
-4 0.010000      4   0.63852 0.63852 0.0084574
+          CP nsplit rel error    xerror        xstd
+1 0.12999467      0 1.0000000 1.0000000 0.010001793
+2 0.06419819      2 0.7400107 0.7400107 0.008966969
+3 0.03729355      3 0.6758125 0.6758125 0.008652716
+4 0.01000000      4 0.6385189 0.6385189 0.008457392
 
 Variable importance
   relationship marital_status   capital_gain      education  education_num            sex     occupation            age hours_per_week 
             24             23             10              9              9              8              7              5              3 
 
-Node number 1: 30161 observations,    complexity param=0.12999
-  predicted class=&lt;=50K  expected loss=0.24893  P(node) =1
+Node number 1: 30161 observations,    complexity param=0.1299947
+  predicted class=&lt;=50K  expected loss=0.2489307  P(node) =1
     class counts: 22653  7508
    probabilities: 0.751 0.249 
   left son=2 (16292 obs) right son=3 (13869 obs)
   Primary splits:
-      relationship   splits as  RLLLLR, improve=2277.2, (0 missing)
-      marital_status splits as  LRRLLLL, improve=2244.4, (0 missing)
-      capital_gain   &lt; 5119   to the left,  improve=1540.8, (0 missing)
-      education      splits as  LLLLLLLLLRRLRLRL, improve=1193.8, (0 missing)
-      education_num  &lt; 12.5   to the left,  improve=1193.8, (0 missing)
+      relationship   splits as  RLLLLR, improve=2277.164, (0 missing)
+      marital_status splits as  LRRLLLL, improve=2244.398, (0 missing)
+      capital_gain   &lt; 5119   to the left,  improve=1540.825, (0 missing)
+      education      splits as  LLLLLLLLLRRLRLRL, improve=1193.769, (0 missing)
+      education_num  &lt; 12.5   to the left,  improve=1193.769, (0 missing)
   Surrogate splits:
       marital_status splits as  LRRLLLL, agree=0.993, adj=0.984, (0 split)
       sex            splits as  LR, agree=0.691, adj=0.328, (0 split)
@@ -3063,29 +3069,29 @@ Node number 1: 30161 observations,    complexity param=0.12999
       occupation     splits as  LLRRRLLLLRRLLR, agree=0.620, adj=0.175, (0 split)
       hours_per_week &lt; 43.5   to the left,  agree=0.604, adj=0.138, (0 split)
 
-Node number 2: 16292 observations,    complexity param=0.037294
-  predicted class=&lt;=50K  expected loss=0.069666  P(node) =0.54017
+Node number 2: 16292 observations,    complexity param=0.03729355
+  predicted class=&lt;=50K  expected loss=0.06966609  P(node) =0.5401678
     class counts: 15157  1135
    probabilities: 0.930 0.070 
   left son=4 (15992 obs) right son=5 (300 obs)
   Primary splits:
-      capital_gain   &lt; 7073.5 to the left,  improve=491.82, (0 missing)
-      education      splits as  LLLLLLLLLLRLRLRL, improve=143.00, (0 missing)
-      education_num  &lt; 13.5   to the left,  improve=143.00, (0 missing)
-      occupation     splits as  LLLRLLLLLRRLLL, improve=117.02, (0 missing)
-      hours_per_week &lt; 42.5   to the left,  improve=107.99, (0 missing)
+      capital_gain   &lt; 7073.5 to the left,  improve=491.8224, (0 missing)
+      education      splits as  LLLLLLLLLLRLRLRL, improve=142.9961, (0 missing)
+      education_num  &lt; 13.5   to the left,  improve=142.9961, (0 missing)
+      occupation     splits as  LLLRLLLLLRRLLL, improve=117.0150, (0 missing)
+      hours_per_week &lt; 42.5   to the left,  improve=107.9941, (0 missing)
 
-Node number 3: 13869 observations,    complexity param=0.12999
-  predicted class=&lt;=50K  expected loss=0.45951  P(node) =0.45983
+Node number 3: 13869 observations,    complexity param=0.1299947
+  predicted class=&lt;=50K  expected loss=0.459514  P(node) =0.4598322
     class counts:  7496  6373
    probabilities: 0.540 0.460 
   left son=6 (9719 obs) right son=7 (4150 obs)
   Primary splits:
-      education     splits as  LLLLLLLLLRRLRLRL, improve=900.06, (0 missing)
-      education_num &lt; 12.5   to the left,  improve=900.06, (0 missing)
-      occupation    splits as  LRLRLLLLLRRRRL, improve=841.40, (0 missing)
-      capital_gain  &lt; 5095.5 to the left,  improve=698.63, (0 missing)
-      capital_loss  &lt; 1782.5 to the left,  improve=240.69, (0 missing)
+      education     splits as  LLLLLLLLLRRLRLRL, improve=900.0575, (0 missing)
+      education_num &lt; 12.5   to the left,  improve=900.0575, (0 missing)
+      occupation    splits as  LRLRLLLLLRRRRL, improve=841.3999, (0 missing)
+      capital_gain  &lt; 5095.5 to the left,  improve=698.6333, (0 missing)
+      capital_loss  &lt; 1782.5 to the left,  improve=240.6928, (0 missing)
   Surrogate splits:
       education_num  &lt; 12.5   to the left,  agree=1.000, adj=1.000, (0 split)
       occupation     splits as  LLLRLLLLLRLLLL, agree=0.792, adj=0.306, (0 split)
@@ -3094,39 +3100,39 @@ Node number 3: 13869 observations,    complexity param=0.12999
       capital_loss   &lt; 1894.5 to the left,  agree=0.706, adj=0.018, (0 split)
 
 Node number 4: 15992 observations
-  predicted class=&lt;=50K  expected loss=0.052839  P(node) =0.53022
+  predicted class=&lt;=50K  expected loss=0.05283892  P(node) =0.5302211
     class counts: 15147   845
    probabilities: 0.947 0.053 
 
 Node number 5: 300 observations
-  predicted class=&gt;50K   expected loss=0.033333  P(node) =0.0099466
+  predicted class=&gt;50K   expected loss=0.03333333  P(node) =0.00994662
     class counts:    10   290
    probabilities: 0.033 0.967 
 
-Node number 6: 9719 observations,    complexity param=0.064198
-  predicted class=&lt;=50K  expected loss=0.3418  P(node) =0.32224
+Node number 6: 9719 observations,    complexity param=0.06419819
+  predicted class=&lt;=50K  expected loss=0.3418047  P(node) =0.3222373
     class counts:  6397  3322
    probabilities: 0.658 0.342 
   left son=12 (9219 obs) right son=13 (500 obs)
   Primary splits:
-      capital_gain  &lt; 5095.5 to the left,  improve=432.08, (0 missing)
-      occupation    splits as  RLLRLLLLLRRRRL, improve=230.83, (0 missing)
-      education     splits as  LLLLLLLRR--R-L-R, improve=164.36, (0 missing)
-      education_num &lt; 8.5    to the left,  improve=164.36, (0 missing)
-      age           &lt; 35.5   to the left,  improve=131.18, (0 missing)
+      capital_gain  &lt; 5095.5 to the left,  improve=432.0786, (0 missing)
+      occupation    splits as  RLLRLLLLLRRRRL, improve=230.8277, (0 missing)
+      education     splits as  LLLLLLLRR--R-L-R, improve=164.3625, (0 missing)
+      education_num &lt; 8.5    to the left,  improve=164.3625, (0 missing)
+      age           &lt; 35.5   to the left,  improve=131.1760, (0 missing)
 
 Node number 7: 4150 observations
-  predicted class=&gt;50K   expected loss=0.26482  P(node) =0.13759
+  predicted class=&gt;50K   expected loss=0.2648193  P(node) =0.1375949
     class counts:  1099  3051
    probabilities: 0.265 0.735 
 
 Node number 12: 9219 observations
-  predicted class=&lt;=50K  expected loss=0.30708  P(node) =0.30566
+  predicted class=&lt;=50K  expected loss=0.3070832  P(node) =0.3056596
     class counts:  6388  2831
    probabilities: 0.693 0.307 
 
 Node number 13: 500 observations
-  predicted class=&gt;50K   expected loss=0.018  P(node) =0.016578
+  predicted class=&gt;50K   expected loss=0.018  P(node) =0.0165777
     class counts:     9   491
    probabilities: 0.018 0.982 </code></pre>
 <!-- rnb-output-end -->
@@ -3192,41 +3198,12 @@ y_hat   &lt;=50K  &gt;50K
   &lt;=50K 10772  1837
   &gt;50K    588  1863</code></pre>
 <!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBjb25mdXNpb24gbWF0cml4IGZ1bmN0aW9uXG5jb25mdXNpb25NYXRyaXgoeV9oYXQsIGFzLmZhY3Rvcih5LnRlc3QpKVxuYGBgIn0= -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBjb25mdXNpb24gbWF0cml4IGZ1bmN0aW9uXG5jb25meCA8LWNvbmZ1c2lvbk1hdHJpeCh5X2hhdCwgYXMuZmFjdG9yKHkudGVzdCkpXG5cblxuc3ByaW50ZihwYXN0ZShcInJlY2FsbDogXCIscm91bmQocmVjYWxsKGNvbmZ1c2VNYXRyaXgpLCBkaWdpdCA9IDMpKSlcbmBgYCJ9 -->
 <pre class="r"><code># confusion matrix function
-confusionMatrix(y_hat, as.factor(y.test))</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiQ29uZnVzaW9uIE1hdHJpeCBhbmQgU3RhdGlzdGljc1xuXG4gICAgICAgICAgUmVmZXJlbmNlXG5QcmVkaWN0aW9uIDw9NTBLICA+NTBLXG4gICAgIDw9NTBLIDEwNzcyICAxODM3XG4gICAgID41MEsgICAgNTg4ICAxODYzXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG4gICAgICAgICAgICAgICBBY2N1cmFjeSA6IDAuODM5ICAgICAgICAgXG4gICAgICAgICAgICAgICAgIDk1JSBDSSA6ICgwLjgzMywgMC44NDUpXG4gICAgTm8gSW5mb3JtYXRpb24gUmF0ZSA6IDAuNzU0ICAgICAgICAgXG4gICAgUC1WYWx1ZSBbQWNjID4gTklSXSA6IDwyZS0xNiAgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG4gICAgICAgICAgICAgICAgICBLYXBwYSA6IDAuNTEgICAgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG4gTWNuZW1hcidzIFRlc3QgUC1WYWx1ZSA6IDwyZS0xNiAgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG4gICAgICAgICAgICBTZW5zaXRpdml0eSA6IDAuOTQ4ICAgICAgICAgXG4gICAgICAgICAgICBTcGVjaWZpY2l0eSA6IDAuNTA0ICAgICAgICAgXG4gICAgICAgICBQb3MgUHJlZCBWYWx1ZSA6IDAuODU0ICAgICAgICAgXG4gICAgICAgICBOZWcgUHJlZCBWYWx1ZSA6IDAuNzYwICAgICAgICAgXG4gICAgICAgICAgICAgUHJldmFsZW5jZSA6IDAuNzU0ICAgICAgICAgXG4gICAgICAgICBEZXRlY3Rpb24gUmF0ZSA6IDAuNzE1ICAgICAgICAgXG4gICBEZXRlY3Rpb24gUHJldmFsZW5jZSA6IDAuODM3ICAgICAgICAgXG4gICAgICBCYWxhbmNlZCBBY2N1cmFjeSA6IDAuNzI2ICAgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG4gICAgICAgJ1Bvc2l0aXZlJyBDbGFzcyA6IDw9NTBLICAgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG4ifQ== -->
-<pre><code>Confusion Matrix and Statistics
+confx &lt;-confusionMatrix(y_hat, as.factor(y.test))
 
-          Reference
-Prediction &lt;=50K  &gt;50K
-     &lt;=50K 10772  1837
-     &gt;50K    588  1863
-                                        
-               Accuracy : 0.839         
-                 95% CI : (0.833, 0.845)
-    No Information Rate : 0.754         
-    P-Value [Acc &gt; NIR] : &lt;2e-16        
-                                        
-                  Kappa : 0.51          
-                                        
- Mcnemar&#39;s Test P-Value : &lt;2e-16        
-                                        
-            Sensitivity : 0.948         
-            Specificity : 0.504         
-         Pos Pred Value : 0.854         
-         Neg Pred Value : 0.760         
-             Prevalence : 0.754         
-         Detection Rate : 0.715         
-   Detection Prevalence : 0.837         
-      Balanced Accuracy : 0.726         
-                                        
-       &#39;Positive&#39; Class : &lt;=50K         
-                                        </code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3ByaW50ZihwYXN0ZShcInJlY2FsbDogXCIscm91bmQocmVjYWxsKGNvbmZ1c2VNYXRyaXgpLCBkaWdpdCA9IDMpKSlcbmBgYCJ9 -->
-<pre class="r"><code>sprintf(paste(&quot;recall: &quot;,round(recall(confuseMatrix), digit = 3)))</code></pre>
+
+sprintf(paste(&quot;recall: &quot;,round(recall(confuseMatrix), digit = 3)))</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwicmVjYWxsOiAgMC45NDhcIlxuIn0= -->
 <pre><code>[1] &quot;recall:  0.948&quot;</code></pre>
@@ -3334,7 +3311,7 @@ print(paste(&quot;The AUC of the ROC curve is:&quot;,round(auc@y.values[[1]],dig
 <pre class="r"><code>## printcp() will tell you how much CP value is divided into each layer and what the average relative error is.
 printcp(my_tree)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiXG5DbGFzc2lmaWNhdGlvbiB0cmVlOlxucnBhcnQoZm9ybXVsYSA9IGluY29tZSB+IC4sIGRhdGEgPSBkZi50cmFpbi5jbGVhbmVkLCBtZXRob2QgPSBcImNsYXNzXCIpXG5cblZhcmlhYmxlcyBhY3R1YWxseSB1c2VkIGluIHRyZWUgY29uc3RydWN0aW9uOlxuWzFdIGNhcGl0YWxfZ2FpbiBlZHVjYXRpb24gICAgcmVsYXRpb25zaGlwXG5cblJvb3Qgbm9kZSBlcnJvcjogNzUwOC8zMDE2MSA9IDAuMjQ5XG5cbm49IDMwMTYxIFxuXG4gICAgICBDUCBuc3BsaXQgcmVsIGVycm9yIHhlcnJvciAgICB4c3RkXG4xIDAuMTMwMCAgICAgIDAgICAgIDEuMDAwICAxLjAwMCAwLjAxMDAwXG4yIDAuMDY0MiAgICAgIDIgICAgIDAuNzQwICAwLjc0MCAwLjAwODk3XG4zIDAuMDM3MyAgICAgIDMgICAgIDAuNjc2ICAwLjY3NiAwLjAwODY1XG40IDAuMDEwMCAgICAgIDQgICAgIDAuNjM5ICAwLjYzOSAwLjAwODQ2XG4ifQ== -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG5DbGFzc2lmaWNhdGlvbiB0cmVlOlxucnBhcnQoZm9ybXVsYSA9IGluY29tZSB+IC4sIGRhdGEgPSBkZi50cmFpbi5jbGVhbmVkLCBtZXRob2QgPSBcImNsYXNzXCIpXG5cblZhcmlhYmxlcyBhY3R1YWxseSB1c2VkIGluIHRyZWUgY29uc3RydWN0aW9uOlxuWzFdIGNhcGl0YWxfZ2FpbiBlZHVjYXRpb24gICAgcmVsYXRpb25zaGlwXG5cblJvb3Qgbm9kZSBlcnJvcjogNzUwOC8zMDE2MSA9IDAuMjQ4OTNcblxubj0gMzAxNjEgXG5cbiAgICAgICAgQ1AgbnNwbGl0IHJlbCBlcnJvciAgeGVycm9yICAgICAgeHN0ZFxuMSAwLjEyOTk5NSAgICAgIDAgICAxLjAwMDAwIDEuMDAwMDAgMC4wMTAwMDE4XG4yIDAuMDY0MTk4ICAgICAgMiAgIDAuNzQwMDEgMC43NDAwMSAwLjAwODk2NzBcbjMgMC4wMzcyOTQgICAgICAzICAgMC42NzU4MSAwLjY3NTgxIDAuMDA4NjUyN1xuNCAwLjAxMDAwMCAgICAgIDQgICAwLjYzODUyIDAuNjM4NTIgMC4wMDg0NTc0XG4ifQ== -->
 <pre><code>
 Classification tree:
 rpart(formula = income ~ ., data = df.train.cleaned, method = &quot;class&quot;)
@@ -3342,15 +3319,15 @@ rpart(formula = income ~ ., data = df.train.cleaned, method = &quot;class&quot;)
 Variables actually used in tree construction:
 [1] capital_gain education    relationship
 
-Root node error: 7508/30161 = 0.249
+Root node error: 7508/30161 = 0.24893
 
 n= 30161 
 
-      CP nsplit rel error xerror    xstd
-1 0.1300      0     1.000  1.000 0.01000
-2 0.0642      2     0.740  0.740 0.00897
-3 0.0373      3     0.676  0.676 0.00865
-4 0.0100      4     0.639  0.639 0.00846</code></pre>
+        CP nsplit rel error  xerror      xstd
+1 0.129995      0   1.00000 1.00000 0.0100018
+2 0.064198      2   0.74001 0.74001 0.0089670
+3 0.037294      3   0.67581 0.67581 0.0086527
+4 0.010000      4   0.63852 0.63852 0.0084574</code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucGxvdGNwKG15X3RyZWUpXG5gYGAifQ== -->
 <pre class="r"><code>plotcp(my_tree)</code></pre>
@@ -3406,66 +3383,66 @@ pruned.pred &lt;- predict(model.pruned, X.test, type=&quot;class&quot;)
 
 confusionMatrix(pruned.pred, as.factor(y.test))</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiQ29uZnVzaW9uIE1hdHJpeCBhbmQgU3RhdGlzdGljc1xuXG4gICAgICAgICAgUmVmZXJlbmNlXG5QcmVkaWN0aW9uIDw9NTBLICA+NTBLXG4gICAgIDw9NTBLIDEwNzcyICAxODM3XG4gICAgID41MEsgICAgNTg4ICAxODYzXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG4gICAgICAgICAgICAgICBBY2N1cmFjeSA6IDAuODM5ICAgICAgICAgXG4gICAgICAgICAgICAgICAgIDk1JSBDSSA6ICgwLjgzMywgMC44NDUpXG4gICAgTm8gSW5mb3JtYXRpb24gUmF0ZSA6IDAuNzU0ICAgICAgICAgXG4gICAgUC1WYWx1ZSBbQWNjID4gTklSXSA6IDwyZS0xNiAgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG4gICAgICAgICAgICAgICAgICBLYXBwYSA6IDAuNTEgICAgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG4gTWNuZW1hcidzIFRlc3QgUC1WYWx1ZSA6IDwyZS0xNiAgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG4gICAgICAgICAgICBTZW5zaXRpdml0eSA6IDAuOTQ4ICAgICAgICAgXG4gICAgICAgICAgICBTcGVjaWZpY2l0eSA6IDAuNTA0ICAgICAgICAgXG4gICAgICAgICBQb3MgUHJlZCBWYWx1ZSA6IDAuODU0ICAgICAgICAgXG4gICAgICAgICBOZWcgUHJlZCBWYWx1ZSA6IDAuNzYwICAgICAgICAgXG4gICAgICAgICAgICAgUHJldmFsZW5jZSA6IDAuNzU0ICAgICAgICAgXG4gICAgICAgICBEZXRlY3Rpb24gUmF0ZSA6IDAuNzE1ICAgICAgICAgXG4gICBEZXRlY3Rpb24gUHJldmFsZW5jZSA6IDAuODM3ICAgICAgICAgXG4gICAgICBCYWxhbmNlZCBBY2N1cmFjeSA6IDAuNzI2ICAgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG4gICAgICAgJ1Bvc2l0aXZlJyBDbGFzcyA6IDw9NTBLICAgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG4ifQ== -->
+<!-- rnb-output-begin eyJkYXRhIjoiQ29uZnVzaW9uIE1hdHJpeCBhbmQgU3RhdGlzdGljc1xuXG4gICAgICAgICAgUmVmZXJlbmNlXG5QcmVkaWN0aW9uIDw9NTBLICA+NTBLXG4gICAgIDw9NTBLIDEwNzcyICAxODM3XG4gICAgID41MEsgICAgNTg4ICAxODYzXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuICAgICAgICAgICAgICAgQWNjdXJhY3kgOiAwLjgzOSAgICAgICAgICBcbiAgICAgICAgICAgICAgICAgOTUlIENJIDogKDAuODMzLCAwLjg0NDgpXG4gICAgTm8gSW5mb3JtYXRpb24gUmF0ZSA6IDAuNzU0MyAgICAgICAgIFxuICAgIFAtVmFsdWUgW0FjYyA+IE5JUl0gOiA8IDIuMmUtMTYgICAgICBcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG4gICAgICAgICAgICAgICAgICBLYXBwYSA6IDAuNTA5OCAgICAgICAgIFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiBNY25lbWFyJ3MgVGVzdCBQLVZhbHVlIDogPCAyLjJlLTE2ICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuICAgICAgICAgICAgU2Vuc2l0aXZpdHkgOiAwLjk0ODIgICAgICAgICBcbiAgICAgICAgICAgIFNwZWNpZmljaXR5IDogMC41MDM1ICAgICAgICAgXG4gICAgICAgICBQb3MgUHJlZCBWYWx1ZSA6IDAuODU0MyAgICAgICAgIFxuICAgICAgICAgTmVnIFByZWQgVmFsdWUgOiAwLjc2MDEgICAgICAgICBcbiAgICAgICAgICAgICBQcmV2YWxlbmNlIDogMC43NTQzICAgICAgICAgXG4gICAgICAgICBEZXRlY3Rpb24gUmF0ZSA6IDAuNzE1MyAgICAgICAgIFxuICAgRGV0ZWN0aW9uIFByZXZhbGVuY2UgOiAwLjgzNzMgICAgICAgICBcbiAgICAgIEJhbGFuY2VkIEFjY3VyYWN5IDogMC43MjU5ICAgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuICAgICAgICdQb3NpdGl2ZScgQ2xhc3MgOiA8PTUwSyAgICAgICAgICBcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG4ifQ== -->
 <pre><code>Confusion Matrix and Statistics
 
           Reference
 Prediction &lt;=50K  &gt;50K
      &lt;=50K 10772  1837
      &gt;50K    588  1863
-                                        
-               Accuracy : 0.839         
-                 95% CI : (0.833, 0.845)
-    No Information Rate : 0.754         
-    P-Value [Acc &gt; NIR] : &lt;2e-16        
-                                        
-                  Kappa : 0.51          
-                                        
- Mcnemar&#39;s Test P-Value : &lt;2e-16        
-                                        
-            Sensitivity : 0.948         
-            Specificity : 0.504         
-         Pos Pred Value : 0.854         
-         Neg Pred Value : 0.760         
-             Prevalence : 0.754         
-         Detection Rate : 0.715         
-   Detection Prevalence : 0.837         
-      Balanced Accuracy : 0.726         
-                                        
-       &#39;Positive&#39; Class : &lt;=50K         
-                                        </code></pre>
+                                         
+               Accuracy : 0.839          
+                 95% CI : (0.833, 0.8448)
+    No Information Rate : 0.7543         
+    P-Value [Acc &gt; NIR] : &lt; 2.2e-16      
+                                         
+                  Kappa : 0.5098         
+                                         
+ Mcnemar&#39;s Test P-Value : &lt; 2.2e-16      
+                                         
+            Sensitivity : 0.9482         
+            Specificity : 0.5035         
+         Pos Pred Value : 0.8543         
+         Neg Pred Value : 0.7601         
+             Prevalence : 0.7543         
+         Detection Rate : 0.7153         
+   Detection Prevalence : 0.8373         
+      Balanced Accuracy : 0.7259         
+                                         
+       &#39;Positive&#39; Class : &lt;=50K          
+                                         </code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuY29uZnVzaW9uTWF0cml4KHlfaGF0LCBhcy5mYWN0b3IoeS50ZXN0KSlcbmBgYCJ9 -->
 <pre class="r"><code>confusionMatrix(y_hat, as.factor(y.test))</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiQ29uZnVzaW9uIE1hdHJpeCBhbmQgU3RhdGlzdGljc1xuXG4gICAgICAgICAgUmVmZXJlbmNlXG5QcmVkaWN0aW9uIDw9NTBLICA+NTBLXG4gICAgIDw9NTBLIDEwNzcyICAxODM3XG4gICAgID41MEsgICAgNTg4ICAxODYzXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG4gICAgICAgICAgICAgICBBY2N1cmFjeSA6IDAuODM5ICAgICAgICAgXG4gICAgICAgICAgICAgICAgIDk1JSBDSSA6ICgwLjgzMywgMC44NDUpXG4gICAgTm8gSW5mb3JtYXRpb24gUmF0ZSA6IDAuNzU0ICAgICAgICAgXG4gICAgUC1WYWx1ZSBbQWNjID4gTklSXSA6IDwyZS0xNiAgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG4gICAgICAgICAgICAgICAgICBLYXBwYSA6IDAuNTEgICAgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG4gTWNuZW1hcidzIFRlc3QgUC1WYWx1ZSA6IDwyZS0xNiAgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG4gICAgICAgICAgICBTZW5zaXRpdml0eSA6IDAuOTQ4ICAgICAgICAgXG4gICAgICAgICAgICBTcGVjaWZpY2l0eSA6IDAuNTA0ICAgICAgICAgXG4gICAgICAgICBQb3MgUHJlZCBWYWx1ZSA6IDAuODU0ICAgICAgICAgXG4gICAgICAgICBOZWcgUHJlZCBWYWx1ZSA6IDAuNzYwICAgICAgICAgXG4gICAgICAgICAgICAgUHJldmFsZW5jZSA6IDAuNzU0ICAgICAgICAgXG4gICAgICAgICBEZXRlY3Rpb24gUmF0ZSA6IDAuNzE1ICAgICAgICAgXG4gICBEZXRlY3Rpb24gUHJldmFsZW5jZSA6IDAuODM3ICAgICAgICAgXG4gICAgICBCYWxhbmNlZCBBY2N1cmFjeSA6IDAuNzI2ICAgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG4gICAgICAgJ1Bvc2l0aXZlJyBDbGFzcyA6IDw9NTBLICAgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG4ifQ== -->
+<!-- rnb-output-begin eyJkYXRhIjoiQ29uZnVzaW9uIE1hdHJpeCBhbmQgU3RhdGlzdGljc1xuXG4gICAgICAgICAgUmVmZXJlbmNlXG5QcmVkaWN0aW9uIDw9NTBLICA+NTBLXG4gICAgIDw9NTBLIDEwNzcyICAxODM3XG4gICAgID41MEsgICAgNTg4ICAxODYzXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuICAgICAgICAgICAgICAgQWNjdXJhY3kgOiAwLjgzOSAgICAgICAgICBcbiAgICAgICAgICAgICAgICAgOTUlIENJIDogKDAuODMzLCAwLjg0NDgpXG4gICAgTm8gSW5mb3JtYXRpb24gUmF0ZSA6IDAuNzU0MyAgICAgICAgIFxuICAgIFAtVmFsdWUgW0FjYyA+IE5JUl0gOiA8IDIuMmUtMTYgICAgICBcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG4gICAgICAgICAgICAgICAgICBLYXBwYSA6IDAuNTA5OCAgICAgICAgIFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiBNY25lbWFyJ3MgVGVzdCBQLVZhbHVlIDogPCAyLjJlLTE2ICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuICAgICAgICAgICAgU2Vuc2l0aXZpdHkgOiAwLjk0ODIgICAgICAgICBcbiAgICAgICAgICAgIFNwZWNpZmljaXR5IDogMC41MDM1ICAgICAgICAgXG4gICAgICAgICBQb3MgUHJlZCBWYWx1ZSA6IDAuODU0MyAgICAgICAgIFxuICAgICAgICAgTmVnIFByZWQgVmFsdWUgOiAwLjc2MDEgICAgICAgICBcbiAgICAgICAgICAgICBQcmV2YWxlbmNlIDogMC43NTQzICAgICAgICAgXG4gICAgICAgICBEZXRlY3Rpb24gUmF0ZSA6IDAuNzE1MyAgICAgICAgIFxuICAgRGV0ZWN0aW9uIFByZXZhbGVuY2UgOiAwLjgzNzMgICAgICAgICBcbiAgICAgIEJhbGFuY2VkIEFjY3VyYWN5IDogMC43MjU5ICAgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuICAgICAgICdQb3NpdGl2ZScgQ2xhc3MgOiA8PTUwSyAgICAgICAgICBcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG4ifQ== -->
 <pre><code>Confusion Matrix and Statistics
 
           Reference
 Prediction &lt;=50K  &gt;50K
      &lt;=50K 10772  1837
      &gt;50K    588  1863
-                                        
-               Accuracy : 0.839         
-                 95% CI : (0.833, 0.845)
-    No Information Rate : 0.754         
-    P-Value [Acc &gt; NIR] : &lt;2e-16        
-                                        
-                  Kappa : 0.51          
-                                        
- Mcnemar&#39;s Test P-Value : &lt;2e-16        
-                                        
-            Sensitivity : 0.948         
-            Specificity : 0.504         
-         Pos Pred Value : 0.854         
-         Neg Pred Value : 0.760         
-             Prevalence : 0.754         
-         Detection Rate : 0.715         
-   Detection Prevalence : 0.837         
-      Balanced Accuracy : 0.726         
-                                        
-       &#39;Positive&#39; Class : &lt;=50K         
-                                        </code></pre>
+                                         
+               Accuracy : 0.839          
+                 95% CI : (0.833, 0.8448)
+    No Information Rate : 0.7543         
+    P-Value [Acc &gt; NIR] : &lt; 2.2e-16      
+                                         
+                  Kappa : 0.5098         
+                                         
+ Mcnemar&#39;s Test P-Value : &lt; 2.2e-16      
+                                         
+            Sensitivity : 0.9482         
+            Specificity : 0.5035         
+         Pos Pred Value : 0.8543         
+         Neg Pred Value : 0.7601         
+             Prevalence : 0.7543         
+         Detection Rate : 0.7153         
+   Detection Prevalence : 0.8373         
+      Balanced Accuracy : 0.7259         
+                                         
+       &#39;Positive&#39; Class : &lt;=50K          
+                                         </code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI2NvbXBhcmVfbW9kZWxzKG15X3RyZWUsIG1vZGVsLnBydW5lZClcbmBgYCJ9 -->
 <pre class="r"><code>#compare_models(my_tree, model.pruned)</code></pre>
@@ -3533,151 +3510,151 @@ my_tree_new &lt;- rpart(income ~ ., data = new.df.train, method=&quot;class&quot
 
 summary(my_tree_new)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiQ2FsbDpcbnJwYXJ0KGZvcm11bGEgPSBpbmNvbWUgfiAuLCBkYXRhID0gbmV3LmRmLnRyYWluLCBtZXRob2QgPSBcImNsYXNzXCIpXG4gIG49IDE1MDE2IFxuXG4gICAgICAgIENQIG5zcGxpdCByZWwgZXJyb3IgIHhlcnJvciAgICAgIHhzdGRcbjEgMC41MDg3OTEgICAgICAwICAgMS4wMDAwMCAxLjAxNzA1IDAuMDA4MTU5NFxuMiAwLjAzOTk1NyAgICAgIDEgICAwLjQ5MTIxIDAuNDkxMjEgMC4wMDcwMjU0XG4zIDAuMDEwMzg5ICAgICAgMiAgIDAuNDUxMjUgMC40NTEyNSAwLjAwNjgyMjJcbjQgMC4wMTAwMDAgICAgICA2ICAgMC4zOTQzOCAwLjM5ODY0IDAuMDA2NTIwMlxuXG5WYXJpYWJsZSBpbXBvcnRhbmNlXG4gIHJlbGF0aW9uc2hpcCBtYXJpdGFsX3N0YXR1cyAgICAgb2NjdXBhdGlvbiAgICAgICAgICAgIHNleCAgICAgICAgICAgIGFnZSAgIGNhcGl0YWxfZ2FpbiBob3Vyc19wZXJfd2VlayAgICAgIGVkdWNhdGlvbiAgZWR1Y2F0aW9uX251bSBcbiAgICAgICAgICAgIDI4ICAgICAgICAgICAgIDI4ICAgICAgICAgICAgIDEwICAgICAgICAgICAgIDEwICAgICAgICAgICAgICA4ICAgICAgICAgICAgICA3ICAgICAgICAgICAgICAzICAgICAgICAgICAgICAzICAgICAgICAgICAgICAzIFxuXG5Ob2RlIG51bWJlciAxOiAxNTAxNiBvYnNlcnZhdGlvbnMsICAgIGNvbXBsZXhpdHkgcGFyYW09MC41MDg3OVxuICBwcmVkaWN0ZWQgY2xhc3M9PD01MEsgIGV4cGVjdGVkIGxvc3M9MC41ICBQKG5vZGUpID0xXG4gICAgY2xhc3MgY291bnRzOiAgNzUwOCAgNzUwOFxuICAgcHJvYmFiaWxpdGllczogMC41MDAgMC41MDAgXG4gIGxlZnQgc29uPTIgKDYwOTAgb2JzKSByaWdodCBzb249MyAoODkyNiBvYnMpXG4gIFByaW1hcnkgc3BsaXRzOlxuICAgICAgcmVsYXRpb25zaGlwICAgc3BsaXRzIGFzICBSTExMTFIsIGltcHJvdmU9MjAxNS41MCwgKDAgbWlzc2luZylcbiAgICAgIG1hcml0YWxfc3RhdHVzIHNwbGl0cyBhcyAgTFJSTExMTCwgaW1wcm92ZT0xOTk4LjcwLCAoMCBtaXNzaW5nKVxuICAgICAgYWdlICAgICAgICAgICAgPCAyOC41ICAgdG8gdGhlIGxlZnQsICBpbXByb3ZlPSA5OTMuMzYsICgwIG1pc3NpbmcpXG4gICAgICBlZHVjYXRpb24gICAgICBzcGxpdHMgYXMgIExMTExMTExMTFJSTFJMUkwsIGltcHJvdmU9IDkwMy45NSwgKDAgbWlzc2luZylcbiAgICAgIGVkdWNhdGlvbl9udW0gIDwgMTIuNSAgIHRvIHRoZSBsZWZ0LCAgaW1wcm92ZT0gOTAzLjk1LCAoMCBtaXNzaW5nKVxuICBTdXJyb2dhdGUgc3BsaXRzOlxuICAgICAgbWFyaXRhbF9zdGF0dXMgc3BsaXRzIGFzICBMUlJMTExMLCBhZ3JlZT0wLjk5MywgYWRqPTAuOTg0LCAoMCBzcGxpdClcbiAgICAgIHNleCAgICAgICAgICAgIHNwbGl0cyBhcyAgTFIsIGFncmVlPTAuNzMxLCBhZGo9MC4zMzcsICgwIHNwbGl0KVxuICAgICAgYWdlICAgICAgICAgICAgPCAyOC41ICAgdG8gdGhlIGxlZnQsICBhZ3JlZT0wLjcwMiwgYWRqPTAuMjY1LCAoMCBzcGxpdClcbiAgICAgIG9jY3VwYXRpb24gICAgIHNwbGl0cyBhcyAgTExSUlJMUkxMUlJSUlIsIGFncmVlPTAuNjYwLCBhZGo9MC4xNjIsICgwIHNwbGl0KVxuICAgICAgaG91cnNfcGVyX3dlZWsgPCAzOS41ICAgdG8gdGhlIGxlZnQsICBhZ3JlZT0wLjYzOSwgYWRqPTAuMTA5LCAoMCBzcGxpdClcblxuTm9kZSBudW1iZXIgMjogNjA5MCBvYnNlcnZhdGlvbnMsICAgIGNvbXBsZXhpdHkgcGFyYW09MC4wMzk5NTdcbiAgcHJlZGljdGVkIGNsYXNzPTw9NTBLICBleHBlY3RlZCBsb3NzPTAuMTg2MzcgIFAobm9kZSkgPTAuNDA1NTdcbiAgICBjbGFzcyBjb3VudHM6ICA0OTU1ICAxMTM1XG4gICBwcm9iYWJpbGl0aWVzOiAwLjgxNCAwLjE4NiBcbiAgbGVmdCBzb249NCAoNTc0MiBvYnMpIHJpZ2h0IHNvbj01ICgzNDggb2JzKVxuICBQcmltYXJ5IHNwbGl0czpcbiAgICAgIGNhcGl0YWxfZ2FpbiAgIDwgNDY2OC41IHRvIHRoZSBsZWZ0LCAgaW1wcm92ZT00MDkuMzQsICgwIG1pc3NpbmcpXG4gICAgICBlZHVjYXRpb24gICAgICBzcGxpdHMgYXMgIExMTExMTExMTFJSTFJMUkwsIGltcHJvdmU9MjUyLjA1LCAoMCBtaXNzaW5nKVxuICAgICAgZWR1Y2F0aW9uX251bSAgPCAxMi41ICAgdG8gdGhlIGxlZnQsICBpbXByb3ZlPTI1Mi4wNSwgKDAgbWlzc2luZylcbiAgICAgIG9jY3VwYXRpb24gICAgIHNwbGl0cyBhcyAgTExMUkxMTExMUlJMTEwsIGltcHJvdmU9MjE3LjAxLCAoMCBtaXNzaW5nKVxuICAgICAgaG91cnNfcGVyX3dlZWsgPCA0Mi41ICAgdG8gdGhlIGxlZnQsICBpbXByb3ZlPTE3OS4zOSwgKDAgbWlzc2luZylcblxuTm9kZSBudW1iZXIgMzogODkyNiBvYnNlcnZhdGlvbnMsICAgIGNvbXBsZXhpdHkgcGFyYW09MC4wMTAzODlcbiAgcHJlZGljdGVkIGNsYXNzPT41MEsgICBleHBlY3RlZCBsb3NzPTAuMjg2MDIgIFAobm9kZSkgPTAuNTk0NDNcbiAgICBjbGFzcyBjb3VudHM6ICAyNTUzICA2MzczXG4gICBwcm9iYWJpbGl0aWVzOiAwLjI4NiAwLjcxNCBcbiAgbGVmdCBzb249NiAoMzE1MiBvYnMpIHJpZ2h0IHNvbj03ICg1Nzc0IG9icylcbiAgUHJpbWFyeSBzcGxpdHM6XG4gICAgICBvY2N1cGF0aW9uICAgIHNwbGl0cyBhcyAgUkxMUkxMTExMUlJSUkwsIGltcHJvdmU9Mzk0Ljg2LCAoMCBtaXNzaW5nKVxuICAgICAgZWR1Y2F0aW9uICAgICBzcGxpdHMgYXMgIExMTExMTExSTFJSTFJMUkwsIGltcHJvdmU9MzU0LjQ2LCAoMCBtaXNzaW5nKVxuICAgICAgZWR1Y2F0aW9uX251bSA8IDExLjUgICB0byB0aGUgbGVmdCwgIGltcHJvdmU9MzU0LjQ2LCAoMCBtaXNzaW5nKVxuICAgICAgY2FwaXRhbF9nYWluICA8IDUwOTUuNSB0byB0aGUgbGVmdCwgIGltcHJvdmU9MjA4Ljg1LCAoMCBtaXNzaW5nKVxuICAgICAgYWdlICAgICAgICAgICA8IDI5LjUgICB0byB0aGUgbGVmdCwgIGltcHJvdmU9MTIxLjI1LCAoMCBtaXNzaW5nKVxuICBTdXJyb2dhdGUgc3BsaXRzOlxuICAgICAgZWR1Y2F0aW9uICAgICAgc3BsaXRzIGFzICBMTExMTExMUlJSUkxSTFJSLCBhZ3JlZT0wLjc0OCwgYWRqPTAuMjg2LCAoMCBzcGxpdClcbiAgICAgIGVkdWNhdGlvbl9udW0gIDwgOS41ICAgIHRvIHRoZSBsZWZ0LCAgYWdyZWU9MC43NDgsIGFkaj0wLjI4NiwgKDAgc3BsaXQpXG4gICAgICBuYXRpdmVfY291bnRyeSBzcGxpdHMgYXMgIExSUlJSTFJSUlJSUkxMUlJMUlJSUlJSTExMUlJSTExSUlJSUkxSTEwsIGFncmVlPTAuNjU4LCBhZGo9MC4wMzEsICgwIHNwbGl0KVxuICAgICAgYWdlICAgICAgICAgICAgPCAyNC41ICAgdG8gdGhlIGxlZnQsICBhZ3JlZT0wLjY1MiwgYWRqPTAuMDE2LCAoMCBzcGxpdClcbiAgICAgIHJhY2UgICAgICAgICAgIHNwbGl0cyBhcyAgTFJSTFIsIGFncmVlPTAuNjQ3LCBhZGo9MC4wMDEsICgwIHNwbGl0KVxuXG5Ob2RlIG51bWJlciA0OiA1NzQyIG9ic2VydmF0aW9uc1xuICBwcmVkaWN0ZWQgY2xhc3M9PD01MEsgIGV4cGVjdGVkIGxvc3M9MC4xNDEyNCAgUChub2RlKSA9MC4zODIzOVxuICAgIGNsYXNzIGNvdW50czogIDQ5MzEgICA4MTFcbiAgIHByb2JhYmlsaXRpZXM6IDAuODU5IDAuMTQxIFxuXG5Ob2RlIG51bWJlciA1OiAzNDggb2JzZXJ2YXRpb25zXG4gIHByZWRpY3RlZCBjbGFzcz0+NTBLICAgZXhwZWN0ZWQgbG9zcz0wLjA2ODk2NiAgUChub2RlKSA9MC4wMjMxNzVcbiAgICBjbGFzcyBjb3VudHM6ICAgIDI0ICAgMzI0XG4gICBwcm9iYWJpbGl0aWVzOiAwLjA2OSAwLjkzMSBcblxuTm9kZSBudW1iZXIgNjogMzE1MiBvYnNlcnZhdGlvbnMsICAgIGNvbXBsZXhpdHkgcGFyYW09MC4wMTAzODlcbiAgcHJlZGljdGVkIGNsYXNzPT41MEsgICBleHBlY3RlZCBsb3NzPTAuNDg3MzEgIFAobm9kZSkgPTAuMjA5OTFcbiAgICBjbGFzcyBjb3VudHM6ICAxNTM2ICAxNjE2XG4gICBwcm9iYWJpbGl0aWVzOiAwLjQ4NyAwLjUxMyBcbiAgbGVmdCBzb249MTIgKDI5MTQgb2JzKSByaWdodCBzb249MTMgKDIzOCBvYnMpXG4gIFByaW1hcnkgc3BsaXRzOlxuICAgICAgY2FwaXRhbF9nYWluICAgPCA1MDk1LjUgdG8gdGhlIGxlZnQsICBpbXByb3ZlPTEyMC4xNzAsICgwIG1pc3NpbmcpXG4gICAgICBlZHVjYXRpb24gICAgICBzcGxpdHMgYXMgIExMUkxMTExSUlJMUlJMUlIsIGltcHJvdmU9IDkwLjIwNSwgKDAgbWlzc2luZylcbiAgICAgIGVkdWNhdGlvbl9udW0gIDwgNy41ICAgIHRvIHRoZSBsZWZ0LCAgaW1wcm92ZT0gODkuOTQwLCAoMCBtaXNzaW5nKVxuICAgICAgYWdlICAgICAgICAgICAgPCAzMC41ICAgdG8gdGhlIGxlZnQsICBpbXByb3ZlPSA0OC40MzIsICgwIG1pc3NpbmcpXG4gICAgICBuYXRpdmVfY291bnRyeSBzcGxpdHMgYXMgIFJSTExSTFJSUi1STExSLS1STFJSUlJSTExMLUxSUkxMTFItTFJSUlIsIGltcHJvdmU9IDM5LjU3OCwgKDAgbWlzc2luZylcbiAgU3Vycm9nYXRlIHNwbGl0czpcbiAgICAgIGZubHdndCA8IDIwNTIwICB0byB0aGUgcmlnaHQsIGFncmVlPTAuOTI1LCBhZGo9MC4wMDgsICgwIHNwbGl0KVxuXG5Ob2RlIG51bWJlciA3OiA1Nzc0IG9ic2VydmF0aW9uc1xuICBwcmVkaWN0ZWQgY2xhc3M9PjUwSyAgIGV4cGVjdGVkIGxvc3M9MC4xNzYxMyAgUChub2RlKSA9MC4zODQ1MlxuICAgIGNsYXNzIGNvdW50czogIDEwMTcgIDQ3NTdcbiAgIHByb2JhYmlsaXRpZXM6IDAuMTc2IDAuODI0IFxuXG5Ob2RlIG51bWJlciAxMjogMjkxNCBvYnNlcnZhdGlvbnMsICAgIGNvbXBsZXhpdHkgcGFyYW09MC4wMTAzODlcbiAgcHJlZGljdGVkIGNsYXNzPTw9NTBLICBleHBlY3RlZCBsb3NzPTAuNDczMjMgIFAobm9kZSkgPTAuMTk0MDZcbiAgICBjbGFzcyBjb3VudHM6ICAxNTM1ICAxMzc5XG4gICBwcm9iYWJpbGl0aWVzOiAwLjUyNyAwLjQ3MyBcbiAgbGVmdCBzb249MjQgKDUxNCBvYnMpIHJpZ2h0IHNvbj0yNSAoMjQwMCBvYnMpXG4gIFByaW1hcnkgc3BsaXRzOlxuICAgICAgZWR1Y2F0aW9uICAgICAgc3BsaXRzIGFzICBMTExMTExMUlJSTFJSTFJSLCBpbXByb3ZlPTgzLjg3NCwgKDAgbWlzc2luZylcbiAgICAgIGVkdWNhdGlvbl9udW0gIDwgOC41ICAgIHRvIHRoZSBsZWZ0LCAgaW1wcm92ZT04Mi45NDAsICgwIG1pc3NpbmcpXG4gICAgICBhZ2UgICAgICAgICAgICA8IDMwLjUgICB0byB0aGUgbGVmdCwgIGltcHJvdmU9NDAuMjk4LCAoMCBtaXNzaW5nKVxuICAgICAgbmF0aXZlX2NvdW50cnkgc3BsaXRzIGFzICBSUkxMUkxMTFItUkxMUi0tUkxSUlJSUlJMUi1MUlJSTExSLUxSUlJSLCBpbXByb3ZlPTM3LjczOSwgKDAgbWlzc2luZylcbiAgICAgIGNhcGl0YWxfbG9zcyAgIDwgMTc5NCAgIHRvIHRoZSBsZWZ0LCAgaW1wcm92ZT0zNS43ODcsICgwIG1pc3NpbmcpXG4gIFN1cnJvZ2F0ZSBzcGxpdHM6XG4gICAgICBlZHVjYXRpb25fbnVtICA8IDguNSAgICB0byB0aGUgbGVmdCwgIGFncmVlPTAuOTk5LCBhZGo9MC45OTYsICgwIHNwbGl0KVxuICAgICAgbmF0aXZlX2NvdW50cnkgc3BsaXRzIGFzICBSUlJMUkxSTFItUlJMUi0tUkxSUlJSUlJMUi1SUlJMUlJSLVJMUlJSLCBhZ3JlZT0wLjgzNywgYWRqPTAuMDc0LCAoMCBzcGxpdClcblxuTm9kZSBudW1iZXIgMTM6IDIzOCBvYnNlcnZhdGlvbnNcbiAgcHJlZGljdGVkIGNsYXNzPT41MEsgICBleHBlY3RlZCBsb3NzPTAuMDA0MjAxNyAgUChub2RlKSA9MC4wMTU4NVxuICAgIGNsYXNzIGNvdW50czogICAgIDEgICAyMzdcbiAgIHByb2JhYmlsaXRpZXM6IDAuMDA0IDAuOTk2IFxuXG5Ob2RlIG51bWJlciAyNDogNTE0IG9ic2VydmF0aW9uc1xuICBwcmVkaWN0ZWQgY2xhc3M9PD01MEsgIGV4cGVjdGVkIGxvc3M9MC4yMTQwMSAgUChub2RlKSA9MC4wMzQyM1xuICAgIGNsYXNzIGNvdW50czogICA0MDQgICAxMTBcbiAgIHByb2JhYmlsaXRpZXM6IDAuNzg2IDAuMjE0IFxuXG5Ob2RlIG51bWJlciAyNTogMjQwMCBvYnNlcnZhdGlvbnMsICAgIGNvbXBsZXhpdHkgcGFyYW09MC4wMTAzODlcbiAgcHJlZGljdGVkIGNsYXNzPT41MEsgICBleHBlY3RlZCBsb3NzPTAuNDcxMjUgIFAobm9kZSkgPTAuMTU5ODNcbiAgICBjbGFzcyBjb3VudHM6ICAxMTMxICAxMjY5XG4gICBwcm9iYWJpbGl0aWVzOiAwLjQ3MSAwLjUyOSBcbiAgbGVmdCBzb249NTAgKDMxMSBvYnMpIHJpZ2h0IHNvbj01MSAoMjA4OSBvYnMpXG4gIFByaW1hcnkgc3BsaXRzOlxuICAgICAgYWdlICAgICAgICAgICAgPCAyOS41ICAgdG8gdGhlIGxlZnQsICBpbXByb3ZlPTQyLjA0OSwgKDAgbWlzc2luZylcbiAgICAgIGNhcGl0YWxfbG9zcyAgIDwgMTc5NCAgIHRvIHRoZSBsZWZ0LCAgaW1wcm92ZT0yOS4xMjEsICgwIG1pc3NpbmcpXG4gICAgICBvY2N1cGF0aW9uICAgICBzcGxpdHMgYXMgIC1SUi1MTFJMTC0tLS1SLCBpbXByb3ZlPTIyLjc4MCwgKDAgbWlzc2luZylcbiAgICAgIGhvdXJzX3Blcl93ZWVrIDwgMzQuNSAgIHRvIHRoZSBsZWZ0LCAgaW1wcm92ZT0xOS40MTEsICgwIG1pc3NpbmcpXG4gICAgICBuYXRpdmVfY291bnRyeSBzcGxpdHMgYXMgIFJSTExSTExSUi1STExSLS1STFJSUlJSTExMLUxSUlJMTEwtTC1SUlIsIGltcHJvdmU9MTguNzI5LCAoMCBtaXNzaW5nKVxuICBTdXJyb2dhdGUgc3BsaXRzOlxuICAgICAgbmF0aXZlX2NvdW50cnkgc3BsaXRzIGFzICBSUlJMUlJMUlItUlJSUi0tUlJSUlJSUkxSUi1SUlJSUlJSLVItUlJSLCBhZ3JlZT0wLjg3MiwgYWRqPTAuMDEzLCAoMCBzcGxpdClcblxuTm9kZSBudW1iZXIgNTA6IDMxMSBvYnNlcnZhdGlvbnNcbiAgcHJlZGljdGVkIGNsYXNzPTw9NTBLICBleHBlY3RlZCBsb3NzPTAuMjg2MTcgIFAobm9kZSkgPTAuMDIwNzExXG4gICAgY2xhc3MgY291bnRzOiAgIDIyMiAgICA4OVxuICAgcHJvYmFiaWxpdGllczogMC43MTQgMC4yODYgXG5cbk5vZGUgbnVtYmVyIDUxOiAyMDg5IG9ic2VydmF0aW9uc1xuICBwcmVkaWN0ZWQgY2xhc3M9PjUwSyAgIGV4cGVjdGVkIGxvc3M9MC40MzUxNCAgUChub2RlKSA9MC4xMzkxMlxuICAgIGNsYXNzIGNvdW50czogICA5MDkgIDExODBcbiAgIHByb2JhYmlsaXRpZXM6IDAuNDM1IDAuNTY1IFxuIn0= -->
+<!-- rnb-output-begin eyJkYXRhIjoiQ2FsbDpcbnJwYXJ0KGZvcm11bGEgPSBpbmNvbWUgfiAuLCBkYXRhID0gbmV3LmRmLnRyYWluLCBtZXRob2QgPSBcImNsYXNzXCIpXG4gIG49IDE1MDE2IFxuXG4gICAgICAgICAgQ1AgbnNwbGl0IHJlbCBlcnJvciAgICB4ZXJyb3IgICAgICAgIHhzdGRcbjEgMC41MDg3OTA2MiAgICAgIDAgMS4wMDAwMDAwIDEuMDE3MDQ4NSAwLjAwODE1OTQyOVxuMiAwLjAzOTk1NzM4ICAgICAgMSAwLjQ5MTIwOTQgMC40OTEyMDk0IDAuMDA3MDI1Mzk0XG4zIDAuMDEwMzg4OTIgICAgICAyIDAuNDUxMjUyMCAwLjQ1MTI1MjAgMC4wMDY4MjIxNzRcbjQgMC4wMTAwMDAwMCAgICAgIDYgMC4zOTQzNzkzIDAuMzk4NjQxNCAwLjAwNjUyMDE2MlxuXG5WYXJpYWJsZSBpbXBvcnRhbmNlXG4gIHJlbGF0aW9uc2hpcCBtYXJpdGFsX3N0YXR1cyAgICAgb2NjdXBhdGlvbiAgICAgICAgICAgIHNleCAgICAgICAgICAgIGFnZSAgIGNhcGl0YWxfZ2FpbiBob3Vyc19wZXJfd2VlayAgICAgIGVkdWNhdGlvbiAgZWR1Y2F0aW9uX251bSBcbiAgICAgICAgICAgIDI4ICAgICAgICAgICAgIDI4ICAgICAgICAgICAgIDEwICAgICAgICAgICAgIDEwICAgICAgICAgICAgICA4ICAgICAgICAgICAgICA3ICAgICAgICAgICAgICAzICAgICAgICAgICAgICAzICAgICAgICAgICAgICAzIFxuXG5Ob2RlIG51bWJlciAxOiAxNTAxNiBvYnNlcnZhdGlvbnMsICAgIGNvbXBsZXhpdHkgcGFyYW09MC41MDg3OTA2XG4gIHByZWRpY3RlZCBjbGFzcz08PTUwSyAgZXhwZWN0ZWQgbG9zcz0wLjUgIFAobm9kZSkgPTFcbiAgICBjbGFzcyBjb3VudHM6ICA3NTA4ICA3NTA4XG4gICBwcm9iYWJpbGl0aWVzOiAwLjUwMCAwLjUwMCBcbiAgbGVmdCBzb249MiAoNjA5MCBvYnMpIHJpZ2h0IHNvbj0zICg4OTI2IG9icylcbiAgUHJpbWFyeSBzcGxpdHM6XG4gICAgICByZWxhdGlvbnNoaXAgICBzcGxpdHMgYXMgIFJMTExMUiwgaW1wcm92ZT0yMDE1LjQ3MjAsICgwIG1pc3NpbmcpXG4gICAgICBtYXJpdGFsX3N0YXR1cyBzcGxpdHMgYXMgIExSUkxMTEwsIGltcHJvdmU9MTk5OC43MDIwLCAoMCBtaXNzaW5nKVxuICAgICAgYWdlICAgICAgICAgICAgPCAyOC41ICAgIHRvIHRoZSBsZWZ0LCAgaW1wcm92ZT0gOTkzLjM1NTcsICgwIG1pc3NpbmcpXG4gICAgICBlZHVjYXRpb24gICAgICBzcGxpdHMgYXMgIExMTExMTExMTFJSTFJMUkwsIGltcHJvdmU9IDkwMy45NDY3LCAoMCBtaXNzaW5nKVxuICAgICAgZWR1Y2F0aW9uX251bSAgPCAxMi41ICAgIHRvIHRoZSBsZWZ0LCAgaW1wcm92ZT0gOTAzLjk0NjcsICgwIG1pc3NpbmcpXG4gIFN1cnJvZ2F0ZSBzcGxpdHM6XG4gICAgICBtYXJpdGFsX3N0YXR1cyBzcGxpdHMgYXMgIExSUkxMTEwsIGFncmVlPTAuOTkzLCBhZGo9MC45ODQsICgwIHNwbGl0KVxuICAgICAgc2V4ICAgICAgICAgICAgc3BsaXRzIGFzICBMUiwgYWdyZWU9MC43MzEsIGFkaj0wLjMzNywgKDAgc3BsaXQpXG4gICAgICBhZ2UgICAgICAgICAgICA8IDI4LjUgICAgdG8gdGhlIGxlZnQsICBhZ3JlZT0wLjcwMiwgYWRqPTAuMjY1LCAoMCBzcGxpdClcbiAgICAgIG9jY3VwYXRpb24gICAgIHNwbGl0cyBhcyAgTExSUlJMUkxMUlJSUlIsIGFncmVlPTAuNjYwLCBhZGo9MC4xNjIsICgwIHNwbGl0KVxuICAgICAgaG91cnNfcGVyX3dlZWsgPCAzOS41ICAgIHRvIHRoZSBsZWZ0LCAgYWdyZWU9MC42MzksIGFkaj0wLjEwOSwgKDAgc3BsaXQpXG5cbk5vZGUgbnVtYmVyIDI6IDYwOTAgb2JzZXJ2YXRpb25zLCAgICBjb21wbGV4aXR5IHBhcmFtPTAuMDM5OTU3MzhcbiAgcHJlZGljdGVkIGNsYXNzPTw9NTBLICBleHBlY3RlZCBsb3NzPTAuMTg2MzcxMSAgUChub2RlKSA9MC40MDU1Njc0XG4gICAgY2xhc3MgY291bnRzOiAgNDk1NSAgMTEzNVxuICAgcHJvYmFiaWxpdGllczogMC44MTQgMC4xODYgXG4gIGxlZnQgc29uPTQgKDU3NDIgb2JzKSByaWdodCBzb249NSAoMzQ4IG9icylcbiAgUHJpbWFyeSBzcGxpdHM6XG4gICAgICBjYXBpdGFsX2dhaW4gICA8IDQ2NjguNSAgdG8gdGhlIGxlZnQsICBpbXByb3ZlPTQwOS4zMzkyLCAoMCBtaXNzaW5nKVxuICAgICAgZWR1Y2F0aW9uICAgICAgc3BsaXRzIGFzICBMTExMTExMTExSUkxSTFJMLCBpbXByb3ZlPTI1Mi4wNDgwLCAoMCBtaXNzaW5nKVxuICAgICAgZWR1Y2F0aW9uX251bSAgPCAxMi41ICAgIHRvIHRoZSBsZWZ0LCAgaW1wcm92ZT0yNTIuMDQ4MCwgKDAgbWlzc2luZylcbiAgICAgIG9jY3VwYXRpb24gICAgIHNwbGl0cyBhcyAgTExMUkxMTExMUlJMTEwsIGltcHJvdmU9MjE3LjAwODMsICgwIG1pc3NpbmcpXG4gICAgICBob3Vyc19wZXJfd2VlayA8IDQyLjUgICAgdG8gdGhlIGxlZnQsICBpbXByb3ZlPTE3OS4zODc1LCAoMCBtaXNzaW5nKVxuXG5Ob2RlIG51bWJlciAzOiA4OTI2IG9ic2VydmF0aW9ucywgICAgY29tcGxleGl0eSBwYXJhbT0wLjAxMDM4ODkyXG4gIHByZWRpY3RlZCBjbGFzcz0+NTBLICAgZXhwZWN0ZWQgbG9zcz0wLjI4NjAxODQgIFAobm9kZSkgPTAuNTk0NDMyNlxuICAgIGNsYXNzIGNvdW50czogIDI1NTMgIDYzNzNcbiAgIHByb2JhYmlsaXRpZXM6IDAuMjg2IDAuNzE0IFxuICBsZWZ0IHNvbj02ICgzMTUyIG9icykgcmlnaHQgc29uPTcgKDU3NzQgb2JzKVxuICBQcmltYXJ5IHNwbGl0czpcbiAgICAgIG9jY3VwYXRpb24gICAgc3BsaXRzIGFzICBSTExSTExMTExSUlJSTCwgaW1wcm92ZT0zOTQuODYyOCwgKDAgbWlzc2luZylcbiAgICAgIGVkdWNhdGlvbiAgICAgc3BsaXRzIGFzICBMTExMTExMUkxSUkxSTFJMLCBpbXByb3ZlPTM1NC40NjM0LCAoMCBtaXNzaW5nKVxuICAgICAgZWR1Y2F0aW9uX251bSA8IDExLjUgICAgdG8gdGhlIGxlZnQsICBpbXByb3ZlPTM1NC40NjM0LCAoMCBtaXNzaW5nKVxuICAgICAgY2FwaXRhbF9nYWluICA8IDUwOTUuNSAgdG8gdGhlIGxlZnQsICBpbXByb3ZlPTIwOC44NTQ5LCAoMCBtaXNzaW5nKVxuICAgICAgYWdlICAgICAgICAgICA8IDI5LjUgICAgdG8gdGhlIGxlZnQsICBpbXByb3ZlPTEyMS4yNTQxLCAoMCBtaXNzaW5nKVxuICBTdXJyb2dhdGUgc3BsaXRzOlxuICAgICAgZWR1Y2F0aW9uICAgICAgc3BsaXRzIGFzICBMTExMTExMUlJSUkxSTFJSLCBhZ3JlZT0wLjc0OCwgYWRqPTAuMjg2LCAoMCBzcGxpdClcbiAgICAgIGVkdWNhdGlvbl9udW0gIDwgOS41ICAgICB0byB0aGUgbGVmdCwgIGFncmVlPTAuNzQ4LCBhZGo9MC4yODYsICgwIHNwbGl0KVxuICAgICAgbmF0aXZlX2NvdW50cnkgc3BsaXRzIGFzICBMUlJSUkxSUlJSUlJMTFJSTFJSUlJSUkxMTFJSUkxMUlJSUlJMUkxMLCBhZ3JlZT0wLjY1OCwgYWRqPTAuMDMxLCAoMCBzcGxpdClcbiAgICAgIGFnZSAgICAgICAgICAgIDwgMjQuNSAgICB0byB0aGUgbGVmdCwgIGFncmVlPTAuNjUyLCBhZGo9MC4wMTYsICgwIHNwbGl0KVxuICAgICAgcmFjZSAgICAgICAgICAgc3BsaXRzIGFzICBMUlJMUiwgYWdyZWU9MC42NDcsIGFkaj0wLjAwMSwgKDAgc3BsaXQpXG5cbk5vZGUgbnVtYmVyIDQ6IDU3NDIgb2JzZXJ2YXRpb25zXG4gIHByZWRpY3RlZCBjbGFzcz08PTUwSyAgZXhwZWN0ZWQgbG9zcz0wLjE0MTI0ICBQKG5vZGUpID0wLjM4MjM5MjFcbiAgICBjbGFzcyBjb3VudHM6ICA0OTMxICAgODExXG4gICBwcm9iYWJpbGl0aWVzOiAwLjg1OSAwLjE0MSBcblxuTm9kZSBudW1iZXIgNTogMzQ4IG9ic2VydmF0aW9uc1xuICBwcmVkaWN0ZWQgY2xhc3M9PjUwSyAgIGV4cGVjdGVkIGxvc3M9MC4wNjg5NjU1MiAgUChub2RlKSA9MC4wMjMxNzUyOFxuICAgIGNsYXNzIGNvdW50czogICAgMjQgICAzMjRcbiAgIHByb2JhYmlsaXRpZXM6IDAuMDY5IDAuOTMxIFxuXG5Ob2RlIG51bWJlciA2OiAzMTUyIG9ic2VydmF0aW9ucywgICAgY29tcGxleGl0eSBwYXJhbT0wLjAxMDM4ODkyXG4gIHByZWRpY3RlZCBjbGFzcz0+NTBLICAgZXhwZWN0ZWQgbG9zcz0wLjQ4NzMwOTYgIFAobm9kZSkgPTAuMjA5OTA5NFxuICAgIGNsYXNzIGNvdW50czogIDE1MzYgIDE2MTZcbiAgIHByb2JhYmlsaXRpZXM6IDAuNDg3IDAuNTEzIFxuICBsZWZ0IHNvbj0xMiAoMjkxNCBvYnMpIHJpZ2h0IHNvbj0xMyAoMjM4IG9icylcbiAgUHJpbWFyeSBzcGxpdHM6XG4gICAgICBjYXBpdGFsX2dhaW4gICA8IDUwOTUuNSAgdG8gdGhlIGxlZnQsICBpbXByb3ZlPTEyMC4xNjg5MCwgKDAgbWlzc2luZylcbiAgICAgIGVkdWNhdGlvbiAgICAgIHNwbGl0cyBhcyAgTExSTExMTFJSUkxSUkxSUiwgaW1wcm92ZT0gOTAuMjA1MjYsICgwIG1pc3NpbmcpXG4gICAgICBlZHVjYXRpb25fbnVtICA8IDcuNSAgICAgdG8gdGhlIGxlZnQsICBpbXByb3ZlPSA4OS45Mzk4NywgKDAgbWlzc2luZylcbiAgICAgIGFnZSAgICAgICAgICAgIDwgMzAuNSAgICB0byB0aGUgbGVmdCwgIGltcHJvdmU9IDQ4LjQzMTgyLCAoMCBtaXNzaW5nKVxuICAgICAgbmF0aXZlX2NvdW50cnkgc3BsaXRzIGFzICBSUkxMUkxSUlItUkxMUi0tUkxSUlJSUkxMTC1MUlJMTExSLUxSUlJSLCBpbXByb3ZlPSAzOS41NzgxMCwgKDAgbWlzc2luZylcbiAgU3Vycm9nYXRlIHNwbGl0czpcbiAgICAgIGZubHdndCA8IDIwNTIwLjUgdG8gdGhlIHJpZ2h0LCBhZ3JlZT0wLjkyNSwgYWRqPTAuMDA4LCAoMCBzcGxpdClcblxuTm9kZSBudW1iZXIgNzogNTc3NCBvYnNlcnZhdGlvbnNcbiAgcHJlZGljdGVkIGNsYXNzPT41MEsgICBleHBlY3RlZCBsb3NzPTAuMTc2MTM0NCAgUChub2RlKSA9MC4zODQ1MjMyXG4gICAgY2xhc3MgY291bnRzOiAgMTAxNyAgNDc1N1xuICAgcHJvYmFiaWxpdGllczogMC4xNzYgMC44MjQgXG5cbk5vZGUgbnVtYmVyIDEyOiAyOTE0IG9ic2VydmF0aW9ucywgICAgY29tcGxleGl0eSBwYXJhbT0wLjAxMDM4ODkyXG4gIHByZWRpY3RlZCBjbGFzcz08PTUwSyAgZXhwZWN0ZWQgbG9zcz0wLjQ3MzIzMjcgIFAobm9kZSkgPTAuMTk0MDU5N1xuICAgIGNsYXNzIGNvdW50czogIDE1MzUgIDEzNzlcbiAgIHByb2JhYmlsaXRpZXM6IDAuNTI3IDAuNDczIFxuICBsZWZ0IHNvbj0yNCAoNTE0IG9icykgcmlnaHQgc29uPTI1ICgyNDAwIG9icylcbiAgUHJpbWFyeSBzcGxpdHM6XG4gICAgICBlZHVjYXRpb24gICAgICBzcGxpdHMgYXMgIExMTExMTExSUlJMUlJMUlIsIGltcHJvdmU9ODMuODczNTEsICgwIG1pc3NpbmcpXG4gICAgICBlZHVjYXRpb25fbnVtICA8IDguNSAgICAgdG8gdGhlIGxlZnQsICBpbXByb3ZlPTgyLjk0MDA1LCAoMCBtaXNzaW5nKVxuICAgICAgYWdlICAgICAgICAgICAgPCAzMC41ICAgIHRvIHRoZSBsZWZ0LCAgaW1wcm92ZT00MC4yOTg0NiwgKDAgbWlzc2luZylcbiAgICAgIG5hdGl2ZV9jb3VudHJ5IHNwbGl0cyBhcyAgUlJMTFJMTExSLVJMTFItLVJMUlJSUlJSTFItTFJSUkxMUi1MUlJSUiwgaW1wcm92ZT0zNy43MzkzMCwgKDAgbWlzc2luZylcbiAgICAgIGNhcGl0YWxfbG9zcyAgIDwgMTc5NCAgICB0byB0aGUgbGVmdCwgIGltcHJvdmU9MzUuNzg3MzIsICgwIG1pc3NpbmcpXG4gIFN1cnJvZ2F0ZSBzcGxpdHM6XG4gICAgICBlZHVjYXRpb25fbnVtICA8IDguNSAgICAgdG8gdGhlIGxlZnQsICBhZ3JlZT0wLjk5OSwgYWRqPTAuOTk2LCAoMCBzcGxpdClcbiAgICAgIG5hdGl2ZV9jb3VudHJ5IHNwbGl0cyBhcyAgUlJSTFJMUkxSLVJSTFItLVJMUlJSUlJSTFItUlJSTFJSUi1STFJSUiwgYWdyZWU9MC44MzcsIGFkaj0wLjA3NCwgKDAgc3BsaXQpXG5cbk5vZGUgbnVtYmVyIDEzOiAyMzggb2JzZXJ2YXRpb25zXG4gIHByZWRpY3RlZCBjbGFzcz0+NTBLICAgZXhwZWN0ZWQgbG9zcz0wLjAwNDIwMTY4MSAgUChub2RlKSA9MC4wMTU4NDk3NlxuICAgIGNsYXNzIGNvdW50czogICAgIDEgICAyMzdcbiAgIHByb2JhYmlsaXRpZXM6IDAuMDA0IDAuOTk2IFxuXG5Ob2RlIG51bWJlciAyNDogNTE0IG9ic2VydmF0aW9uc1xuICBwcmVkaWN0ZWQgY2xhc3M9PD01MEsgIGV4cGVjdGVkIGxvc3M9MC4yMTQwMDc4ICBQKG5vZGUpID0wLjAzNDIzMDE1XG4gICAgY2xhc3MgY291bnRzOiAgIDQwNCAgIDExMFxuICAgcHJvYmFiaWxpdGllczogMC43ODYgMC4yMTQgXG5cbk5vZGUgbnVtYmVyIDI1OiAyNDAwIG9ic2VydmF0aW9ucywgICAgY29tcGxleGl0eSBwYXJhbT0wLjAxMDM4ODkyXG4gIHByZWRpY3RlZCBjbGFzcz0+NTBLICAgZXhwZWN0ZWQgbG9zcz0wLjQ3MTI1ICBQKG5vZGUpID0wLjE1OTgyOTVcbiAgICBjbGFzcyBjb3VudHM6ICAxMTMxICAxMjY5XG4gICBwcm9iYWJpbGl0aWVzOiAwLjQ3MSAwLjUyOSBcbiAgbGVmdCBzb249NTAgKDMxMSBvYnMpIHJpZ2h0IHNvbj01MSAoMjA4OSBvYnMpXG4gIFByaW1hcnkgc3BsaXRzOlxuICAgICAgYWdlICAgICAgICAgICAgPCAyOS41ICAgIHRvIHRoZSBsZWZ0LCAgaW1wcm92ZT00Mi4wNDk0MywgKDAgbWlzc2luZylcbiAgICAgIGNhcGl0YWxfbG9zcyAgIDwgMTc5NCAgICB0byB0aGUgbGVmdCwgIGltcHJvdmU9MjkuMTIwNzgsICgwIG1pc3NpbmcpXG4gICAgICBvY2N1cGF0aW9uICAgICBzcGxpdHMgYXMgIC1SUi1MTFJMTC0tLS1SLCBpbXByb3ZlPTIyLjc4MDE4LCAoMCBtaXNzaW5nKVxuICAgICAgaG91cnNfcGVyX3dlZWsgPCAzNC41ICAgIHRvIHRoZSBsZWZ0LCAgaW1wcm92ZT0xOS40MTE0NSwgKDAgbWlzc2luZylcbiAgICAgIG5hdGl2ZV9jb3VudHJ5IHNwbGl0cyBhcyAgUlJMTFJMTFJSLVJMTFItLVJMUlJSUlJMTEwtTFJSUkxMTC1MLVJSUiwgaW1wcm92ZT0xOC43MjkyNCwgKDAgbWlzc2luZylcbiAgU3Vycm9nYXRlIHNwbGl0czpcbiAgICAgIG5hdGl2ZV9jb3VudHJ5IHNwbGl0cyBhcyAgUlJSTFJSTFJSLVJSUlItLVJSUlJSUlJMUlItUlJSUlJSUi1SLVJSUiwgYWdyZWU9MC44NzIsIGFkaj0wLjAxMywgKDAgc3BsaXQpXG5cbk5vZGUgbnVtYmVyIDUwOiAzMTEgb2JzZXJ2YXRpb25zXG4gIHByZWRpY3RlZCBjbGFzcz08PTUwSyAgZXhwZWN0ZWQgbG9zcz0wLjI4NjE3MzYgIFAobm9kZSkgPTAuMDIwNzExMjRcbiAgICBjbGFzcyBjb3VudHM6ICAgMjIyICAgIDg5XG4gICBwcm9iYWJpbGl0aWVzOiAwLjcxNCAwLjI4NiBcblxuTm9kZSBudW1iZXIgNTE6IDIwODkgb2JzZXJ2YXRpb25zXG4gIHByZWRpY3RlZCBjbGFzcz0+NTBLICAgZXhwZWN0ZWQgbG9zcz0wLjQzNTEzNjQgIFAobm9kZSkgPTAuMTM5MTE4M1xuICAgIGNsYXNzIGNvdW50czogICA5MDkgIDExODBcbiAgIHByb2JhYmlsaXRpZXM6IDAuNDM1IDAuNTY1IFxuIn0= -->
 <pre><code>Call:
 rpart(formula = income ~ ., data = new.df.train, method = &quot;class&quot;)
   n= 15016 
 
-        CP nsplit rel error  xerror      xstd
-1 0.508791      0   1.00000 1.01705 0.0081594
-2 0.039957      1   0.49121 0.49121 0.0070254
-3 0.010389      2   0.45125 0.45125 0.0068222
-4 0.010000      6   0.39438 0.39864 0.0065202
+          CP nsplit rel error    xerror        xstd
+1 0.50879062      0 1.0000000 1.0170485 0.008159429
+2 0.03995738      1 0.4912094 0.4912094 0.007025394
+3 0.01038892      2 0.4512520 0.4512520 0.006822174
+4 0.01000000      6 0.3943793 0.3986414 0.006520162
 
 Variable importance
   relationship marital_status     occupation            sex            age   capital_gain hours_per_week      education  education_num 
             28             28             10             10              8              7              3              3              3 
 
-Node number 1: 15016 observations,    complexity param=0.50879
+Node number 1: 15016 observations,    complexity param=0.5087906
   predicted class=&lt;=50K  expected loss=0.5  P(node) =1
     class counts:  7508  7508
    probabilities: 0.500 0.500 
   left son=2 (6090 obs) right son=3 (8926 obs)
   Primary splits:
-      relationship   splits as  RLLLLR, improve=2015.50, (0 missing)
-      marital_status splits as  LRRLLLL, improve=1998.70, (0 missing)
-      age            &lt; 28.5   to the left,  improve= 993.36, (0 missing)
-      education      splits as  LLLLLLLLLRRLRLRL, improve= 903.95, (0 missing)
-      education_num  &lt; 12.5   to the left,  improve= 903.95, (0 missing)
+      relationship   splits as  RLLLLR, improve=2015.4720, (0 missing)
+      marital_status splits as  LRRLLLL, improve=1998.7020, (0 missing)
+      age            &lt; 28.5    to the left,  improve= 993.3557, (0 missing)
+      education      splits as  LLLLLLLLLRRLRLRL, improve= 903.9467, (0 missing)
+      education_num  &lt; 12.5    to the left,  improve= 903.9467, (0 missing)
   Surrogate splits:
       marital_status splits as  LRRLLLL, agree=0.993, adj=0.984, (0 split)
       sex            splits as  LR, agree=0.731, adj=0.337, (0 split)
-      age            &lt; 28.5   to the left,  agree=0.702, adj=0.265, (0 split)
+      age            &lt; 28.5    to the left,  agree=0.702, adj=0.265, (0 split)
       occupation     splits as  LLRRRLRLLRRRRR, agree=0.660, adj=0.162, (0 split)
-      hours_per_week &lt; 39.5   to the left,  agree=0.639, adj=0.109, (0 split)
+      hours_per_week &lt; 39.5    to the left,  agree=0.639, adj=0.109, (0 split)
 
-Node number 2: 6090 observations,    complexity param=0.039957
-  predicted class=&lt;=50K  expected loss=0.18637  P(node) =0.40557
+Node number 2: 6090 observations,    complexity param=0.03995738
+  predicted class=&lt;=50K  expected loss=0.1863711  P(node) =0.4055674
     class counts:  4955  1135
    probabilities: 0.814 0.186 
   left son=4 (5742 obs) right son=5 (348 obs)
   Primary splits:
-      capital_gain   &lt; 4668.5 to the left,  improve=409.34, (0 missing)
-      education      splits as  LLLLLLLLLRRLRLRL, improve=252.05, (0 missing)
-      education_num  &lt; 12.5   to the left,  improve=252.05, (0 missing)
-      occupation     splits as  LLLRLLLLLRRLLL, improve=217.01, (0 missing)
-      hours_per_week &lt; 42.5   to the left,  improve=179.39, (0 missing)
+      capital_gain   &lt; 4668.5  to the left,  improve=409.3392, (0 missing)
+      education      splits as  LLLLLLLLLRRLRLRL, improve=252.0480, (0 missing)
+      education_num  &lt; 12.5    to the left,  improve=252.0480, (0 missing)
+      occupation     splits as  LLLRLLLLLRRLLL, improve=217.0083, (0 missing)
+      hours_per_week &lt; 42.5    to the left,  improve=179.3875, (0 missing)
 
-Node number 3: 8926 observations,    complexity param=0.010389
-  predicted class=&gt;50K   expected loss=0.28602  P(node) =0.59443
+Node number 3: 8926 observations,    complexity param=0.01038892
+  predicted class=&gt;50K   expected loss=0.2860184  P(node) =0.5944326
     class counts:  2553  6373
    probabilities: 0.286 0.714 
   left son=6 (3152 obs) right son=7 (5774 obs)
   Primary splits:
-      occupation    splits as  RLLRLLLLLRRRRL, improve=394.86, (0 missing)
-      education     splits as  LLLLLLLRLRRLRLRL, improve=354.46, (0 missing)
-      education_num &lt; 11.5   to the left,  improve=354.46, (0 missing)
-      capital_gain  &lt; 5095.5 to the left,  improve=208.85, (0 missing)
-      age           &lt; 29.5   to the left,  improve=121.25, (0 missing)
+      occupation    splits as  RLLRLLLLLRRRRL, improve=394.8628, (0 missing)
+      education     splits as  LLLLLLLRLRRLRLRL, improve=354.4634, (0 missing)
+      education_num &lt; 11.5    to the left,  improve=354.4634, (0 missing)
+      capital_gain  &lt; 5095.5  to the left,  improve=208.8549, (0 missing)
+      age           &lt; 29.5    to the left,  improve=121.2541, (0 missing)
   Surrogate splits:
       education      splits as  LLLLLLLRRRRLRLRR, agree=0.748, adj=0.286, (0 split)
-      education_num  &lt; 9.5    to the left,  agree=0.748, adj=0.286, (0 split)
+      education_num  &lt; 9.5     to the left,  agree=0.748, adj=0.286, (0 split)
       native_country splits as  LRRRRLRRRRRRLLRRLRRRRRRLLLRRRLLRRRRRLRLL, agree=0.658, adj=0.031, (0 split)
-      age            &lt; 24.5   to the left,  agree=0.652, adj=0.016, (0 split)
+      age            &lt; 24.5    to the left,  agree=0.652, adj=0.016, (0 split)
       race           splits as  LRRLR, agree=0.647, adj=0.001, (0 split)
 
 Node number 4: 5742 observations
-  predicted class=&lt;=50K  expected loss=0.14124  P(node) =0.38239
+  predicted class=&lt;=50K  expected loss=0.14124  P(node) =0.3823921
     class counts:  4931   811
    probabilities: 0.859 0.141 
 
 Node number 5: 348 observations
-  predicted class=&gt;50K   expected loss=0.068966  P(node) =0.023175
+  predicted class=&gt;50K   expected loss=0.06896552  P(node) =0.02317528
     class counts:    24   324
    probabilities: 0.069 0.931 
 
-Node number 6: 3152 observations,    complexity param=0.010389
-  predicted class=&gt;50K   expected loss=0.48731  P(node) =0.20991
+Node number 6: 3152 observations,    complexity param=0.01038892
+  predicted class=&gt;50K   expected loss=0.4873096  P(node) =0.2099094
     class counts:  1536  1616
    probabilities: 0.487 0.513 
   left son=12 (2914 obs) right son=13 (238 obs)
   Primary splits:
-      capital_gain   &lt; 5095.5 to the left,  improve=120.170, (0 missing)
-      education      splits as  LLRLLLLRRRLRRLRR, improve= 90.205, (0 missing)
-      education_num  &lt; 7.5    to the left,  improve= 89.940, (0 missing)
-      age            &lt; 30.5   to the left,  improve= 48.432, (0 missing)
-      native_country splits as  RRLLRLRRR-RLLR--RLRRRRRLLL-LRRLLLR-LRRRR, improve= 39.578, (0 missing)
+      capital_gain   &lt; 5095.5  to the left,  improve=120.16890, (0 missing)
+      education      splits as  LLRLLLLRRRLRRLRR, improve= 90.20526, (0 missing)
+      education_num  &lt; 7.5     to the left,  improve= 89.93987, (0 missing)
+      age            &lt; 30.5    to the left,  improve= 48.43182, (0 missing)
+      native_country splits as  RRLLRLRRR-RLLR--RLRRRRRLLL-LRRLLLR-LRRRR, improve= 39.57810, (0 missing)
   Surrogate splits:
-      fnlwgt &lt; 20520  to the right, agree=0.925, adj=0.008, (0 split)
+      fnlwgt &lt; 20520.5 to the right, agree=0.925, adj=0.008, (0 split)
 
 Node number 7: 5774 observations
-  predicted class=&gt;50K   expected loss=0.17613  P(node) =0.38452
+  predicted class=&gt;50K   expected loss=0.1761344  P(node) =0.3845232
     class counts:  1017  4757
    probabilities: 0.176 0.824 
 
-Node number 12: 2914 observations,    complexity param=0.010389
-  predicted class=&lt;=50K  expected loss=0.47323  P(node) =0.19406
+Node number 12: 2914 observations,    complexity param=0.01038892
+  predicted class=&lt;=50K  expected loss=0.4732327  P(node) =0.1940597
     class counts:  1535  1379
    probabilities: 0.527 0.473 
   left son=24 (514 obs) right son=25 (2400 obs)
   Primary splits:
-      education      splits as  LLLLLLLRRRLRRLRR, improve=83.874, (0 missing)
-      education_num  &lt; 8.5    to the left,  improve=82.940, (0 missing)
-      age            &lt; 30.5   to the left,  improve=40.298, (0 missing)
-      native_country splits as  RRLLRLLLR-RLLR--RLRRRRRRLR-LRRRLLR-LRRRR, improve=37.739, (0 missing)
-      capital_loss   &lt; 1794   to the left,  improve=35.787, (0 missing)
+      education      splits as  LLLLLLLRRRLRRLRR, improve=83.87351, (0 missing)
+      education_num  &lt; 8.5     to the left,  improve=82.94005, (0 missing)
+      age            &lt; 30.5    to the left,  improve=40.29846, (0 missing)
+      native_country splits as  RRLLRLLLR-RLLR--RLRRRRRRLR-LRRRLLR-LRRRR, improve=37.73930, (0 missing)
+      capital_loss   &lt; 1794    to the left,  improve=35.78732, (0 missing)
   Surrogate splits:
-      education_num  &lt; 8.5    to the left,  agree=0.999, adj=0.996, (0 split)
+      education_num  &lt; 8.5     to the left,  agree=0.999, adj=0.996, (0 split)
       native_country splits as  RRRLRLRLR-RRLR--RLRRRRRRLR-RRRLRRR-RLRRR, agree=0.837, adj=0.074, (0 split)
 
 Node number 13: 238 observations
-  predicted class=&gt;50K   expected loss=0.0042017  P(node) =0.01585
+  predicted class=&gt;50K   expected loss=0.004201681  P(node) =0.01584976
     class counts:     1   237
    probabilities: 0.004 0.996 
 
 Node number 24: 514 observations
-  predicted class=&lt;=50K  expected loss=0.21401  P(node) =0.03423
+  predicted class=&lt;=50K  expected loss=0.2140078  P(node) =0.03423015
     class counts:   404   110
    probabilities: 0.786 0.214 
 
-Node number 25: 2400 observations,    complexity param=0.010389
-  predicted class=&gt;50K   expected loss=0.47125  P(node) =0.15983
+Node number 25: 2400 observations,    complexity param=0.01038892
+  predicted class=&gt;50K   expected loss=0.47125  P(node) =0.1598295
     class counts:  1131  1269
    probabilities: 0.471 0.529 
   left son=50 (311 obs) right son=51 (2089 obs)
   Primary splits:
-      age            &lt; 29.5   to the left,  improve=42.049, (0 missing)
-      capital_loss   &lt; 1794   to the left,  improve=29.121, (0 missing)
-      occupation     splits as  -RR-LLRLL----R, improve=22.780, (0 missing)
-      hours_per_week &lt; 34.5   to the left,  improve=19.411, (0 missing)
-      native_country splits as  RRLLRLLRR-RLLR--RLRRRRRLLL-LRRRLLL-L-RRR, improve=18.729, (0 missing)
+      age            &lt; 29.5    to the left,  improve=42.04943, (0 missing)
+      capital_loss   &lt; 1794    to the left,  improve=29.12078, (0 missing)
+      occupation     splits as  -RR-LLRLL----R, improve=22.78018, (0 missing)
+      hours_per_week &lt; 34.5    to the left,  improve=19.41145, (0 missing)
+      native_country splits as  RRLLRLLRR-RLLR--RLRRRRRLLL-LRRRLLL-L-RRR, improve=18.72924, (0 missing)
   Surrogate splits:
       native_country splits as  RRRLRRLRR-RRRR--RRRRRRRLRR-RRRRRRR-R-RRR, agree=0.872, adj=0.013, (0 split)
 
 Node number 50: 311 observations
-  predicted class=&lt;=50K  expected loss=0.28617  P(node) =0.020711
+  predicted class=&lt;=50K  expected loss=0.2861736  P(node) =0.02071124
     class counts:   222    89
    probabilities: 0.714 0.286 
 
 Node number 51: 2089 observations
-  predicted class=&gt;50K   expected loss=0.43514  P(node) =0.13912
+  predicted class=&gt;50K   expected loss=0.4351364  P(node) =0.1391183
     class counts:   909  1180
    probabilities: 0.435 0.565 </code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucHJpbnRjcChteV90cmVlX25ldylcbmBgYCJ9 -->
 <pre class="r"><code>printcp(my_tree_new)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiXG5DbGFzc2lmaWNhdGlvbiB0cmVlOlxucnBhcnQoZm9ybXVsYSA9IGluY29tZSB+IC4sIGRhdGEgPSBuZXcuZGYudHJhaW4sIG1ldGhvZCA9IFwiY2xhc3NcIilcblxuVmFyaWFibGVzIGFjdHVhbGx5IHVzZWQgaW4gdHJlZSBjb25zdHJ1Y3Rpb246XG5bMV0gYWdlICAgICAgICAgIGNhcGl0YWxfZ2FpbiBlZHVjYXRpb24gICAgb2NjdXBhdGlvbiAgIHJlbGF0aW9uc2hpcFxuXG5Sb290IG5vZGUgZXJyb3I6IDc1MDgvMTUwMTYgPSAwLjVcblxubj0gMTUwMTYgXG5cbiAgICAgIENQIG5zcGxpdCByZWwgZXJyb3IgeGVycm9yICAgIHhzdGRcbjEgMC41MDg4ICAgICAgMCAgICAgMS4wMDAgIDEuMDE3IDAuMDA4MTZcbjIgMC4wNDAwICAgICAgMSAgICAgMC40OTEgIDAuNDkxIDAuMDA3MDNcbjMgMC4wMTA0ICAgICAgMiAgICAgMC40NTEgIDAuNDUxIDAuMDA2ODJcbjQgMC4wMTAwICAgICAgNiAgICAgMC4zOTQgIDAuMzk5IDAuMDA2NTJcbiJ9 -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG5DbGFzc2lmaWNhdGlvbiB0cmVlOlxucnBhcnQoZm9ybXVsYSA9IGluY29tZSB+IC4sIGRhdGEgPSBuZXcuZGYudHJhaW4sIG1ldGhvZCA9IFwiY2xhc3NcIilcblxuVmFyaWFibGVzIGFjdHVhbGx5IHVzZWQgaW4gdHJlZSBjb25zdHJ1Y3Rpb246XG5bMV0gYWdlICAgICAgICAgIGNhcGl0YWxfZ2FpbiBlZHVjYXRpb24gICAgb2NjdXBhdGlvbiAgIHJlbGF0aW9uc2hpcFxuXG5Sb290IG5vZGUgZXJyb3I6IDc1MDgvMTUwMTYgPSAwLjVcblxubj0gMTUwMTYgXG5cbiAgICAgICAgQ1AgbnNwbGl0IHJlbCBlcnJvciAgeGVycm9yICAgICAgeHN0ZFxuMSAwLjUwODc5MSAgICAgIDAgICAxLjAwMDAwIDEuMDE3MDUgMC4wMDgxNTk0XG4yIDAuMDM5OTU3ICAgICAgMSAgIDAuNDkxMjEgMC40OTEyMSAwLjAwNzAyNTRcbjMgMC4wMTAzODkgICAgICAyICAgMC40NTEyNSAwLjQ1MTI1IDAuMDA2ODIyMlxuNCAwLjAxMDAwMCAgICAgIDYgICAwLjM5NDM4IDAuMzk4NjQgMC4wMDY1MjAyXG4ifQ== -->
 <pre><code>
 Classification tree:
 rpart(formula = income ~ ., data = new.df.train, method = &quot;class&quot;)
@@ -3689,11 +3666,11 @@ Root node error: 7508/15016 = 0.5
 
 n= 15016 
 
-      CP nsplit rel error xerror    xstd
-1 0.5088      0     1.000  1.017 0.00816
-2 0.0400      1     0.491  0.491 0.00703
-3 0.0104      2     0.451  0.451 0.00682
-4 0.0100      6     0.394  0.399 0.00652</code></pre>
+        CP nsplit rel error  xerror      xstd
+1 0.508791      0   1.00000 1.01705 0.0081594
+2 0.039957      1   0.49121 0.49121 0.0070254
+3 0.010389      2   0.45125 0.45125 0.0068222
+4 0.010000      6   0.39438 0.39864 0.0065202</code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucGxvdGNwKG15X3RyZWVfbmV3KVxuXG5gYGAifQ== -->
 <pre class="r"><code>plotcp(my_tree_new)
@@ -3715,34 +3692,34 @@ y_hat_new &lt;- predict(my_tree_new, newdata = X.test,type = &quot;class&quot;)
 confusMatrix_new &lt;-confusionMatrix(y_hat_new, as.factor(y.test))
 print(confusMatrix_new)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiQ29uZnVzaW9uIE1hdHJpeCBhbmQgU3RhdGlzdGljc1xuXG4gICAgICAgICAgUmVmZXJlbmNlXG5QcmVkaWN0aW9uIDw9NTBLID41MEtcbiAgICAgPD01MEsgIDg0MzMgIDQ5MVxuICAgICA+NTBLICAgMjkyNyAzMjA5XG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiAgICAgICAgICAgICAgIEFjY3VyYWN5IDogMC43NzMgICAgICAgIFxuICAgICAgICAgICAgICAgICA5NSUgQ0kgOiAoMC43NjYsIDAuNzgpXG4gICAgTm8gSW5mb3JtYXRpb24gUmF0ZSA6IDAuNzU0ICAgICAgICBcbiAgICBQLVZhbHVlIFtBY2MgPiBOSVJdIDogMy44NWUtMDggICAgIFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG4gICAgICAgICAgICAgICAgICBLYXBwYSA6IDAuNDk5ICAgICAgICBcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuIE1jbmVtYXIncyBUZXN0IFAtVmFsdWUgOiA8IDJlLTE2ICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiAgICAgICAgICAgIFNlbnNpdGl2aXR5IDogMC43NDIgICAgICAgIFxuICAgICAgICAgICAgU3BlY2lmaWNpdHkgOiAwLjg2NyAgICAgICAgXG4gICAgICAgICBQb3MgUHJlZCBWYWx1ZSA6IDAuOTQ1ICAgICAgICBcbiAgICAgICAgIE5lZyBQcmVkIFZhbHVlIDogMC41MjMgICAgICAgIFxuICAgICAgICAgICAgIFByZXZhbGVuY2UgOiAwLjc1NCAgICAgICAgXG4gICAgICAgICBEZXRlY3Rpb24gUmF0ZSA6IDAuNTYwICAgICAgICBcbiAgIERldGVjdGlvbiBQcmV2YWxlbmNlIDogMC41OTMgICAgICAgIFxuICAgICAgQmFsYW5jZWQgQWNjdXJhY3kgOiAwLjgwNSAgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiAgICAgICAnUG9zaXRpdmUnIENsYXNzIDogPD01MEsgICAgICAgIFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG4ifQ== -->
+<!-- rnb-output-begin eyJkYXRhIjoiQ29uZnVzaW9uIE1hdHJpeCBhbmQgU3RhdGlzdGljc1xuXG4gICAgICAgICAgUmVmZXJlbmNlXG5QcmVkaWN0aW9uIDw9NTBLID41MEtcbiAgICAgPD01MEsgIDg0MzMgIDQ5MVxuICAgICA+NTBLICAgMjkyNyAzMjA5XG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiAgICAgICAgICAgICAgIEFjY3VyYWN5IDogMC43NzMgICAgICAgICAgIFxuICAgICAgICAgICAgICAgICA5NSUgQ0kgOiAoMC43NjYzLCAwLjc3OTcpXG4gICAgTm8gSW5mb3JtYXRpb24gUmF0ZSA6IDAuNzU0MyAgICAgICAgICBcbiAgICBQLVZhbHVlIFtBY2MgPiBOSVJdIDogMy44NDVlLTA4ICAgICAgIFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG4gICAgICAgICAgICAgICAgICBLYXBwYSA6IDAuNDk4OSAgICAgICAgICBcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuIE1jbmVtYXIncyBUZXN0IFAtVmFsdWUgOiA8IDIuMmUtMTYgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiAgICAgICAgICAgIFNlbnNpdGl2aXR5IDogMC43NDIzICAgICAgICAgIFxuICAgICAgICAgICAgU3BlY2lmaWNpdHkgOiAwLjg2NzMgICAgICAgICAgXG4gICAgICAgICBQb3MgUHJlZCBWYWx1ZSA6IDAuOTQ1MCAgICAgICAgICBcbiAgICAgICAgIE5lZyBQcmVkIFZhbHVlIDogMC41MjMwICAgICAgICAgIFxuICAgICAgICAgICAgIFByZXZhbGVuY2UgOiAwLjc1NDMgICAgICAgICAgXG4gICAgICAgICBEZXRlY3Rpb24gUmF0ZSA6IDAuNTYwMCAgICAgICAgICBcbiAgIERldGVjdGlvbiBQcmV2YWxlbmNlIDogMC41OTI2ICAgICAgICAgIFxuICAgICAgQmFsYW5jZWQgQWNjdXJhY3kgOiAwLjgwNDggICAgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiAgICAgICAnUG9zaXRpdmUnIENsYXNzIDogPD01MEsgICAgICAgICAgIFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG4ifQ== -->
 <pre><code>Confusion Matrix and Statistics
 
           Reference
 Prediction &lt;=50K &gt;50K
      &lt;=50K  8433  491
      &gt;50K   2927 3209
-                                       
-               Accuracy : 0.773        
-                 95% CI : (0.766, 0.78)
-    No Information Rate : 0.754        
-    P-Value [Acc &gt; NIR] : 3.85e-08     
-                                       
-                  Kappa : 0.499        
-                                       
- Mcnemar&#39;s Test P-Value : &lt; 2e-16      
-                                       
-            Sensitivity : 0.742        
-            Specificity : 0.867        
-         Pos Pred Value : 0.945        
-         Neg Pred Value : 0.523        
-             Prevalence : 0.754        
-         Detection Rate : 0.560        
-   Detection Prevalence : 0.593        
-      Balanced Accuracy : 0.805        
-                                       
-       &#39;Positive&#39; Class : &lt;=50K        
-                                       </code></pre>
+                                          
+               Accuracy : 0.773           
+                 95% CI : (0.7663, 0.7797)
+    No Information Rate : 0.7543          
+    P-Value [Acc &gt; NIR] : 3.845e-08       
+                                          
+                  Kappa : 0.4989          
+                                          
+ Mcnemar&#39;s Test P-Value : &lt; 2.2e-16       
+                                          
+            Sensitivity : 0.7423          
+            Specificity : 0.8673          
+         Pos Pred Value : 0.9450          
+         Neg Pred Value : 0.5230          
+             Prevalence : 0.7543          
+         Detection Rate : 0.5600          
+   Detection Prevalence : 0.5926          
+      Balanced Accuracy : 0.8048          
+                                          
+       &#39;Positive&#39; Class : &lt;=50K           
+                                          </code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBEcmF3aW5nIGRlY2lzaW9uIGNsYXNzaWZpY2F0aW9uIHRyZWVcbnJwYXJ0LnBsb3QobXlfdHJlZV9uZXcsIGV4dHJhPTEwNCwgZmFsbGVuLmxlYXZlcz1ULCB0eXBlPTQsIG1haW49XCJEZWNpc2lvbiBUcmVlXCIpXG5cbmBgYCJ9 -->
 <pre class="r"><code># Drawing decision classification tree
@@ -3859,66 +3836,66 @@ print(paste(&quot;The test data size of the class &#39;&lt;=50K&#39; is:&quot;,N
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuY29uZnVzaW9uTWF0cml4KHlfaGF0LCBhcy5mYWN0b3IoeS50ZXN0KSlcbmBgYCJ9 -->
 <pre class="r"><code>confusionMatrix(y_hat, as.factor(y.test))</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiQ29uZnVzaW9uIE1hdHJpeCBhbmQgU3RhdGlzdGljc1xuXG4gICAgICAgICAgUmVmZXJlbmNlXG5QcmVkaWN0aW9uIDw9NTBLICA+NTBLXG4gICAgIDw9NTBLIDEwNzcyICAxODM3XG4gICAgID41MEsgICAgNTg4ICAxODYzXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG4gICAgICAgICAgICAgICBBY2N1cmFjeSA6IDAuODM5ICAgICAgICAgXG4gICAgICAgICAgICAgICAgIDk1JSBDSSA6ICgwLjgzMywgMC44NDUpXG4gICAgTm8gSW5mb3JtYXRpb24gUmF0ZSA6IDAuNzU0ICAgICAgICAgXG4gICAgUC1WYWx1ZSBbQWNjID4gTklSXSA6IDwyZS0xNiAgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG4gICAgICAgICAgICAgICAgICBLYXBwYSA6IDAuNTEgICAgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG4gTWNuZW1hcidzIFRlc3QgUC1WYWx1ZSA6IDwyZS0xNiAgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG4gICAgICAgICAgICBTZW5zaXRpdml0eSA6IDAuOTQ4ICAgICAgICAgXG4gICAgICAgICAgICBTcGVjaWZpY2l0eSA6IDAuNTA0ICAgICAgICAgXG4gICAgICAgICBQb3MgUHJlZCBWYWx1ZSA6IDAuODU0ICAgICAgICAgXG4gICAgICAgICBOZWcgUHJlZCBWYWx1ZSA6IDAuNzYwICAgICAgICAgXG4gICAgICAgICAgICAgUHJldmFsZW5jZSA6IDAuNzU0ICAgICAgICAgXG4gICAgICAgICBEZXRlY3Rpb24gUmF0ZSA6IDAuNzE1ICAgICAgICAgXG4gICBEZXRlY3Rpb24gUHJldmFsZW5jZSA6IDAuODM3ICAgICAgICAgXG4gICAgICBCYWxhbmNlZCBBY2N1cmFjeSA6IDAuNzI2ICAgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG4gICAgICAgJ1Bvc2l0aXZlJyBDbGFzcyA6IDw9NTBLICAgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG4ifQ== -->
+<!-- rnb-output-begin eyJkYXRhIjoiQ29uZnVzaW9uIE1hdHJpeCBhbmQgU3RhdGlzdGljc1xuXG4gICAgICAgICAgUmVmZXJlbmNlXG5QcmVkaWN0aW9uIDw9NTBLICA+NTBLXG4gICAgIDw9NTBLIDEwNzcyICAxODM3XG4gICAgID41MEsgICAgNTg4ICAxODYzXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuICAgICAgICAgICAgICAgQWNjdXJhY3kgOiAwLjgzOSAgICAgICAgICBcbiAgICAgICAgICAgICAgICAgOTUlIENJIDogKDAuODMzLCAwLjg0NDgpXG4gICAgTm8gSW5mb3JtYXRpb24gUmF0ZSA6IDAuNzU0MyAgICAgICAgIFxuICAgIFAtVmFsdWUgW0FjYyA+IE5JUl0gOiA8IDIuMmUtMTYgICAgICBcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG4gICAgICAgICAgICAgICAgICBLYXBwYSA6IDAuNTA5OCAgICAgICAgIFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiBNY25lbWFyJ3MgVGVzdCBQLVZhbHVlIDogPCAyLjJlLTE2ICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuICAgICAgICAgICAgU2Vuc2l0aXZpdHkgOiAwLjk0ODIgICAgICAgICBcbiAgICAgICAgICAgIFNwZWNpZmljaXR5IDogMC41MDM1ICAgICAgICAgXG4gICAgICAgICBQb3MgUHJlZCBWYWx1ZSA6IDAuODU0MyAgICAgICAgIFxuICAgICAgICAgTmVnIFByZWQgVmFsdWUgOiAwLjc2MDEgICAgICAgICBcbiAgICAgICAgICAgICBQcmV2YWxlbmNlIDogMC43NTQzICAgICAgICAgXG4gICAgICAgICBEZXRlY3Rpb24gUmF0ZSA6IDAuNzE1MyAgICAgICAgIFxuICAgRGV0ZWN0aW9uIFByZXZhbGVuY2UgOiAwLjgzNzMgICAgICAgICBcbiAgICAgIEJhbGFuY2VkIEFjY3VyYWN5IDogMC43MjU5ICAgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuICAgICAgICdQb3NpdGl2ZScgQ2xhc3MgOiA8PTUwSyAgICAgICAgICBcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG4ifQ== -->
 <pre><code>Confusion Matrix and Statistics
 
           Reference
 Prediction &lt;=50K  &gt;50K
      &lt;=50K 10772  1837
      &gt;50K    588  1863
-                                        
-               Accuracy : 0.839         
-                 95% CI : (0.833, 0.845)
-    No Information Rate : 0.754         
-    P-Value [Acc &gt; NIR] : &lt;2e-16        
-                                        
-                  Kappa : 0.51          
-                                        
- Mcnemar&#39;s Test P-Value : &lt;2e-16        
-                                        
-            Sensitivity : 0.948         
-            Specificity : 0.504         
-         Pos Pred Value : 0.854         
-         Neg Pred Value : 0.760         
-             Prevalence : 0.754         
-         Detection Rate : 0.715         
-   Detection Prevalence : 0.837         
-      Balanced Accuracy : 0.726         
-                                        
-       &#39;Positive&#39; Class : &lt;=50K         
-                                        </code></pre>
+                                         
+               Accuracy : 0.839          
+                 95% CI : (0.833, 0.8448)
+    No Information Rate : 0.7543         
+    P-Value [Acc &gt; NIR] : &lt; 2.2e-16      
+                                         
+                  Kappa : 0.5098         
+                                         
+ Mcnemar&#39;s Test P-Value : &lt; 2.2e-16      
+                                         
+            Sensitivity : 0.9482         
+            Specificity : 0.5035         
+         Pos Pred Value : 0.8543         
+         Neg Pred Value : 0.7601         
+             Prevalence : 0.7543         
+         Detection Rate : 0.7153         
+   Detection Prevalence : 0.8373         
+      Balanced Accuracy : 0.7259         
+                                         
+       &#39;Positive&#39; Class : &lt;=50K          
+                                         </code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuY29uZnVzaW9uTWF0cml4KHlfaGF0X25ldywgYXMuZmFjdG9yKHkudGVzdCkpXG5gYGAifQ== -->
 <pre class="r"><code>confusionMatrix(y_hat_new, as.factor(y.test))</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiQ29uZnVzaW9uIE1hdHJpeCBhbmQgU3RhdGlzdGljc1xuXG4gICAgICAgICAgUmVmZXJlbmNlXG5QcmVkaWN0aW9uIDw9NTBLID41MEtcbiAgICAgPD01MEsgIDg0MzMgIDQ5MVxuICAgICA+NTBLICAgMjkyNyAzMjA5XG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiAgICAgICAgICAgICAgIEFjY3VyYWN5IDogMC43NzMgICAgICAgIFxuICAgICAgICAgICAgICAgICA5NSUgQ0kgOiAoMC43NjYsIDAuNzgpXG4gICAgTm8gSW5mb3JtYXRpb24gUmF0ZSA6IDAuNzU0ICAgICAgICBcbiAgICBQLVZhbHVlIFtBY2MgPiBOSVJdIDogMy44NWUtMDggICAgIFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG4gICAgICAgICAgICAgICAgICBLYXBwYSA6IDAuNDk5ICAgICAgICBcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuIE1jbmVtYXIncyBUZXN0IFAtVmFsdWUgOiA8IDJlLTE2ICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiAgICAgICAgICAgIFNlbnNpdGl2aXR5IDogMC43NDIgICAgICAgIFxuICAgICAgICAgICAgU3BlY2lmaWNpdHkgOiAwLjg2NyAgICAgICAgXG4gICAgICAgICBQb3MgUHJlZCBWYWx1ZSA6IDAuOTQ1ICAgICAgICBcbiAgICAgICAgIE5lZyBQcmVkIFZhbHVlIDogMC41MjMgICAgICAgIFxuICAgICAgICAgICAgIFByZXZhbGVuY2UgOiAwLjc1NCAgICAgICAgXG4gICAgICAgICBEZXRlY3Rpb24gUmF0ZSA6IDAuNTYwICAgICAgICBcbiAgIERldGVjdGlvbiBQcmV2YWxlbmNlIDogMC41OTMgICAgICAgIFxuICAgICAgQmFsYW5jZWQgQWNjdXJhY3kgOiAwLjgwNSAgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiAgICAgICAnUG9zaXRpdmUnIENsYXNzIDogPD01MEsgICAgICAgIFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG4ifQ== -->
+<!-- rnb-output-begin eyJkYXRhIjoiQ29uZnVzaW9uIE1hdHJpeCBhbmQgU3RhdGlzdGljc1xuXG4gICAgICAgICAgUmVmZXJlbmNlXG5QcmVkaWN0aW9uIDw9NTBLID41MEtcbiAgICAgPD01MEsgIDg0MzMgIDQ5MVxuICAgICA+NTBLICAgMjkyNyAzMjA5XG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiAgICAgICAgICAgICAgIEFjY3VyYWN5IDogMC43NzMgICAgICAgICAgIFxuICAgICAgICAgICAgICAgICA5NSUgQ0kgOiAoMC43NjYzLCAwLjc3OTcpXG4gICAgTm8gSW5mb3JtYXRpb24gUmF0ZSA6IDAuNzU0MyAgICAgICAgICBcbiAgICBQLVZhbHVlIFtBY2MgPiBOSVJdIDogMy44NDVlLTA4ICAgICAgIFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG4gICAgICAgICAgICAgICAgICBLYXBwYSA6IDAuNDk4OSAgICAgICAgICBcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuIE1jbmVtYXIncyBUZXN0IFAtVmFsdWUgOiA8IDIuMmUtMTYgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiAgICAgICAgICAgIFNlbnNpdGl2aXR5IDogMC43NDIzICAgICAgICAgIFxuICAgICAgICAgICAgU3BlY2lmaWNpdHkgOiAwLjg2NzMgICAgICAgICAgXG4gICAgICAgICBQb3MgUHJlZCBWYWx1ZSA6IDAuOTQ1MCAgICAgICAgICBcbiAgICAgICAgIE5lZyBQcmVkIFZhbHVlIDogMC41MjMwICAgICAgICAgIFxuICAgICAgICAgICAgIFByZXZhbGVuY2UgOiAwLjc1NDMgICAgICAgICAgXG4gICAgICAgICBEZXRlY3Rpb24gUmF0ZSA6IDAuNTYwMCAgICAgICAgICBcbiAgIERldGVjdGlvbiBQcmV2YWxlbmNlIDogMC41OTI2ICAgICAgICAgIFxuICAgICAgQmFsYW5jZWQgQWNjdXJhY3kgOiAwLjgwNDggICAgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiAgICAgICAnUG9zaXRpdmUnIENsYXNzIDogPD01MEsgICAgICAgICAgIFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG4ifQ== -->
 <pre><code>Confusion Matrix and Statistics
 
           Reference
 Prediction &lt;=50K &gt;50K
      &lt;=50K  8433  491
      &gt;50K   2927 3209
-                                       
-               Accuracy : 0.773        
-                 95% CI : (0.766, 0.78)
-    No Information Rate : 0.754        
-    P-Value [Acc &gt; NIR] : 3.85e-08     
-                                       
-                  Kappa : 0.499        
-                                       
- Mcnemar&#39;s Test P-Value : &lt; 2e-16      
-                                       
-            Sensitivity : 0.742        
-            Specificity : 0.867        
-         Pos Pred Value : 0.945        
-         Neg Pred Value : 0.523        
-             Prevalence : 0.754        
-         Detection Rate : 0.560        
-   Detection Prevalence : 0.593        
-      Balanced Accuracy : 0.805        
-                                       
-       &#39;Positive&#39; Class : &lt;=50K        
-                                       </code></pre>
+                                          
+               Accuracy : 0.773           
+                 95% CI : (0.7663, 0.7797)
+    No Information Rate : 0.7543          
+    P-Value [Acc &gt; NIR] : 3.845e-08       
+                                          
+                  Kappa : 0.4989          
+                                          
+ Mcnemar&#39;s Test P-Value : &lt; 2.2e-16       
+                                          
+            Sensitivity : 0.7423          
+            Specificity : 0.8673          
+         Pos Pred Value : 0.9450          
+         Neg Pred Value : 0.5230          
+             Prevalence : 0.7543          
+         Detection Rate : 0.5600          
+   Detection Prevalence : 0.5926          
+      Balanced Accuracy : 0.8048          
+                                          
+       &#39;Positive&#39; Class : &lt;=50K           
+                                          </code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucHJpbnQocGFzdGUoXCJ0aGUgYXVjIG9mIHRoZSBiZWZvcmUgdHJlYXRtZW50IGlzOlwiLHJvdW5kKGF1Y0B5LnZhbHVlc1tbMV1dLGRpZ2l0cyA9IDMpKSlcbmBgYCJ9 -->
 <pre class="r"><code>print(paste(&quot;the auc of the before treatment is:&quot;,round(auc@y.values[[1]],digits = 3)))</code></pre>
@@ -3948,7 +3925,7 @@ value.</p>
 </div>
 </div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiQ1MgNDIyIEhvbWV3b3JrIDQiCmF1dGhvcjogIlhpbmdsaSBMaSIKb3V0cHV0OgogIGh0bWxfbm90ZWJvb2s6CiAgICB0b2M6IHllcwogICAgdG9jX2Zsb2F0OiB5ZXMKICBodG1sX2RvY3VtZW50OgogICAgdG9jOiB5ZXMKICAgIGRmX3ByaW50OiBwYWdlZAotLS0KCiMjIEhvbWV3b3JrIDQKCnNldCB3b3JrIHNwYWNlIGFuZCBpbnN0YWxsIGRlcGVuZGVudCBwYWNrYWdlLgoKYGBge3J9CgpzZXR3ZChnZXR3ZCgpKQoKI2luc3RhbGwucGFja2FnZXMocnBhcnQpCmxpYnJhcnkocnBhcnQpICAjY2xhc3NpZmljYXRpb24gYW5kIHJlZ3Jlc3Npb24gdHJlZXMKbGlicmFyeShycGFydC5wbG90KQojaW5zdGFsbC5wYWNrYWdlcyhjYXJldCkKbGlicmFyeShjYXJldCkKI2luc3RhbGwucGFja2FnZXMocGFydHlraXQpCmxpYnJhcnkocGFydHlraXQpICN0cmVlcGxvdHMKI2luc3RhbGwucGFja2FnZXMoUk9DUikKbGlicmFyeShST0NSKQpgYGAKCiMjIyBQYXJ0IDIuMS1hCgpgYGB7cn0KCmRmLnRlc3QgPC0gcmVhZC5jc3YoZmlsZSA9ICIvbWVkaWEvZXJpYy9EYXRhL0lJVC9DUzQyMi9jczQyMl9ody9hc3NpZ25tZW50NC1YaW5nbGktTGkvYWR1bHQtdGVzdC5jc3YiLCBlbmNvZGluZyA9ICJVVEYtOCIpCmRmLnRyYWluIDwtIHJlYWQuY3N2KGZpbGUgPSAiL21lZGlhL2VyaWMvRGF0YS9JSVQvQ1M0MjIvY3M0MjJfaHcvYXNzaWdubWVudDQtWGluZ2xpLUxpL2FkdWx0LXRyYWluLmNzdiIsIGVuY29kaW5nID0gIlVURi04IikKCk5ST1coZGYudGVzdCkKTlJPVyhkZi50cmFpbikKdHlwZW9mKGRmLnRlc3QpCmNvbC5uYW1lcyA8LSBuYW1lcyhkZi50ZXN0KQoKcHJpbnQoY29sLm5hbWVzKQoKZm9yIChjb2wgaW4gY29sLm5hbWVzKSB7CiAgaWYgKHN1bShkZi50ZXN0W2NvbF0gPT0gIj8iKSA+IDApIHsKICAgICMgVGhlIGNvbHVtbiBjb250YWluICc/JyBpbiB0ZXN0IGRhdGEgc2V0LgogICAgcHJpbnQocGFzdGUoInRoZSBjb2x1bW4gJyIsIGNvbCwgIicgaW4gdGVzdCBkYXRhIikpCiAgfQogIGlmIChzdW0oZGYudHJhaW5bY29sXSA9PSAiPyIpID4gMCkgewogICAgIyBUaGUgY29sdW1uIGNvbnRhaW4gJz8nIGluIHRyYWluIGRhdGEgc2V0LgogICAgcHJpbnQocGFzdGUoInRoZSBjb2x1bW4gJyIsIGNvbCwgIicgaW4gdHJhaW4gZGF0YSIpKQogIH0KfQoKZGYudGVzdC5jbGVhbmVkIDwtIGRmLnRlc3RbLXdoaWNoKGRmLnRlc3RbJ3dvcmtjbGFzcyddID09ICc/JwogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBkZi50ZXN0WydvY2N1cGF0aW9uJ10gPT0gJz8nCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgfAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGRmLnRlc3RbJ25hdGl2ZV9jb3VudHJ5J10gPT0gJz8nKSxdCnByaW50KHBhc3RlKCJ0ZXN0IGRhdGEgc2V0IHRvdGFsOiIsTlJPVyhkZi50ZXN0LmNsZWFuZWQpKSkKCmRmLnRyYWluLmNsZWFuZWQgPC0gZGYudHJhaW5bLXdoaWNoKGRmLnRyYWluWyd3b3JrY2xhc3MnXSA9PSAnPycKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICB8CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgZGYudHJhaW5bJ29jY3VwYXRpb24nXSA9PSAnPycKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICB8CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgZGYudHJhaW5bJ25hdGl2ZV9jb3VudHJ5J10gPT0gJz8nKSxdCgpwcmludChwYXN0ZSgidHJhaW4gZGF0YSBzZXQgdG90YWw6IiwgTlJPVyhkZi50cmFpbi5jbGVhbmVkKSkpCgoKIyBzdHJpbmcgdG8gbnVtYmVyCiMgZGYudGVzdC5jbGVhbmVkIDwtIGRhdGEuZnJhbWUoZGYudGVzdC5jbGVhbmVkWywxOjE0XSwKIyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGluY29tZT1pZmVsc2UoZGYudGVzdC5jbGVhbmVkJGluY29tZT09Ijw9NTBLIiwwLCAxKSkKIwojIGRmLnRyYWluLmNsZWFuZWQgPC0gZGF0YS5mcmFtZShkZi50cmFpbi5jbGVhbmVkWywxOjE0XSwKIyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBpbmNvbWU9aWZlbHNlKGRmLnRyYWluLmNsZWFuZWQkaW5jb21lPT0iPD01MEsiLDAsIDEpKQoKYGBgCgojIyMgUGFydCAyLjEtYi1pCgpgYGB7cn0KCm15X3RyZWUgPC0gcnBhcnQoaW5jb21lIH4gLiwgZGF0YSA9IGRmLnRyYWluLmNsZWFuZWQsIG1ldGhvZD0iY2xhc3MiKQoKc3VtbWFyeShteV90cmVlKQoKcGxvdGNwKG15X3RyZWUpCgojIHBsb3QgbWV0aG9kIG9mIHRoZSBwYXJ0eWtpdCBwYWNrYWdlLgpwbG90KGFzLnBhcnR5KG15X3RyZWUpKQoKIyBEcmF3aW5nIGRlY2lzaW9uIGNsYXNzaWZpY2F0aW9uIHRyZWUKcnBhcnQucGxvdChteV90cmVlLCBleHRyYT0xMDQsIGZhbGxlbi5sZWF2ZXM9VCwgdHlwZT00LAogICAgICAgICAgIG1haW49IkRlY2lzaW9uIFRyZWUiKSAKCmBgYAoKICAgIGNhcGl0YWxfZ2FpbjsKICAgIGVkdWNhdGlvbjsKICAgIHJlbGF0aW9uc2hpcAoKIyMjIFBhcnQgMi4xLWItaWkKCiAgICBUaGUgZmlyc3Qgc3BsaXQgaXMgZG9uZSBvbiAicmVsYXRpb25zaGlwIiBwcmVkaWN0b3IuCgogICAgdGhlIHByZWRpY3RlZCBjbGFzcyBvZiB0aGUgZmlyc3Qgbm9kZSBpcyAiPD01MGsiLgoKICAgIHRoZSBkaXN0cmlidXRpb24gb2Ygb2JzZXJ2YXRpb25zIGF0IGZpcnN0IG5vZGUgaXM6CiAgICBvYnNlcnZhdGlvbnM6IDw9NTBLICAgPjUwSwogICAgY2xhc3MgY291bnRzOiAyMjY1MyAgIDc1MDgKICAgIHByb2JhYmlsaXRpZXM6IDAuNzUxICAwLjI0OQoKIyMjIFBhcnQgMi4xLWMtaQoKYGBge3J9CgpYLnRlc3QgPC0gZGYudGVzdC5jbGVhbmVkWywxOjE0XQp5LnRlc3QgPC0gZGYudGVzdC5jbGVhbmVkJGluY29tZQoKIyBwcmVkaWN0IHRoZSB0ZXN0IGRhdGFzZXQKeV9oYXQgPC0gcHJlZGljdChteV90cmVlLCBuZXdkYXRhID0gWC50ZXN0LHR5cGUgPSAiY2xhc3MiKQoKY29uZnVzZU1hdHJpeCA8LXRhYmxlKHlfaGF0LHkudGVzdCkKcHJpbnQoY29uZnVzZU1hdHJpeCkKCiMgY29uZnVzaW9uIG1hdHJpeCBmdW5jdGlvbgpjb25mdXNpb25NYXRyaXgoeV9oYXQsIGFzLmZhY3Rvcih5LnRlc3QpKQoKCnNwcmludGYocGFzdGUoInJlY2FsbDogIixyb3VuZChyZWNhbGwoY29uZnVzZU1hdHJpeCksIGRpZ2l0ID0gMykpKQoKCnByaW50KHBhc3RlKCJwcmVjaXNpb246Iixyb3VuZChwcmVjaXNpb24oY29uZnVzZU1hdHJpeCksIGRpZ2l0ID0gMykpKQoKCnByaW50KHBhc3RlKCJGMSB2YWx1ZToiLHJvdW5kKEZfbWVhcyhjb25mdXNlTWF0cml4KSwgZGlnaXQgPSAzKSkpCgoKYmFsYW5jZWRfYWNjdXJhY3kgPSBtZWFuKCBjKHNlbnNpdGl2aXR5KGNvbmZ1c2VNYXRyaXgpLHNwZWNpZmljaXR5KGNvbmZ1c2VNYXRyaXgpKSkKCnByaW50KHBhc3RlKCJiYWxhbmNlZF9hY2N1cmFjeToiLHJvdW5kKGJhbGFuY2VkX2FjY3VyYWN5LCBkaWdpdCA9IDMpICkpCmBgYAoKIyMjIFBhcnQgMi4xLWMtaWkKCmBgYHtyfQoKIyBCYWxhbmNlZCBlcnJvciByYXRlID0gMS4wIOKAkyBiYWxhbmNlZCBhY2N1cmFjeQpiYWxhbmNlZF9lcnJvcl9yYXRlIDwtIDEuMCAtIGJhbGFuY2VkX2FjY3VyYWN5CnByaW50KHBhc3RlKCJiYWxhbmNlZCBlcnJvciByYXRlOiIscm91bmQoYmFsYW5jZWRfZXJyb3JfcmF0ZSxkaWdpdHMgPSAzKSkpCmBgYAoKIyMjIFBhcnQgMi4xLWMtaWlpCgpgYGB7cn0KIyBzZW5zaXRpdml0eSAsc3BlY2lmaWNpdHkKCiMgc2Vuc2l0aXZpdHk6IFRoZSB0cnVlIHBvc2l0aXZlIHJhdGUgaXMgdGhlIHNlbnNpdGl2aXR5CgojIHNwZWNpZmljaXR5OiBUaGUgZmFsc2UgcG9zaXRpdmUgcmF0ZSBpcyAxLXNwZWNpZmljaXR5CgpwcmludChwYXN0ZSgic2Vuc2l0aXZpdHk6Iixyb3VuZChzZW5zaXRpdml0eShjb25mdXNlTWF0cml4KSwgZGlnaXQgPSAzKSkpCgpwcmludChwYXN0ZSgic3BlY2lmaWNpdHk6Iixyb3VuZChzcGVjaWZpY2l0eShjb25mdXNlTWF0cml4KSwgZGlnaXQgPSAzKSkpCgpgYGAKCiMjIyBQYXJ0IDIuMS1jLWl2CgpgYGB7cn0KcHJlZC5yb2NyIDwtIHByZWRpY3QobXlfdHJlZSwgbmV3ZGF0YSA9IFgudGVzdCwgdHlwZSA9ICJwcm9iIilbLDJdCgpmLnByZWQgPC0gcHJlZGljdGlvbihwcmVkLnJvY3IsIHkudGVzdCkKZi5wZXJmIDwtIHBlcmZvcm1hbmNlKGYucHJlZCwgInRwciIsICJmcHIiKQpwbG90KGYucGVyZiwgY29sb3JpemU9VCwgbHdkPTMpCmFibGluZSgwLDEpCmBgYAoKYGBge3J9CgphdWMgPC0gcGVyZm9ybWFuY2UoZi5wcmVkLCBtZWFzdXJlID0gImF1YyIpCgpwcmludChwYXN0ZSgiVGhlIEFVQyBvZiB0aGUgUk9DIGN1cnZlIGlzOiIscm91bmQoYXVjQHkudmFsdWVzW1sxXV0sZGlnaXRzID0gMykpKQpgYGAKCiMjIyBQYXJ0IDIuMS1kCgpgYGB7cn0KIyMgcHJpbnRjcCgpIHdpbGwgdGVsbCB5b3UgaG93IG11Y2ggQ1AgdmFsdWUgaXMgZGl2aWRlZCBpbnRvIGVhY2ggbGF5ZXIgYW5kIHdoYXQgdGhlIGF2ZXJhZ2UgcmVsYXRpdmUgZXJyb3IgaXMuCnByaW50Y3AobXlfdHJlZSkKCnBsb3RjcChteV90cmVlKQoKY3AgPC0gbXlfdHJlZSRjcHRhYmxlW3doaWNoLm1pbihteV90cmVlJGNwdGFibGVbLCJ4ZXJyb3IiXSksICJDUCJdCgpgYGAKCmBgYHtyfQoKIyBjcDogY29tcGxleGl0eSBwYXJhbWV0ZXIgb2YgdGhlIG5vZGUuCiMgbnNwbGl0OiBOdW1iZXIgb2YgdHJlZSBzcGxpdHMuCiMgcmVsIGVycm9yOiBSZWxhdGl2ZSBlcnJvciA9IHhlcnJvciDCsSB4c3RkLgojIHhlcnJvcjogRXN0aW1hdGlvbiBlcnJvciBvZiBjcm9zcyB2YWxpZGF0aW9uLgojIHhzdGQ6IFN0YW5kYXJkIGRldmlhdGlvbiBvZiBjcm9zcyB2YWxpZGF0aW9uIHByb2Nlc3MuCgpwcmludChwYXN0ZSgiVGhlIENQIGlzIGNvbXBsZXhpdHkgcGFyYW1ldGVyIG9mIHRoZSBub2RlLCB0aGUgQ1Agb2YgdGhlIG1vZGVsIixjcCkpCmBgYAoKUHJ1bmluZzoKCmBgYHtyIH0KCm1vZGVsLnBydW5lZCA8LSBwcnVuZShteV90cmVlLCBjcD1jcCkKCiMgUmVkcmF3bgpycGFydC5wbG90KG1vZGVsLnBydW5lZCwgZXh0cmE9MTA0LCBmYWxsZW4ubGVhdmVzPVQsIHR5cGU9NCwgbWFpbj0iRGVjaXNpb24gVHJlZSBwcnVuZWQiKQoKYGBgCgpgYGB7cn0KCnBydW5lZC5wcmVkIDwtIHByZWRpY3QobW9kZWwucHJ1bmVkLCBYLnRlc3QsIHR5cGU9ImNsYXNzIikKCmNvbmZ1c2lvbk1hdHJpeChwcnVuZWQucHJlZCwgYXMuZmFjdG9yKHkudGVzdCkpCgpjb25mdXNpb25NYXRyaXgoeV9oYXQsIGFzLmZhY3Rvcih5LnRlc3QpKQoKI2NvbXBhcmVfbW9kZWxzKG15X3RyZWUsIG1vZGVsLnBydW5lZCkKYGBgCgpGcm9tIGNvbXBhcmluZywgdGhlIGVmZmVjdCBpcyBub3QgaW1wcm92ZWQuCgojIyMgUGFydCAyLjEtZS1pCgpgYGB7cn0KCmNvdW50LnNtYWxsZXIgPC0gc3VtKGRmLnRyYWluLmNsZWFuZWQkaW5jb21lPT0iPD01MEsiKQpjb3VudC5iaWdnZXIgPC0gc3VtKGRmLnRyYWluLmNsZWFuZWQkaW5jb21lPT0iPjUwSyIpCgpwcmludCgiSW4gdGhlIHRyYWluaW5nIGRhdGFzZXQsIikKcHJpbnQocGFzdGUoInRoIG9ic2VydmF0aW9ucyBvZiB0aGUgY2xhc3Mg4oCcPD01MEvigJ0gYXJlOiIsY291bnQuc21hbGxlcikpCnByaW50KHBhc3RlKCJ0aCBvYnNlcnZhdGlvbnMgb2YgdGhlIGNsYXNzIOKAnD41MEvigJ0gYXJlOiIsY291bnQuYmlnZ2VyKSkKYGBgCgojIyMgUGFydCAyLjEtZS1paQoKYGBge3J9CnNldC5zZWVkKDExMjIpCgpkZi50cmFpbi5zbWFsbGVyIDwtIGRmLnRyYWluLmNsZWFuZWRbZGYudHJhaW4uY2xlYW5lZCRpbmNvbWU9PSI8PTUwSyIsXQpkZi50cmFpbi5iaWdnZXIgPC0gZGYudHJhaW4uY2xlYW5lZFtkZi50cmFpbi5jbGVhbmVkJGluY29tZSA9PSI+NTBLIixdCgpuZXcuZGYudHJhaW4uc21hbGxlciA8LSBkZi50cmFpbi5zbWFsbGVyW3NhbXBsZShucm93KGRmLnRyYWluLnNtYWxsZXIpLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGNvdW50LmJpZ2dlcixyZXBsYWNlID0gRkFMU0UpLF0KCm5ldy5kZi50cmFpbiA8LSByYmluZChuZXcuZGYudHJhaW4uc21hbGxlciwgZGYudHJhaW4uYmlnZ2VyKQoKYGBgCgojIyMgUGFydCAyLjEtZS1paWktaQoKYGBge3J9CgojIFRyYWluaW5nCm15X3RyZWVfbmV3IDwtIHJwYXJ0KGluY29tZSB+IC4sIGRhdGEgPSBuZXcuZGYudHJhaW4sIG1ldGhvZD0iY2xhc3MiKQoKc3VtbWFyeShteV90cmVlX25ldykKCnByaW50Y3AobXlfdHJlZV9uZXcpCgpwbG90Y3AobXlfdHJlZV9uZXcpCgpgYGAKCmBgYHtyfQoKIyBwcmVkaWN0IHRoZSB0ZXN0IGRhdGFzZXQKeV9oYXRfbmV3IDwtIHByZWRpY3QobXlfdHJlZV9uZXcsIG5ld2RhdGEgPSBYLnRlc3QsdHlwZSA9ICJjbGFzcyIpCgojIGNvbmZ1c2lvbiBtYXRyaXggZnVuY3Rpb24KY29uZnVzTWF0cml4X25ldyA8LWNvbmZ1c2lvbk1hdHJpeCh5X2hhdF9uZXcsIGFzLmZhY3Rvcih5LnRlc3QpKQpwcmludChjb25mdXNNYXRyaXhfbmV3KQoKIyBEcmF3aW5nIGRlY2lzaW9uIGNsYXNzaWZpY2F0aW9uIHRyZWUKcnBhcnQucGxvdChteV90cmVlX25ldywgZXh0cmE9MTA0LCBmYWxsZW4ubGVhdmVzPVQsIHR5cGU9NCwgbWFpbj0iRGVjaXNpb24gVHJlZSIpCgpgYGAKCmBgYHtyfQoKcHJpbnQocGFzdGUoIkJhbGFuY2VkIEFjY3VyYWN5IG9mIHRoZSBuZXcgbW9kZWwgaW4gdGhlIHRlc3QgZGF0YSBzZXQgaXM6IiwKICAgICAgICAgICAgcm91bmQoY29uZnVzTWF0cml4X25ldyRieUNsYXNzWyJCYWxhbmNlZCBBY2N1cmFjeSJdLGRpZ2l0cyA9IDMpKSkKYGBgCgojIyMgUGFydCAyLjEtZS1paWktaWkKCmBgYHtyfQojIGJhbGFuY2VkX2Vycm9yX3JhdGUKcHJpbnQocGFzdGUoIkJhbGFuY2VkIGVycm9yIHJhdGUgb2YgdGhlIG5ldyBtb2RlbCBpbiB0aGUgdGVzdCBkYXRhIHNldCBpczoiLAogICAgICAgICAgIHJvdW5kKDEuMCAtIGNvbmZ1c01hdHJpeF9uZXckYnlDbGFzc1siQmFsYW5jZWQgQWNjdXJhY3kiXSxkaWdpdHMgPSAzKSkpCmBgYAoKIyMjIFBhcnQgMi4xLWUtaWlpLWlpaQoKYGBge3J9CiMgc2Vuc2l0aXZpdHksU3BlY2lmaWNpdHkKCnByaW50KHBhc3RlKCJTZW5zaXRpdml0eSBvZiB0aGUgbmV3IG1vZGVsIGluIHRoZSB0ZXN0IGRhdGEgc2V0IGlzOiIsCiAgICAgICAgICAgcm91bmQoY29uZnVzTWF0cml4X25ldyRieUNsYXNzWyJTZW5zaXRpdml0eSJdLGRpZ2l0cyA9IDMpKSkKCnByaW50KHBhc3RlKCJTcGVjaWZpY2l0eSBvZiB0aGUgbmV3IG1vZGVsIGluIHRoZSB0ZXN0IGRhdGEgc2V0IGlzOiIsCiAgICAgICAgICAgcm91bmQoY29uZnVzTWF0cml4X25ldyRieUNsYXNzWyJTcGVjaWZpY2l0eSJdLGRpZ2l0cyA9IDMpKSkKYGBgCgojIyMgUGFydCAyLjEtZS1paWktaXYKCmBgYHtyfQojIFJPQyBjdXJ2ZSwgd2hhdCBpcyB0aGUgQVVDPwoKcHJlZC5yb2NyIDwtIHByZWRpY3QobXlfdHJlZV9uZXcsIG5ld2RhdGEgPSBYLnRlc3QsIHR5cGUgPSAicHJvYiIpWywyXQoKZi5wcmVkIDwtIHByZWRpY3Rpb24ocHJlZC5yb2NyLCB5LnRlc3QpCmYucGVyZiA8LSBwZXJmb3JtYW5jZShmLnByZWQsICJ0cHIiLCAiZnByIikKcGxvdChmLnBlcmYsIGNvbG9yaXplPVQsIGx3ZD0zKQphYmxpbmUoMCwxKQpgYGAKCmBgYHtyfQoKYXVjX25ldyA8LSBwZXJmb3JtYW5jZShmLnByZWQsIG1lYXN1cmUgPSAiYXVjIikKCgpwcmludChwYXN0ZSgiVGhlIEFVQyBvZiB0aGUgUk9DIGN1cnZlIGlzOiIscm91bmQoYXVjX25ld0B5LnZhbHVlc1tbMV1dLGRpZ2l0cyA9IDMpKSkKYGBgCgojIyMgUGFydCAyLjEtZgoKYGBge3J9CgpwcmludChwYXN0ZSgiVGhlIHRlc3QgZGF0YSBzaXplIG9mIHRoZSBjbGFzcyAnPD01MEsnIGlzOiIsTlJPVyhkZi50ZXN0LmNsZWFuZWRbZGYudGVzdC5jbGVhbmVkJGluY29tZT09Ijw9NTBLIixdKSkpCnByaW50KHBhc3RlKCJUaGUgdGVzdCBkYXRhIHNpemUgb2YgdGhlIGNsYXNzICc+NTBLJyBpczoiLE5ST1coZGYudGVzdC5jbGVhbmVkW2RmLnRlc3QuY2xlYW5lZCRpbmNvbWU9PSI+NTBLIixdKSkpCgoKY29uZnVzaW9uTWF0cml4KHlfaGF0LCBhcy5mYWN0b3IoeS50ZXN0KSkKCmNvbmZ1c2lvbk1hdHJpeCh5X2hhdF9uZXcsIGFzLmZhY3Rvcih5LnRlc3QpKQoKcHJpbnQocGFzdGUoInRoZSBhdWMgb2YgdGhlIGJlZm9yZSB0cmVhdG1lbnQgaXM6Iixyb3VuZChhdWNAeS52YWx1ZXNbWzFdXSxkaWdpdHMgPSAzKSkpCgpwcmludChwYXN0ZSgidGhlIGF1YyBvZiB0aGUgYWZ0ZXIgdHJlYXRtZW50IGlzOiIscm91bmQoYXVjX25ld0B5LnZhbHVlc1tbMV1dLGRpZ2l0cyA9IDMpKSkKYGBgCgpCYWxhbmNlZCBBY2N1cmFjeSBpcyBpbmNyZWFzZWQsCgpTZW5zaXRpdml0eSBpcyBkZWNyZWFzZSwKClNwZWNpZmljaXR5IGlzIGluY3JlYXNlZCwKClBvc2l0aXZlIHByZWRpY3RpdmUgdmFsdWUgaXMgaW5jcmVhc2VkLAoKQVVDIGlzIGluY3JlYXNlZCBhIGxpdHRsZS4KClNlbnNpdGl2aXR5IGlzIHRydWUgcG9zaXRpdmUgcmF0ZSwgd2hpY2ggbWVhbnMgYSBtb2RlbCBjb3JyZWN0bHkgcHJlZGljdHMgdGhlIHByb3BvcnRpb24gb2YgcG9zaXRpdmUgc2FtcGxlcy4KCkJlY2F1c2UgcG9zaXRpdmUgc2FtcGxlcyBhcmUgdG9vIG1vcmUgdGhhbiBuZWdpdGl2ZSBzYW1wbGVzICwgaXQgd2FzIG92ZXJlc3RpbWF0ZWQgYmVmb3JlIHRyZWF0bWVudCwgY3VycmVudCBTZW5zaXRpdml0eSBpcyByZWFzb25hYmxlIHZhbHVlLgo=</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiQ1MgNDIyIEhvbWV3b3JrIDQiCmF1dGhvcjogIlhpbmdsaSBMaSIKb3V0cHV0OgogIGh0bWxfbm90ZWJvb2s6CiAgICB0b2M6IHllcwogICAgdG9jX2Zsb2F0OiB5ZXMKICBodG1sX2RvY3VtZW50OgogICAgdG9jOiB5ZXMKICAgIGRmX3ByaW50OiBwYWdlZAotLS0KCiMjIEhvbWV3b3JrIDQKCnNldCB3b3JrIHNwYWNlIGFuZCBpbnN0YWxsIGRlcGVuZGVudCBwYWNrYWdlLgoKYGBge3J9CgpzZXR3ZChnZXR3ZCgpKQoKI2luc3RhbGwucGFja2FnZXMocnBhcnQpCmxpYnJhcnkocnBhcnQpICAjY2xhc3NpZmljYXRpb24gYW5kIHJlZ3Jlc3Npb24gdHJlZXMKbGlicmFyeShycGFydC5wbG90KQojaW5zdGFsbC5wYWNrYWdlcyhjYXJldCkKbGlicmFyeShjYXJldCkKI2luc3RhbGwucGFja2FnZXMocGFydHlraXQpCmxpYnJhcnkocGFydHlraXQpICN0cmVlcGxvdHMKI2luc3RhbGwucGFja2FnZXMoUk9DUikKbGlicmFyeShST0NSKQpgYGAKCiMjIyBQYXJ0IDIuMS1hCgpgYGB7cn0KCmRmLnRlc3QgPC0gcmVhZC5jc3YoZmlsZSA9ICIvbWVkaWEvZXJpYy9EYXRhL0lJVC9DUzQyMi9jczQyMl9ody9hc3NpZ25tZW50NC1YaW5nbGktTGkvYWR1bHQtdGVzdC5jc3YiLCBlbmNvZGluZyA9ICJVVEYtOCIpCmRmLnRyYWluIDwtIHJlYWQuY3N2KGZpbGUgPSAiL21lZGlhL2VyaWMvRGF0YS9JSVQvQ1M0MjIvY3M0MjJfaHcvYXNzaWdubWVudDQtWGluZ2xpLUxpL2FkdWx0LXRyYWluLmNzdiIsIGVuY29kaW5nID0gIlVURi04IikKCk5ST1coZGYudGVzdCkKTlJPVyhkZi50cmFpbikKdHlwZW9mKGRmLnRlc3QpCmNvbC5uYW1lcyA8LSBuYW1lcyhkZi50ZXN0KQoKcHJpbnQoY29sLm5hbWVzKQoKZm9yIChjb2wgaW4gY29sLm5hbWVzKSB7CiAgaWYgKHN1bShkZi50ZXN0W2NvbF0gPT0gIj8iKSA+IDApIHsKICAgICMgVGhlIGNvbHVtbiBjb250YWluICc/JyBpbiB0ZXN0IGRhdGEgc2V0LgogICAgcHJpbnQocGFzdGUoInRoZSBjb2x1bW4gJyIsIGNvbCwgIicgaW4gdGVzdCBkYXRhIikpCiAgfQogIGlmIChzdW0oZGYudHJhaW5bY29sXSA9PSAiPyIpID4gMCkgewogICAgIyBUaGUgY29sdW1uIGNvbnRhaW4gJz8nIGluIHRyYWluIGRhdGEgc2V0LgogICAgcHJpbnQocGFzdGUoInRoZSBjb2x1bW4gJyIsIGNvbCwgIicgaW4gdHJhaW4gZGF0YSIpKQogIH0KfQoKZGYudGVzdC5jbGVhbmVkIDwtIGRmLnRlc3RbLXdoaWNoKGRmLnRlc3RbJ3dvcmtjbGFzcyddID09ICc/JwogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBkZi50ZXN0WydvY2N1cGF0aW9uJ10gPT0gJz8nCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgfAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGRmLnRlc3RbJ25hdGl2ZV9jb3VudHJ5J10gPT0gJz8nKSxdCnByaW50KHBhc3RlKCJ0ZXN0IGRhdGEgc2V0IHRvdGFsOiIsTlJPVyhkZi50ZXN0LmNsZWFuZWQpKSkKCmRmLnRyYWluLmNsZWFuZWQgPC0gZGYudHJhaW5bLXdoaWNoKGRmLnRyYWluWyd3b3JrY2xhc3MnXSA9PSAnPycKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICB8CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgZGYudHJhaW5bJ29jY3VwYXRpb24nXSA9PSAnPycKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICB8CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgZGYudHJhaW5bJ25hdGl2ZV9jb3VudHJ5J10gPT0gJz8nKSxdCgpwcmludChwYXN0ZSgidHJhaW4gZGF0YSBzZXQgdG90YWw6IiwgTlJPVyhkZi50cmFpbi5jbGVhbmVkKSkpCgoKIyBzdHJpbmcgdG8gbnVtYmVyCiMgZGYudGVzdC5jbGVhbmVkIDwtIGRhdGEuZnJhbWUoZGYudGVzdC5jbGVhbmVkWywxOjE0XSwKIyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGluY29tZT1pZmVsc2UoZGYudGVzdC5jbGVhbmVkJGluY29tZT09Ijw9NTBLIiwwLCAxKSkKIwojIGRmLnRyYWluLmNsZWFuZWQgPC0gZGF0YS5mcmFtZShkZi50cmFpbi5jbGVhbmVkWywxOjE0XSwKIyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBpbmNvbWU9aWZlbHNlKGRmLnRyYWluLmNsZWFuZWQkaW5jb21lPT0iPD01MEsiLDAsIDEpKQoKYGBgCgojIyMgUGFydCAyLjEtYi1pCgpgYGB7cn0KCm15X3RyZWUgPC0gcnBhcnQoaW5jb21lIH4gLiwgZGF0YSA9IGRmLnRyYWluLmNsZWFuZWQsIG1ldGhvZD0iY2xhc3MiKQoKc3VtbWFyeShteV90cmVlKQoKcGxvdGNwKG15X3RyZWUpCgojIHBsb3QgbWV0aG9kIG9mIHRoZSBwYXJ0eWtpdCBwYWNrYWdlLgpwbG90KGFzLnBhcnR5KG15X3RyZWUpKQoKIyBEcmF3aW5nIGRlY2lzaW9uIGNsYXNzaWZpY2F0aW9uIHRyZWUKcnBhcnQucGxvdChteV90cmVlLCBleHRyYT0xMDQsIGZhbGxlbi5sZWF2ZXM9VCwgdHlwZT00LAogICAgICAgICAgIG1haW49IkRlY2lzaW9uIFRyZWUiKSAKCmBgYAoKICAgIGNhcGl0YWxfZ2FpbjsKICAgIGVkdWNhdGlvbjsKICAgIHJlbGF0aW9uc2hpcAoKIyMjIFBhcnQgMi4xLWItaWkKCiAgICBUaGUgZmlyc3Qgc3BsaXQgaXMgZG9uZSBvbiAicmVsYXRpb25zaGlwIiBwcmVkaWN0b3IuCgogICAgdGhlIHByZWRpY3RlZCBjbGFzcyBvZiB0aGUgZmlyc3Qgbm9kZSBpcyAiPD01MGsiLgoKICAgIHRoZSBkaXN0cmlidXRpb24gb2Ygb2JzZXJ2YXRpb25zIGF0IGZpcnN0IG5vZGUgaXM6CiAgICBvYnNlcnZhdGlvbnM6IDw9NTBLICAgPjUwSwogICAgY2xhc3MgY291bnRzOiAyMjY1MyAgIDc1MDgKICAgIHByb2JhYmlsaXRpZXM6IDAuNzUxICAwLjI0OQoKIyMjIFBhcnQgMi4xLWMtaQoKYGBge3J9CgpYLnRlc3QgPC0gZGYudGVzdC5jbGVhbmVkWywxOjE0XQp5LnRlc3QgPC0gZGYudGVzdC5jbGVhbmVkJGluY29tZQoKIyBwcmVkaWN0IHRoZSB0ZXN0IGRhdGFzZXQKeV9oYXQgPC0gcHJlZGljdChteV90cmVlLCBuZXdkYXRhID0gWC50ZXN0LHR5cGUgPSAiY2xhc3MiKQoKY29uZnVzZU1hdHJpeCA8LXRhYmxlKHlfaGF0LHkudGVzdCkKcHJpbnQoY29uZnVzZU1hdHJpeCkKCiMgY29uZnVzaW9uIG1hdHJpeCBmdW5jdGlvbgpjb25meCA8LWNvbmZ1c2lvbk1hdHJpeCh5X2hhdCwgYXMuZmFjdG9yKHkudGVzdCkpCgoKc3ByaW50ZihwYXN0ZSgicmVjYWxsOiAiLHJvdW5kKHJlY2FsbChjb25mdXNlTWF0cml4KSwgZGlnaXQgPSAzKSkpCgoKcHJpbnQocGFzdGUoInByZWNpc2lvbjoiLHJvdW5kKHByZWNpc2lvbihjb25mdXNlTWF0cml4KSwgZGlnaXQgPSAzKSkpCgoKcHJpbnQocGFzdGUoIkYxIHZhbHVlOiIscm91bmQoRl9tZWFzKGNvbmZ1c2VNYXRyaXgpLCBkaWdpdCA9IDMpKSkKCgpiYWxhbmNlZF9hY2N1cmFjeSA9IG1lYW4oIGMoc2Vuc2l0aXZpdHkoY29uZnVzZU1hdHJpeCksc3BlY2lmaWNpdHkoY29uZnVzZU1hdHJpeCkpKQoKcHJpbnQocGFzdGUoImJhbGFuY2VkX2FjY3VyYWN5OiIscm91bmQoYmFsYW5jZWRfYWNjdXJhY3ksIGRpZ2l0ID0gMykgKSkKYGBgCgojIyMgUGFydCAyLjEtYy1paQoKYGBge3J9CgojIEJhbGFuY2VkIGVycm9yIHJhdGUgPSAxLjAg4oCTIGJhbGFuY2VkIGFjY3VyYWN5CmJhbGFuY2VkX2Vycm9yX3JhdGUgPC0gMS4wIC0gYmFsYW5jZWRfYWNjdXJhY3kKcHJpbnQocGFzdGUoImJhbGFuY2VkIGVycm9yIHJhdGU6Iixyb3VuZChiYWxhbmNlZF9lcnJvcl9yYXRlLGRpZ2l0cyA9IDMpKSkKYGBgCgojIyMgUGFydCAyLjEtYy1paWkKCmBgYHtyfQojIHNlbnNpdGl2aXR5ICxzcGVjaWZpY2l0eQoKIyBzZW5zaXRpdml0eTogVGhlIHRydWUgcG9zaXRpdmUgcmF0ZSBpcyB0aGUgc2Vuc2l0aXZpdHkKCiMgc3BlY2lmaWNpdHk6IFRoZSBmYWxzZSBwb3NpdGl2ZSByYXRlIGlzIDEtc3BlY2lmaWNpdHkKCnByaW50KHBhc3RlKCJzZW5zaXRpdml0eToiLHJvdW5kKHNlbnNpdGl2aXR5KGNvbmZ1c2VNYXRyaXgpLCBkaWdpdCA9IDMpKSkKCnByaW50KHBhc3RlKCJzcGVjaWZpY2l0eToiLHJvdW5kKHNwZWNpZmljaXR5KGNvbmZ1c2VNYXRyaXgpLCBkaWdpdCA9IDMpKSkKCmBgYAoKIyMjIFBhcnQgMi4xLWMtaXYKCmBgYHtyfQpwcmVkLnJvY3IgPC0gcHJlZGljdChteV90cmVlLCBuZXdkYXRhID0gWC50ZXN0LCB0eXBlID0gInByb2IiKVssMl0KCmYucHJlZCA8LSBwcmVkaWN0aW9uKHByZWQucm9jciwgeS50ZXN0KQpmLnBlcmYgPC0gcGVyZm9ybWFuY2UoZi5wcmVkLCAidHByIiwgImZwciIpCnBsb3QoZi5wZXJmLCBjb2xvcml6ZT1ULCBsd2Q9MykKYWJsaW5lKDAsMSkKYGBgCgpgYGB7cn0KCmF1YyA8LSBwZXJmb3JtYW5jZShmLnByZWQsIG1lYXN1cmUgPSAiYXVjIikKCnByaW50KHBhc3RlKCJUaGUgQVVDIG9mIHRoZSBST0MgY3VydmUgaXM6Iixyb3VuZChhdWNAeS52YWx1ZXNbWzFdXSxkaWdpdHMgPSAzKSkpCmBgYAoKIyMjIFBhcnQgMi4xLWQKCmBgYHtyfQojIyBwcmludGNwKCkgd2lsbCB0ZWxsIHlvdSBob3cgbXVjaCBDUCB2YWx1ZSBpcyBkaXZpZGVkIGludG8gZWFjaCBsYXllciBhbmQgd2hhdCB0aGUgYXZlcmFnZSByZWxhdGl2ZSBlcnJvciBpcy4KcHJpbnRjcChteV90cmVlKQoKcGxvdGNwKG15X3RyZWUpCgpjcCA8LSBteV90cmVlJGNwdGFibGVbd2hpY2gubWluKG15X3RyZWUkY3B0YWJsZVssInhlcnJvciJdKSwgIkNQIl0KCmBgYAoKYGBge3J9CgojIGNwOiBjb21wbGV4aXR5IHBhcmFtZXRlciBvZiB0aGUgbm9kZS4KIyBuc3BsaXQ6IE51bWJlciBvZiB0cmVlIHNwbGl0cy4KIyByZWwgZXJyb3I6IFJlbGF0aXZlIGVycm9yID0geGVycm9yIMKxIHhzdGQuCiMgeGVycm9yOiBFc3RpbWF0aW9uIGVycm9yIG9mIGNyb3NzIHZhbGlkYXRpb24uCiMgeHN0ZDogU3RhbmRhcmQgZGV2aWF0aW9uIG9mIGNyb3NzIHZhbGlkYXRpb24gcHJvY2Vzcy4KCnByaW50KHBhc3RlKCJUaGUgQ1AgaXMgY29tcGxleGl0eSBwYXJhbWV0ZXIgb2YgdGhlIG5vZGUsIHRoZSBDUCBvZiB0aGUgbW9kZWwiLGNwKSkKYGBgCgpQcnVuaW5nOgoKYGBge3IgfQoKbW9kZWwucHJ1bmVkIDwtIHBydW5lKG15X3RyZWUsIGNwPWNwKQoKIyBSZWRyYXduCnJwYXJ0LnBsb3QobW9kZWwucHJ1bmVkLCBleHRyYT0xMDQsIGZhbGxlbi5sZWF2ZXM9VCwgdHlwZT00LCBtYWluPSJEZWNpc2lvbiBUcmVlIHBydW5lZCIpCgpgYGAKCmBgYHtyfQoKcHJ1bmVkLnByZWQgPC0gcHJlZGljdChtb2RlbC5wcnVuZWQsIFgudGVzdCwgdHlwZT0iY2xhc3MiKQoKY29uZnVzaW9uTWF0cml4KHBydW5lZC5wcmVkLCBhcy5mYWN0b3IoeS50ZXN0KSkKCmNvbmZ1c2lvbk1hdHJpeCh5X2hhdCwgYXMuZmFjdG9yKHkudGVzdCkpCgojY29tcGFyZV9tb2RlbHMobXlfdHJlZSwgbW9kZWwucHJ1bmVkKQpgYGAKCkZyb20gY29tcGFyaW5nLCB0aGUgZWZmZWN0IGlzIG5vdCBpbXByb3ZlZC4KCiMjIyBQYXJ0IDIuMS1lLWkKCmBgYHtyfQoKY291bnQuc21hbGxlciA8LSBzdW0oZGYudHJhaW4uY2xlYW5lZCRpbmNvbWU9PSI8PTUwSyIpCmNvdW50LmJpZ2dlciA8LSBzdW0oZGYudHJhaW4uY2xlYW5lZCRpbmNvbWU9PSI+NTBLIikKCnByaW50KCJJbiB0aGUgdHJhaW5pbmcgZGF0YXNldCwiKQpwcmludChwYXN0ZSgidGggb2JzZXJ2YXRpb25zIG9mIHRoZSBjbGFzcyDigJw8PTUwS+KAnSBhcmU6Iixjb3VudC5zbWFsbGVyKSkKcHJpbnQocGFzdGUoInRoIG9ic2VydmF0aW9ucyBvZiB0aGUgY2xhc3Mg4oCcPjUwS+KAnSBhcmU6Iixjb3VudC5iaWdnZXIpKQpgYGAKCiMjIyBQYXJ0IDIuMS1lLWlpCgpgYGB7cn0Kc2V0LnNlZWQoMTEyMikKCmRmLnRyYWluLnNtYWxsZXIgPC0gZGYudHJhaW4uY2xlYW5lZFtkZi50cmFpbi5jbGVhbmVkJGluY29tZT09Ijw9NTBLIixdCmRmLnRyYWluLmJpZ2dlciA8LSBkZi50cmFpbi5jbGVhbmVkW2RmLnRyYWluLmNsZWFuZWQkaW5jb21lID09Ij41MEsiLF0KCm5ldy5kZi50cmFpbi5zbWFsbGVyIDwtIGRmLnRyYWluLnNtYWxsZXJbc2FtcGxlKG5yb3coZGYudHJhaW4uc21hbGxlciksCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgY291bnQuYmlnZ2VyLHJlcGxhY2UgPSBGQUxTRSksXQoKbmV3LmRmLnRyYWluIDwtIHJiaW5kKG5ldy5kZi50cmFpbi5zbWFsbGVyLCBkZi50cmFpbi5iaWdnZXIpCgpgYGAKCiMjIyBQYXJ0IDIuMS1lLWlpaS1pCgpgYGB7cn0KCiMgVHJhaW5pbmcKbXlfdHJlZV9uZXcgPC0gcnBhcnQoaW5jb21lIH4gLiwgZGF0YSA9IG5ldy5kZi50cmFpbiwgbWV0aG9kPSJjbGFzcyIpCgpzdW1tYXJ5KG15X3RyZWVfbmV3KQoKcHJpbnRjcChteV90cmVlX25ldykKCnBsb3RjcChteV90cmVlX25ldykKCmBgYAoKYGBge3J9CgojIHByZWRpY3QgdGhlIHRlc3QgZGF0YXNldAp5X2hhdF9uZXcgPC0gcHJlZGljdChteV90cmVlX25ldywgbmV3ZGF0YSA9IFgudGVzdCx0eXBlID0gImNsYXNzIikKCiMgY29uZnVzaW9uIG1hdHJpeCBmdW5jdGlvbgpjb25mdXNNYXRyaXhfbmV3IDwtY29uZnVzaW9uTWF0cml4KHlfaGF0X25ldywgYXMuZmFjdG9yKHkudGVzdCkpCnByaW50KGNvbmZ1c01hdHJpeF9uZXcpCgojIERyYXdpbmcgZGVjaXNpb24gY2xhc3NpZmljYXRpb24gdHJlZQpycGFydC5wbG90KG15X3RyZWVfbmV3LCBleHRyYT0xMDQsIGZhbGxlbi5sZWF2ZXM9VCwgdHlwZT00LCBtYWluPSJEZWNpc2lvbiBUcmVlIikKCmBgYAoKYGBge3J9CgpwcmludChwYXN0ZSgiQmFsYW5jZWQgQWNjdXJhY3kgb2YgdGhlIG5ldyBtb2RlbCBpbiB0aGUgdGVzdCBkYXRhIHNldCBpczoiLAogICAgICAgICAgICByb3VuZChjb25mdXNNYXRyaXhfbmV3JGJ5Q2xhc3NbIkJhbGFuY2VkIEFjY3VyYWN5Il0sZGlnaXRzID0gMykpKQpgYGAKCiMjIyBQYXJ0IDIuMS1lLWlpaS1paQoKYGBge3J9CiMgYmFsYW5jZWRfZXJyb3JfcmF0ZQpwcmludChwYXN0ZSgiQmFsYW5jZWQgZXJyb3IgcmF0ZSBvZiB0aGUgbmV3IG1vZGVsIGluIHRoZSB0ZXN0IGRhdGEgc2V0IGlzOiIsCiAgICAgICAgICAgcm91bmQoMS4wIC0gY29uZnVzTWF0cml4X25ldyRieUNsYXNzWyJCYWxhbmNlZCBBY2N1cmFjeSJdLGRpZ2l0cyA9IDMpKSkKYGBgCgojIyMgUGFydCAyLjEtZS1paWktaWlpCgpgYGB7cn0KIyBzZW5zaXRpdml0eSxTcGVjaWZpY2l0eQoKcHJpbnQocGFzdGUoIlNlbnNpdGl2aXR5IG9mIHRoZSBuZXcgbW9kZWwgaW4gdGhlIHRlc3QgZGF0YSBzZXQgaXM6IiwKICAgICAgICAgICByb3VuZChjb25mdXNNYXRyaXhfbmV3JGJ5Q2xhc3NbIlNlbnNpdGl2aXR5Il0sZGlnaXRzID0gMykpKQoKcHJpbnQocGFzdGUoIlNwZWNpZmljaXR5IG9mIHRoZSBuZXcgbW9kZWwgaW4gdGhlIHRlc3QgZGF0YSBzZXQgaXM6IiwKICAgICAgICAgICByb3VuZChjb25mdXNNYXRyaXhfbmV3JGJ5Q2xhc3NbIlNwZWNpZmljaXR5Il0sZGlnaXRzID0gMykpKQpgYGAKCiMjIyBQYXJ0IDIuMS1lLWlpaS1pdgoKYGBge3J9CiMgUk9DIGN1cnZlLCB3aGF0IGlzIHRoZSBBVUM/CgpwcmVkLnJvY3IgPC0gcHJlZGljdChteV90cmVlX25ldywgbmV3ZGF0YSA9IFgudGVzdCwgdHlwZSA9ICJwcm9iIilbLDJdCgpmLnByZWQgPC0gcHJlZGljdGlvbihwcmVkLnJvY3IsIHkudGVzdCkKZi5wZXJmIDwtIHBlcmZvcm1hbmNlKGYucHJlZCwgInRwciIsICJmcHIiKQpwbG90KGYucGVyZiwgY29sb3JpemU9VCwgbHdkPTMpCmFibGluZSgwLDEpCmBgYAoKYGBge3J9CgphdWNfbmV3IDwtIHBlcmZvcm1hbmNlKGYucHJlZCwgbWVhc3VyZSA9ICJhdWMiKQoKCnByaW50KHBhc3RlKCJUaGUgQVVDIG9mIHRoZSBST0MgY3VydmUgaXM6Iixyb3VuZChhdWNfbmV3QHkudmFsdWVzW1sxXV0sZGlnaXRzID0gMykpKQpgYGAKCiMjIyBQYXJ0IDIuMS1mCgpgYGB7cn0KCnByaW50KHBhc3RlKCJUaGUgdGVzdCBkYXRhIHNpemUgb2YgdGhlIGNsYXNzICc8PTUwSycgaXM6IixOUk9XKGRmLnRlc3QuY2xlYW5lZFtkZi50ZXN0LmNsZWFuZWQkaW5jb21lPT0iPD01MEsiLF0pKSkKcHJpbnQocGFzdGUoIlRoZSB0ZXN0IGRhdGEgc2l6ZSBvZiB0aGUgY2xhc3MgJz41MEsnIGlzOiIsTlJPVyhkZi50ZXN0LmNsZWFuZWRbZGYudGVzdC5jbGVhbmVkJGluY29tZT09Ij41MEsiLF0pKSkKCgpjb25mdXNpb25NYXRyaXgoeV9oYXQsIGFzLmZhY3Rvcih5LnRlc3QpKQoKY29uZnVzaW9uTWF0cml4KHlfaGF0X25ldywgYXMuZmFjdG9yKHkudGVzdCkpCgpwcmludChwYXN0ZSgidGhlIGF1YyBvZiB0aGUgYmVmb3JlIHRyZWF0bWVudCBpczoiLHJvdW5kKGF1Y0B5LnZhbHVlc1tbMV1dLGRpZ2l0cyA9IDMpKSkKCnByaW50KHBhc3RlKCJ0aGUgYXVjIG9mIHRoZSBhZnRlciB0cmVhdG1lbnQgaXM6Iixyb3VuZChhdWNfbmV3QHkudmFsdWVzW1sxXV0sZGlnaXRzID0gMykpKQpgYGAKCkJhbGFuY2VkIEFjY3VyYWN5IGlzIGluY3JlYXNlZCwKClNlbnNpdGl2aXR5IGlzIGRlY3JlYXNlLAoKU3BlY2lmaWNpdHkgaXMgaW5jcmVhc2VkLAoKUG9zaXRpdmUgcHJlZGljdGl2ZSB2YWx1ZSBpcyBpbmNyZWFzZWQsCgpBVUMgaXMgaW5jcmVhc2VkIGEgbGl0dGxlLgoKU2Vuc2l0aXZpdHkgaXMgdHJ1ZSBwb3NpdGl2ZSByYXRlLCB3aGljaCBtZWFucyBhIG1vZGVsIGNvcnJlY3RseSBwcmVkaWN0cyB0aGUgcHJvcG9ydGlvbiBvZiBwb3NpdGl2ZSBzYW1wbGVzLgoKQmVjYXVzZSBwb3NpdGl2ZSBzYW1wbGVzIGFyZSB0b28gbW9yZSB0aGFuIG5lZ2l0aXZlIHNhbXBsZXMgLCBpdCB3YXMgb3ZlcmVzdGltYXRlZCBiZWZvcmUgdHJlYXRtZW50LCBjdXJyZW50IFNlbnNpdGl2aXR5IGlzIHJlYXNvbmFibGUgdmFsdWUuCg==</div>
 
 
 </div>
