@@ -15,35 +15,66 @@ output:
 ### Part 2
 
 set work space and install dependent package.
+
 ```{r}
-setwd(getwd())
 
 library(rpart)  #classification and regression trees
 library(rpart.plot)
-#install.packages(caret)
+#install.packages("caret")
+#install.packages("randomForest")
+library(randomForest)
 library(caret)
-#install.packages(partykit)
-library(partykit) #treeplots
-#install.packages(ROCR)
+#install.packages("ROCR")
 library(ROCR)
+
+setwd(getwd())
 ```
 
 ### 2.1-(1)
-```{r}
 
+```{r}
+df.test <- read.csv(file = "adult-test.csv", encoding = "UTF-8")
+df.train <- read.csv(file = "adult-train.csv", encoding = "UTF-8")
+
+col.names <- names(df.test)
+
+print(col.names)
+
+df.test.cleaned <- df.test[-which(df.test['workclass'] == '?'
+                                   |
+                                   df.test['occupation'] == '?'
+                                   |
+                                   df.test['native_country'] == '?'),]
+print(paste("test data set total:",NROW(df.test.cleaned)))
+
+df.train.cleaned <- df.train[-which(df.train['workclass'] == '?'
+                                   |
+                                   df.train['occupation'] == '?'
+                                   |
+                                   df.train['native_country'] == '?'),]
+
+print(paste("train data set total:", NROW(df.train.cleaned)))
 ```
 
 ### 2.1-(2)-(a)
+
 ```{r}
 
+# model <- randomForest(income ~ ., 
+#                method="class", 
+#                ntree=ntree.param,
+#                mtry=mtry.param,
+#                data=df.train.cleaned)
 ```
 
 ### 2.1-(2)-(b)
+
 ```{r}
 
 ```
 
 ### 2.1-(2)-(c)
+
 ```{r}
 
 ```
