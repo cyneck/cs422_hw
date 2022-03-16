@@ -2,12 +2,12 @@
 title: "CS 422 Homework 5"
 author: "Xingli Li"
 output:
-html_notebook:
-toc: yes
-toc_float: yes
-html_document:
-toc: yes
-df_print: paged
+  html_notebook:
+    toc: yes
+    toc_float: yes
+  html_document:
+    toc: yes
+    df_print: paged
 ---
 
 ## Homework 5
@@ -53,9 +53,9 @@ df.train <- df.train[-which(df.train['workclass'] == '?'
                               df.train['native_country'] == '?'),]
 
 
-df.test$income <- factor(df.test$income)
+# df.test$income <- factor(df.test$income)
 
-df.train$income <- factor(df.train$income)
+# df.train$income <- factor(df.train$income)
 
 ```
 
@@ -73,9 +73,13 @@ mtry.range <- c(sqrt(n), sqrt(n) + 1, sqrt(n) + 2)
 
 ```
 
+Defining function
+
 ```{r}
 
 learn_model <- function(train.df, ntree.param, mtry.param) {
+
+  train.df$income <- factor(train.df$income)
   model <- randomForest(income ~ ., method = "class",
                         ntree = ntree.param,
                         mtry = mtry.param,
@@ -93,10 +97,7 @@ get_results <- function(model, pred, test.df) {
   mtry.param <- model$mtry
 
   # Extract acc, bal.acc, error, spec, sens, and prec from the variable a.
-  pred.rocr <- predict(model, newdata = test.df, type = "prob")[,2]
-  f.pred <- prediction(pred.rocr, test.df$income)
-  acc <- performance(f.pred, measure = "acc")
-  acc <- a$byClass["Balanced Accuracy"]
+  acc <- a$overall["Accuracy"]
   bal.acc <- a$byClass["Balanced Accuracy"]
   error <- 1.0 - acc
   spec <- a$byClass["Specificity"]
@@ -175,93 +176,8 @@ for (result in results.df) {
 Determine the best model
 
 ```{r}
-
-for (model in model.list) {
-
-  pre <- predict(model, newdata = df.test.cleaned)
-
-  confuseTable <- table(pre, df.test.cleaned$income, dnn = c("prediction", "actual"))
-
-  print("Grid search resulted in the best model at ntree = XXX and mtry = XXX.")
-  print("Accuracy = ")
-  print("Balanced Accuracy = ")
-  print("Sensitivity = ")
-  print("Specificity = ")
-}
-```
-
-### 2.1-(2)-(c)
-  spec = spec,
-                           sens = sens,
-                           prec = prec,
-                           oob = oob)
-  rm(a)
-  results.df
-}
-```
-
-### 2.1-(2)-(a)
-
-Iteration of the grid search.
-
-```{r}
-
-results.df <- data.frame(ntree = 0,
-                         mtry = 0,
-                         acc = 0,
-                         bal.acc = 0,
-                         error = 0,
-                         spec = 0,
-                         sens = 0,
-                         prec = 0,
-                         oob = 0) # Prime the results data frame.
-
-
-for (ntree in mtree.range) {
-  for (mtry in mtry.range) {
-    str <- paste(Sys.time(), ": Starting model training on", ntree, "trees, and",
-                 floor(mtry), "attributes.\n")
-    cat(str)
-    model <- NULL
-    model <- learn_model(df.train, ntree, mtry)
-    str <- paste(Sys.time(), ": Done.\n")
-    cat(str)
-    pred <- predict(model, newdata = df.test, type = "class")
-    tmp.df <- get_results(model, pred, df.test)
-    results.df <- rbind(results.df, tmp.df)
-    rm(tmp.df)
-  }
-}
-
-rownames(results.df) <- c()
-results.df <- results.df[-1, ] # Remove the first row (used to prime the frame)
-round(results.df, 3)
-```
-
-```{r}
-
 for (result in results.df) {
-
-  print("Grid search resulted in the best model at ntree = XXX and mtry = XXX.")
-  print("Accuracy = ")
-  print("Balanced Accuracy = ")
-  print("Sensitivity = ")
-  print("Specificity = ")
-}
-```
-
-### 2.1-(2)-(b)
-
-Determine the best model
-
-```{r}
-
-for (model in model.list) {
-
-  pre <- predict(model, newdata = df.test.cleaned)
-
-  confuseTable <- table(pre, df.test.cleaned$income, dnn = c("prediction", "actual"))
-
+  
   print("Grid search resulted in the best model at ntree = XXX and mtry = XXX.")
   print("Accuracy = ")
   print("Balanced Accuracy = ")
