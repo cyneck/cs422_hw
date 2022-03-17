@@ -185,13 +185,15 @@ Determine the best model by examining the lowest (minimum) OOB error rate.
 ```{r}
 result <-results.df[which.min(results.df$oob),]
 
-print(paste("Grid search resulted in the best model at ntree =",
+print(paste("Grid search resulted in the best model for OOB at ntree =",
             round(result$ntree,digits = 3),
             " and mtry =", round(result$mtry,digits = 3)))
-print(paste("Accuracy =",round(result$acc,digits = 3)))
-print(paste("Balanced Accuracy = ",round(result$bal.acc,digits = 3)))
-print(paste("Sensitivity =",round(result$sens,digits = 3)))
-print(paste("Specificity =",round(result$spec,digits = 3)))
+print(paste("OOB =",round(result$oob,digits = 3)))
 ```
 
 ### 2.1-(2)-(c)
+
+Is the best model as determined by (a) the same model as determined by (b). Justify your answer.
+
+       (a) is the best model. 
+       Because (a) ntree is smaller, mtry just is a little larger. this model is simple and efficient,it is less generalization error.
