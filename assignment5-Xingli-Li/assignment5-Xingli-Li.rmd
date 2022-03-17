@@ -105,7 +105,7 @@ get_results <- function(model, pred, test.df) {
   prec <- a$byClass["Precision"]
 
   # Extract oob from model$err.rate
-  oob <- model$err.rate[1]
+  oob <- mean(model$err.rate[,1])
 
   results.df <- data.frame(ntree = num.tree,
                            mtry = mtry.param,
@@ -196,4 +196,4 @@ print(paste("OOB =",round(result$oob,digits = 3)))
 Is the best model as determined by (a) the same model as determined by (b). Justify your answer.
 
        (a) is the best model. 
-       Because (a) ntree is smaller, mtry just is a little larger. this model is simple and efficient,it is less generalization error.
+       Because (a) ntree is smaller, it has low computational complexity, this model is simple and efficient,it is less generalization error.
