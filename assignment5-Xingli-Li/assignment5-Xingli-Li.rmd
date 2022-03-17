@@ -73,7 +73,7 @@ mtry.range <- c(sqrt(n), sqrt(n) + 1, sqrt(n) + 2)
 
 ```
 
-Defining function
+Definiting function
 
 ```{r}
 
