@@ -35,7 +35,7 @@ Loading data and cleaning data
 
 ```{r}
 df.test <- read.csv(file = "./adult-test.csv", encoding = "UTF-8")
-df.train <- read.csv(file = "./adult-test.csv", encoding = "UTF-8")
+df.train <- read.csv(file = "./adult-train.csv", encoding = "UTF-8")
 
 col.names <- names(df.test)
 
