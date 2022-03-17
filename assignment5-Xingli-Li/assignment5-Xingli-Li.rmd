@@ -159,30 +159,34 @@ results.df <- results.df[-1, ] # Remove the first row (used to prime the frame)
 round(results.df, 3)
 ```
 
-```{r}
-result <-results.df[1,]
+Determine the best model by examining the maximum balanced accuracy, sensitivity and specificity.
 
-print(paste("Grid search resulted in the best model at ntree =",result[1],
-              " and mtry =", result[2]),digits = 3)
-print(paste("Accuracy =",result[4]),digits = 3)
-print(paste("Balanced Accuracy = ",result[5]),digits = 3)
-print(paste("Sensitivity =",result[7]),digits = 3)
-print(paste("Specificity =",result[6]),digits = 3)
+```{r}
+result <-results.df[which.max(results.df$bal.acc),]
+
+print(paste("Grid search resulted in the best model at ntree =",
+            round(result$ntree,digits = 3),
+            " and mtry =", round(result$mtry,digits = 3)))
+print(paste("Accuracy =",round(result$acc,digits = 3)))
+print(paste("Balanced Accuracy = ",round(result$bal.acc,digits = 3)))
+print(paste("Sensitivity =",round(result$sens,digits = 3)))
+print(paste("Specificity =",round(result$spec,digits = 3)))
 ```
 
 ### 2.1-(2)-(b)
 
-Determine the best model
+Determine the best model by examining the lowest (minimum) OOB error rate.
 
 ```{r}
-result <-results.df[1,]
+result <-results.df[which.min(results.df$oob),]
 
-print(paste("Grid search resulted in the best model at ntree =",result[1],
-              " and mtry =", result[2]),digits = 3)
-print(paste("Accuracy =",result[4]),digits = 3)
-print(paste("Balanced Accuracy = ",result[5]),digits = 3)
-print(paste("Sensitivity =",result[7]),digits = 3)
-print(paste("Specificity =",result[6]),digits = 3)
+print(paste("Grid search resulted in the best model at ntree =",
+            round(result$ntree,digits = 3),
+            " and mtry =", round(result$mtry,digits = 3)))
+print(paste("Accuracy =",round(result$acc,digits = 3)))
+print(paste("Balanced Accuracy = ",round(result$bal.acc,digits = 3)))
+print(paste("Sensitivity =",round(result$sens,digits = 3)))
+print(paste("Specificity =",round(result$spec,digits = 3)))
 ```
 
 ### 2.1-(2)-(c)
