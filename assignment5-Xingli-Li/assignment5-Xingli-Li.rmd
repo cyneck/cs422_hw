@@ -79,7 +79,7 @@ Defining function
 
 learn_model <- function(train.df, ntree.param, mtry.param) {
 
-  train.df$income <- factor(train.df$income)
+  train.df$income <- as.factor(train.df$income)
   model <- randomForest(income ~ ., method = "class",
                         ntree = ntree.param,
                         mtry = mtry.param,
@@ -105,7 +105,7 @@ get_results <- function(model, pred, test.df) {
   prec <- a$byClass["Precision"]
 
   # Extract oob from model$err.rate
-  oob <- model$err.rate
+  oob <- model$err.rate[1]
 
   results.df <- data.frame(ntree = num.tree,
                            mtry = mtry.param,
