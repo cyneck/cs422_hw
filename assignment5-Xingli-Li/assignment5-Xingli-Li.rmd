@@ -162,7 +162,12 @@ round(results.df, 3)
 Determine the best model by examining the maximum balanced accuracy, sensitivity and specificity.
 
 ```{r}
-result <-results.df[which.max(results.df$bal.acc),]
+results.df <-results.df[order(results.df$bal.acc,
+                              results.df$sens,
+                              results.df$spec,
+                              decreasing=TRUE),]
+
+result  <- results.df[1,]
 
 print(paste("Grid search resulted in the best model at ntree =",
             round(result$ntree,digits = 3),
