@@ -29,13 +29,13 @@ work.path <- getwd()
 setwd(work.path)
 ```
 
-### result2.1-(1)
+### 2.1-(1)
 
 Loading data and cleaning data
 
 ```{r}
-df.test <- read.csv(file = "/media/eric/Data/IIT/CS422/cs422_hw/assignment5-Xingli-Li/adult-test.csv", encoding = "UTF-8")
-df.train <- read.csv(file = "/media/eric/Data/IIT/CS422/cs422_hw/assignment5-Xingli-Li/adult-test.csv", encoding = "UTF-8")
+df.test <- read.csv(file = "./adult-test.csv", encoding = "UTF-8")
+df.train <- read.csv(file = "./adult-test.csv", encoding = "UTF-8")
 
 col.names <- names(df.test)
 
@@ -73,7 +73,7 @@ mtry.range <- c(sqrt(n), sqrt(n) + 1, sqrt(n) + 2)
 
 ```
 
-Definiting function
+Definition function
 
 ```{r}
 
