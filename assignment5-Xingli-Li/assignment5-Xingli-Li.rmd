@@ -160,15 +160,14 @@ round(results.df, 3)
 ```
 
 ```{r}
+result <-results.df[1,]
 
-for (result in results.df) {
-
-  print("Grid search resulted in the best model at ntree = XXX and mtry = XXX.")
-  print("Accuracy = ")
-  print("Balanced Accuracy = ")
-  print("Sensitivity = ")
-  print("Specificity = ")
-}
+print(paste("Grid search resulted in the best model at ntree =",result[1],
+              " and mtry =", result[2]),digits = 3)
+print(paste("Accuracy =",result[4]),digits = 3)
+print(paste("Balanced Accuracy = ",result[5]),digits = 3)
+print(paste("Sensitivity =",result[7]),digits = 3)
+print(paste("Specificity =",result[6]),digits = 3)
 ```
 
 ### 2.1-(2)-(b)
@@ -176,14 +175,14 @@ for (result in results.df) {
 Determine the best model
 
 ```{r}
-for (result in results.df) {
-  
-  print("Grid search resulted in the best model at ntree = XXX and mtry = XXX.")
-  print("Accuracy = ")
-  print("Balanced Accuracy = ")
-  print("Sensitivity = ")
-  print("Specificity = ")
-}
+result <-results.df[1,]
+
+print(paste("Grid search resulted in the best model at ntree =",result[1],
+              " and mtry =", result[2]),digits = 3)
+print(paste("Accuracy =",result[4]),digits = 3)
+print(paste("Balanced Accuracy = ",result[5]),digits = 3)
+print(paste("Sensitivity =",result[7]),digits = 3)
+print(paste("Specificity =",result[6]),digits = 3)
 ```
 
 ### 2.1-(2)-(c)
