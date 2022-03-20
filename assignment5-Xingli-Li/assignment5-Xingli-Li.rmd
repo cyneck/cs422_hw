@@ -196,4 +196,4 @@ print(paste("OOB =",round(result$oob,digits = 3)))
 Is the best model as determined by (a) the same model as determined by (b). Justify your answer.
 
        (a) is the best model. 
-       Because (a) ntree is smaller, it has low computational complexity, this model is simple and efficient,it is less generalization error.
+       Because (a) ntree is smaller, it has low computational complexity. Generally speaking, OOB is more suitable for small data sets. Bootstrap sampling is an autonomous sampling method, which refers to the sampling with return, about 1 / 3 of the data in the data set is not selected (called out of bag), so the unselected part is used as the test set of the small tree.it is less generalization error. 
