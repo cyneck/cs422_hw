@@ -58,7 +58,7 @@ for (trx_id in transactions) {
 
 df <- df[-1,]
 
-df
+names(df)
 ```
 
 finding the frequent itemsets

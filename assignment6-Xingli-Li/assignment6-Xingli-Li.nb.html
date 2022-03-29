@@ -2935,6 +2935,34 @@ div.tocify {
 <p>Analysis data:</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG50cmFuc2FjdGlvbnMgPSBjKFwiMWtcIixcIjVrXCIsXCIyMGtcIixcIjc1a1wiKVxuXG5kZiA8LSBkYXRhLmZyYW1lKFggPSAwLFxuICAgICAgICAgICAgICAgICBQMSA9IFwiXCIsXG4gICAgICAgICAgICAgICAgIFAyID0gXCJcIixcbiAgICAgICAgICAgICAgICAgUDMgPSBcIlwiLFxuICAgICAgICAgICAgICAgICBQNCA9IFwiXCIsXG4gICAgICAgICAgICAgICAgIFA1ID0gXCJcIixcbiAgICAgICAgICAgICAgICAgUDYgPSBcIlwiLFxuICAgICAgICAgICAgICAgICBQNyA9IFwiXCIsXG4gICAgICAgICAgICAgICAgIFA4ID0gXCJcIikgIyBQcmltZSB0aGUgcmVzdWx0cyBkYXRhIGZyYW1lLlxuXG5mb3IgKHRyeF9pZCBpbiB0cmFuc2FjdGlvbnMpIHtcbiAgIGZpbGVuYW1lID0gcGFzdGUwKFwidHItXCIsdHJ4X2lkLFwiLWNhbm9uaWNhbC5jc3ZcIilcbiAgIGRmLnRlbXAgPC0gcmVhZC5jc3YoZmlsZSA9IGZpbGVuYW1lLCBlbmNvZGluZyA9IFwiVVRGLThcIilcbiAgIGRmIDwtIHJiaW5kKGRmLCBkZi50ZW1wKVxuICAgZGYudGVtcCA8LSBOVUxMXG59XG5cbmRmIDwtIGRmWy0xLF1cblxubmFtZXMoZGYpXG5gYGAifQ== -->
+<pre class="r"><code>
+transactions = c(&quot;1k&quot;,&quot;5k&quot;,&quot;20k&quot;,&quot;75k&quot;)
+
+df &lt;- data.frame(X = 0,
+                 P1 = &quot;&quot;,
+                 P2 = &quot;&quot;,
+                 P3 = &quot;&quot;,
+                 P4 = &quot;&quot;,
+                 P5 = &quot;&quot;,
+                 P6 = &quot;&quot;,
+                 P7 = &quot;&quot;,
+                 P8 = &quot;&quot;) # Prime the results data frame.
+
+for (trx_id in transactions) {
+   filename = paste0(&quot;tr-&quot;,trx_id,&quot;-canonical.csv&quot;)
+   df.temp &lt;- read.csv(file = filename, encoding = &quot;UTF-8&quot;)
+   df &lt;- rbind(df, df.temp)
+   df.temp &lt;- NULL
+}
+
+df &lt;- df[-1,]
+
+names(df)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiWFwiICBcIlAxXCIgXCJQMlwiIFwiUDNcIiBcIlA0XCIgXCJQNVwiIFwiUDZcIiBcIlA3XCIgXCJQOFwiXG4ifQ== -->
+<pre><code>[1] &quot;X&quot;  &quot;P1&quot; &quot;P2&quot; &quot;P3&quot; &quot;P4&quot; &quot;P5&quot; &quot;P6&quot; &quot;P7&quot; &quot;P8&quot;</code></pre>
+<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>finding the frequent itemsets</p>
@@ -2960,7 +2988,7 @@ determined in (b):</p>
 </div>
 </div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiQ1MgNDIyIEhvbWV3b3JrIDYiCmF1dGhvcjogIlhpbmdsaSBMaSIKb3V0cHV0OgogIGh0bWxfbm90ZWJvb2s6CiAgICB0b2M6IHllcwogICAgdG9jX2Zsb2F0OiB5ZXMKICBodG1sX2RvY3VtZW50OgogICAgdG9jOiB5ZXMKICAgIGRmX3ByaW50OiBwYWdlZAotLS0KCiMjIEhvbWV3b3JrIDYKCiMjIyBQYXJ0IDIKCnNldCB3b3JrIHNwYWNlIGFuZCBpbnN0YWxsIGRlcGVuZGVudCBwYWNrYWdlLgoKYGBge3J9CgpsaWJyYXJ5KHJwYXJ0KSAgI2NsYXNzaWZpY2F0aW9uIGFuZCByZWdyZXNzaW9uIHRyZWVzCmxpYnJhcnkoYXJ1bGVzKQpsaWJyYXJ5KGNhcmV0KQp3b3JrLnBhdGggPC0gZ2V0d2QoKQpzZXR3ZCh3b3JrLnBhdGgpCmBgYAoKIyMjIDIuMS0oYSkKCkxvYWRpbmcgb3JpZ2luIGRhdGEgYW5kIHByb2Nlc3NpbmcgZGF0YS4KCi4uLgoKIyMjIDIuMS0oYikKCkFuYWx5c2lzIGRhdGE6CgpgYGB7cn0KCnRyYW5zYWN0aW9ucyA9IGMoIjFrIiwiNWsiLCIyMGsiLCI3NWsiKQoKZGYgPC0gZGF0YS5mcmFtZShYID0gMCwKICAgICAgICAgICAgICAgICBQMSA9ICIiLAogICAgICAgICAgICAgICAgIFAyID0gIiIsCiAgICAgICAgICAgICAgICAgUDMgPSAiIiwKICAgICAgICAgICAgICAgICBQNCA9ICIiLAogICAgICAgICAgICAgICAgIFA1ID0gIiIsCiAgICAgICAgICAgICAgICAgUDYgPSAiIiwKICAgICAgICAgICAgICAgICBQNyA9ICIiLAogICAgICAgICAgICAgICAgIFA4ID0gIiIpICMgUHJpbWUgdGhlIHJlc3VsdHMgZGF0YSBmcmFtZS4KCmZvciAodHJ4X2lkIGluIHRyYW5zYWN0aW9ucykgewogICBmaWxlbmFtZSA9IHBhc3RlMCgidHItIix0cnhfaWQsIi1jYW5vbmljYWwuY3N2IikKICAgZGYudGVtcCA8LSByZWFkLmNzdihmaWxlID0gZmlsZW5hbWUsIGVuY29kaW5nID0gIlVURi04IikKICAgZGYgPC0gcmJpbmQoZGYsIGRmLnRlbXApCiAgIGRmLnRlbXAgPC0gTlVMTAp9CgpkZiA8LSBkZlstMSxdCgpkZgpgYGAKCmZpbmRpbmcgdGhlIGZyZXF1ZW50IGl0ZW1zZXRzCgpkaXNjb3ZlcmluZyBzdHJvbmcgYXNzb2NpYXRpb24gcnVsZXMgd2l0aGluIHRoZW0uCgojIyMgMi4xLShjKQoKQ29tcGFyZSB0aGUgcnVsZXMgeW91IG9idGFpbmVkIGZvciBlYWNoIGRpZmZlcmVudCBzdWJzZXQgKDEsMDAwIC0tIDc1LDAwMCB0cmFuc2FjdGlvbnMpLiBIb3cgZG9lcyB0aGUgbnVtYmVyIG9mIHRyYW5zYWN0aW9ucyBhZmZlY3QgdGhlIHJlc3VsdHMgeW91IG9ic2VydmVkPyAoV3JpdGUgdGhlIGFuc3dlciBpbiB5b3VyIFIgbWFya3VwIGZpbGUsIGVhc2lseSBpZGVudGlmaWVkLikKCiMjIyAyLjEtKGQpLShpKQoKZm9yIHRoZSA3NSwwMDAgdHJhbnNhY3Rpb25zIGRhdGFzZXQgdXNpbmcgdGhlIHNhbWUgc3VwcG9ydCBsZXZlbCBhcyBkZXRlcm1pbmVkIGluIChiKToKCldoYXQgaXMgdGhlIG1vc3QgZnJlcXVlbnRseSBwdXJjaGFzZWQgaXRlbSBvciBpdGVtc2V0PwoKIyMjIDIuMS0oZCktKGlpKQoKV2hhdCBpcyB0aGUgbGVhc3QgZnJlcXVlbnRseSBwdXJjaGFzZWQgaXRlbSBvciBpdGVtc2V0Pwo=</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiQ1MgNDIyIEhvbWV3b3JrIDYiCmF1dGhvcjogIlhpbmdsaSBMaSIKb3V0cHV0OgogIGh0bWxfbm90ZWJvb2s6CiAgICB0b2M6IHllcwogICAgdG9jX2Zsb2F0OiB5ZXMKICBodG1sX2RvY3VtZW50OgogICAgdG9jOiB5ZXMKICAgIGRmX3ByaW50OiBwYWdlZAotLS0KCiMjIEhvbWV3b3JrIDYKCiMjIyBQYXJ0IDIKCnNldCB3b3JrIHNwYWNlIGFuZCBpbnN0YWxsIGRlcGVuZGVudCBwYWNrYWdlLgoKYGBge3J9CgpsaWJyYXJ5KHJwYXJ0KSAgI2NsYXNzaWZpY2F0aW9uIGFuZCByZWdyZXNzaW9uIHRyZWVzCmxpYnJhcnkoYXJ1bGVzKQpsaWJyYXJ5KGNhcmV0KQp3b3JrLnBhdGggPC0gZ2V0d2QoKQpzZXR3ZCh3b3JrLnBhdGgpCmBgYAoKIyMjIDIuMS0oYSkKCkxvYWRpbmcgb3JpZ2luIGRhdGEgYW5kIHByb2Nlc3NpbmcgZGF0YS4KCi4uLgoKIyMjIDIuMS0oYikKCkFuYWx5c2lzIGRhdGE6CgpgYGB7cn0KCnRyYW5zYWN0aW9ucyA9IGMoIjFrIiwiNWsiLCIyMGsiLCI3NWsiKQoKZGYgPC0gZGF0YS5mcmFtZShYID0gMCwKICAgICAgICAgICAgICAgICBQMSA9ICIiLAogICAgICAgICAgICAgICAgIFAyID0gIiIsCiAgICAgICAgICAgICAgICAgUDMgPSAiIiwKICAgICAgICAgICAgICAgICBQNCA9ICIiLAogICAgICAgICAgICAgICAgIFA1ID0gIiIsCiAgICAgICAgICAgICAgICAgUDYgPSAiIiwKICAgICAgICAgICAgICAgICBQNyA9ICIiLAogICAgICAgICAgICAgICAgIFA4ID0gIiIpICMgUHJpbWUgdGhlIHJlc3VsdHMgZGF0YSBmcmFtZS4KCmZvciAodHJ4X2lkIGluIHRyYW5zYWN0aW9ucykgewogICBmaWxlbmFtZSA9IHBhc3RlMCgidHItIix0cnhfaWQsIi1jYW5vbmljYWwuY3N2IikKICAgZGYudGVtcCA8LSByZWFkLmNzdihmaWxlID0gZmlsZW5hbWUsIGVuY29kaW5nID0gIlVURi04IikKICAgZGYgPC0gcmJpbmQoZGYsIGRmLnRlbXApCiAgIGRmLnRlbXAgPC0gTlVMTAp9CgpkZiA8LSBkZlstMSxdCgpuYW1lcyhkZikKYGBgCgpmaW5kaW5nIHRoZSBmcmVxdWVudCBpdGVtc2V0cwoKZGlzY292ZXJpbmcgc3Ryb25nIGFzc29jaWF0aW9uIHJ1bGVzIHdpdGhpbiB0aGVtLgoKIyMjIDIuMS0oYykKCkNvbXBhcmUgdGhlIHJ1bGVzIHlvdSBvYnRhaW5lZCBmb3IgZWFjaCBkaWZmZXJlbnQgc3Vic2V0ICgxLDAwMCAtLSA3NSwwMDAgdHJhbnNhY3Rpb25zKS4gSG93IGRvZXMgdGhlIG51bWJlciBvZiB0cmFuc2FjdGlvbnMgYWZmZWN0IHRoZSByZXN1bHRzIHlvdSBvYnNlcnZlZD8gKFdyaXRlIHRoZSBhbnN3ZXIgaW4geW91ciBSIG1hcmt1cCBmaWxlLCBlYXNpbHkgaWRlbnRpZmllZC4pCgojIyMgMi4xLShkKS0oaSkKCmZvciB0aGUgNzUsMDAwIHRyYW5zYWN0aW9ucyBkYXRhc2V0IHVzaW5nIHRoZSBzYW1lIHN1cHBvcnQgbGV2ZWwgYXMgZGV0ZXJtaW5lZCBpbiAoYik6CgpXaGF0IGlzIHRoZSBtb3N0IGZyZXF1ZW50bHkgcHVyY2hhc2VkIGl0ZW0gb3IgaXRlbXNldD8KCiMjIyAyLjEtKGQpLShpaSkKCldoYXQgaXMgdGhlIGxlYXN0IGZyZXF1ZW50bHkgcHVyY2hhc2VkIGl0ZW0gb3IgaXRlbXNldD8K</div>
 
 
 </div>
