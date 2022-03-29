@@ -31,7 +31,7 @@ Loading origin data and processing data.
 
 ...
 
-### 2.1-(a)
+### 2.1-(b)
 
 Analysis data:
 
@@ -61,8 +61,6 @@ df <- df[-1,]
 df
 ```
 
-### 2.1-(b)
-
 finding the frequent itemsets
 
 discovering strong association rules within them.
@@ -76,8 +74,6 @@ Compare the rules you obtained for each different subset (1,000 -- 75,000 transa
 for the 75,000 transactions dataset using the same support level as determined in (b):
 
 What is the most frequently purchased item or itemset?
-
-filename \<- NULL
 
 ### 2.1-(d)-(ii)
 
