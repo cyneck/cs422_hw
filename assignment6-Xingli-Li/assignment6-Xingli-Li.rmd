@@ -1,14 +1,14 @@
-|                           |
-|---------------------------|
-| itle: "CS 422 Homework 6" |
-| uthor: "Xingli Li"        |
-| utput:                    |
-| html_notebook:            |
-| toc: yes                  |
-| toc_float: yes            |
-| html_document:            |
-| toc: yes                  |
-| df_print: paged           |
+---
+title: "CS 422 Homework 6"
+author: "Xingli Li"
+output:
+  html_notebook:
+    toc: yes
+    toc_float: yes
+  html_document:
+    toc: yes
+    df_print: paged
+---
 
 ## Homework 6
 
@@ -76,6 +76,8 @@ Compare the rules you obtained for each different subset (1,000 -- 75,000 transa
 for the 75,000 transactions dataset using the same support level as determined in (b):
 
 What is the most frequently purchased item or itemset?
+
+filename \<- NULL
 
 ### 2.1-(d)-(ii)
 
