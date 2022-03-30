@@ -2,9 +2,10 @@
 title: "CS 422 Homework 6"
 author: "Xingli Li"
 output:
-  html_notebook:
+  html_notebook: 
     toc: yes
     toc_float: yes
+    toc_depth: 5
   html_document:
     toc: yes
     df_print: paged
@@ -20,6 +21,7 @@ set work space and install dependent package.
 
 library(rpart)  #classification and regression trees
 library(arules)
+library(arulesViz)
 library(caret)
 work.path <- getwd()
 setwd(work.path)
@@ -29,52 +31,169 @@ setwd(work.path)
 
 Loading origin data and processing data.
 
-...
-
 ### 2.1-(b)
 
-Analysis data:
+Finding the frequent itemsets:
 
 ```{r}
+# Read the data
+trans <- read.transactions("tr-1k-canonical.csv",format = "basket", sep=",")
+summary(trans)
 
-transactions = c("1k","5k","20k","75k")
+### finding the frequent itemsets
+frequent_itemsets <- apriori(trans, 
+                             parameter=list(support=0.03, target="frequent itemsets"))
+inspect(frequent_itemsets)
 
-df <- data.frame(X = 0,
-                 P1 = "",
-                 P2 = "",
-                 P3 = "",
-                 P4 = "",
-                 P5 = "",
-                 P6 = "",
-                 P7 = "",
-                 P8 = "") # Prime the results data frame.
-
-for (trx_id in transactions) {
-   filename = paste0("tr-",trx_id,"-canonical.csv")
-   df.temp <- read.csv(file = filename, encoding = "UTF-8")
-   df <- rbind(df, df.temp)
-   df.temp <- NULL
-}
-
-df <- df[-1,]
-
-names(df)
 ```
 
-finding the frequent itemsets
+Discovering strong association rules within them.
 
-discovering strong association rules within them.
+```{r}
+### get rules
+parameter <- list(support=0.03,confidence = 0.9, target="rules")
+rules <- apriori(trans, parameter=parameter)
+#### Let's inspect the rules, sorted by confidence
+rules.sorted_confd <- arules::sort(rules, decreasing = T,by = "confidence")
+
+### Discovering the first 5 strong association rules within them.
+inspect(head(rules.sorted_confd[1:5]))
+
+```
+
+```{r}
+trans <- read.transactions("tr-5k-canonical.csv",sep=",")
+
+### get rules
+parameter <- list(support=0.03,confidence = 0.9, target="rules")
+rules <- apriori(trans, parameter=parameter)
+#### Let's inspect the rules, sorted by confidence
+rules.sorted_confd <- arules::sort(rules, decreasing = T,by = "confidence")
+
+### Discovering the first 5 strong association rules within them.
+inspect(head(rules.sorted_confd[1:5]))
+
+```
+
+```{r}
+trans <- read.transactions("tr-20k-canonical.csv",sep=",")
+
+### get rules
+parameter <- list(support=0.03,confidence = 0.9, target="rules")
+rules <- apriori(trans, parameter=parameter)
+#### Let's inspect the rules, sorted by confidence
+rules.sorted_confd <- arules::sort(rules, decreasing = T,by = "confidence")
+
+### Discovering the first 5 strong association rules within them.
+inspect(head(rules.sorted_confd[1:5]))
+
+```
+
+
+```{r}
+trans <- read.transactions("tr-20k-canonical.csv",sep=",")
+
+### get rules
+parameter <- list(support=0.03,confidence = 0.9, target="rules")
+rules <- apriori(trans, parameter=parameter)
+#### Let's inspect the rules, sorted by confidence
+rules.sorted_confd <- arules::sort(rules, decreasing = T,by = "confidence")
+
+### Discovering the first 5 strong association rules within them.
+inspect(head(rules.sorted_confd[1:5]))
+
+```
+
 
 ### 2.1-(c)
 
 Compare the rules you obtained for each different subset (1,000 -- 75,000 transactions). How does the number of transactions affect the results you observed? (Write the answer in your R markup file, easily identified.)
 
+```{r}
+trans <- read.transactions("tr-1k-canonical.csv",sep=",")
+
+### get rules
+parameter <- list(support=0.03,confidence = 0.9, target="rules")
+rules <- apriori(trans, parameter=parameter)
+#### Let's inspect the rules, sorted by confidence
+rules.sorted_confd <- arules::sort(rules, decreasing = T,by = "confidence")
+
+### Discovering the first 5 strong association rules within them.
+inspect(head(rules.sorted_confd[1:5]))
+```
+
+```{r}
+trans <- read.transactions("tr-5k-canonical.csv",sep=",")
+
+### get rules
+parameter <- list(support=0.03,confidence = 0.9, target="rules")
+rules <- apriori(trans, parameter=parameter)
+#### Let's inspect the rules, sorted by confidence
+rules.sorted_confd <- arules::sort(rules, decreasing = T,by = "confidence")
+
+### Discovering the first 5 strong association rules within them.
+inspect(head(rules.sorted_confd[1:5]))
+
+```
+
+```{r}
+trans <- read.transactions("tr-20k-canonical.csv",sep=",")
+
+### get rules
+parameter <- list(support=0.03,confidence = 0.9, target="rules")
+rules <- apriori(trans, parameter=parameter)
+#### Let's inspect the rules, sorted by confidence
+rules.sorted_confd <- arules::sort(rules, decreasing = T,by = "confidence")
+
+### Discovering the first 5 strong association rules within them.
+inspect(head(rules.sorted_confd[1:5]))
+```
+
+```{r}
+trans <- read.transactions("tr-75k-canonical.csv",sep=",")
+
+### get rules
+parameter <- list(support=0.03,confidence = 0.9, target="rules")
+rules <- apriori(trans, parameter=parameter)
+#### Let's inspect the rules, sorted by confidence
+rules.sorted_confd <- arules::sort(rules, decreasing = T,by = "confidence")
+
+### Discovering the first 5 strong association rules within them.
+inspect(head(rules.sorted_confd[1:5]))
+```
+Answer:
+    With the increase of transaction data, the computation process takes more and more time.
+
 ### 2.1-(d)-(i)
 
-for the 75,000 transactions dataset using the same support level as determined in (b):
-
+For the 75,000 transactions dataset using the same support level as determined in (b):
 What is the most frequently purchased item or itemset?
+
+```{r}
+trans <- read.transactions("tr-75k-canonical.csv",sep=",")
+
+### finding the frequent itemsets
+frequent_itemsets <- apriori(trans, 
+                             parameter=list(support=0.03, target="frequent itemsets"))
+
+inspect(frequent_itemsets)
+
+summary(frequent_itemsets)
+
+```
+
+Answer:
+    most frequent items: Hot Coffee, Coffee Eclair, Almond Twist, Apple Pie Apricot, Croissant
 
 ### 2.1-(d)-(ii)
 
 What is the least frequently purchased item or itemset?
+
+```{r}
+data_df <- as(frequent_itemsets,"data.frame")
+
+data_df[which.min(data_df$count),] 
+```
+
+Answer: 
+    The least frequently purchased item is {Almond Twist,Hot Coffee}.

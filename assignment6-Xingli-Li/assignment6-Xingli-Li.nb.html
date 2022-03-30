@@ -2922,51 +2922,227 @@ div.tocify {
 <p>set work space and install dependent package.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG5saWJyYXJ5KHJwYXJ0KSAgI2NsYXNzaWZpY2F0aW9uIGFuZCByZWdyZXNzaW9uIHRyZWVzXG5saWJyYXJ5KGFydWxlcylcbmxpYnJhcnkoYXJ1bGVzVml6KVxubGlicmFyeShjYXJldClcbndvcmsucGF0aCA8LSBnZXR3ZCgpXG5zZXR3ZCh3b3JrLnBhdGgpXG5gYGAifQ== -->
+<pre class="r"><code>
+library(rpart)  #classification and regression trees
+library(arules)
+library(arulesViz)
+library(caret)
+work.path &lt;- getwd()
+setwd(work.path)</code></pre>
+<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
 <div id="a" class="section level3">
 <h3>2.1-(a)</h3>
 <p>Loading origin data and processing data.</p>
-<p>…</p>
 </div>
 <div id="b" class="section level3">
 <h3>2.1-(b)</h3>
-<p>Analysis data:</p>
+<p>Finding the frequent itemsets:</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG50cmFuc2FjdGlvbnMgPSBjKFwiMWtcIixcIjVrXCIsXCIyMGtcIixcIjc1a1wiKVxuXG5kZiA8LSBkYXRhLmZyYW1lKFggPSAwLFxuICAgICAgICAgICAgICAgICBQMSA9IFwiXCIsXG4gICAgICAgICAgICAgICAgIFAyID0gXCJcIixcbiAgICAgICAgICAgICAgICAgUDMgPSBcIlwiLFxuICAgICAgICAgICAgICAgICBQNCA9IFwiXCIsXG4gICAgICAgICAgICAgICAgIFA1ID0gXCJcIixcbiAgICAgICAgICAgICAgICAgUDYgPSBcIlwiLFxuICAgICAgICAgICAgICAgICBQNyA9IFwiXCIsXG4gICAgICAgICAgICAgICAgIFA4ID0gXCJcIikgIyBQcmltZSB0aGUgcmVzdWx0cyBkYXRhIGZyYW1lLlxuXG5mb3IgKHRyeF9pZCBpbiB0cmFuc2FjdGlvbnMpIHtcbiAgIGZpbGVuYW1lID0gcGFzdGUwKFwidHItXCIsdHJ4X2lkLFwiLWNhbm9uaWNhbC5jc3ZcIilcbiAgIGRmLnRlbXAgPC0gcmVhZC5jc3YoZmlsZSA9IGZpbGVuYW1lLCBlbmNvZGluZyA9IFwiVVRGLThcIilcbiAgIGRmIDwtIHJiaW5kKGRmLCBkZi50ZW1wKVxuICAgZGYudGVtcCA8LSBOVUxMXG59XG5cbmRmIDwtIGRmWy0xLF1cblxubmFtZXMoZGYpXG5gYGAifQ== -->
-<pre class="r"><code>
-transactions = c(&quot;1k&quot;,&quot;5k&quot;,&quot;20k&quot;,&quot;75k&quot;)
-
-df &lt;- data.frame(X = 0,
-                 P1 = &quot;&quot;,
-                 P2 = &quot;&quot;,
-                 P3 = &quot;&quot;,
-                 P4 = &quot;&quot;,
-                 P5 = &quot;&quot;,
-                 P6 = &quot;&quot;,
-                 P7 = &quot;&quot;,
-                 P8 = &quot;&quot;) # Prime the results data frame.
-
-for (trx_id in transactions) {
-   filename = paste0(&quot;tr-&quot;,trx_id,&quot;-canonical.csv&quot;)
-   df.temp &lt;- read.csv(file = filename, encoding = &quot;UTF-8&quot;)
-   df &lt;- rbind(df, df.temp)
-   df.temp &lt;- NULL
-}
-
-df &lt;- df[-1,]
-
-names(df)</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBSZWFkIHRoZSBkYXRhXG50cmFucyA8LSByZWFkLnRyYW5zYWN0aW9ucyhcInRyLTFrLWNhbm9uaWNhbC5jc3ZcIixmb3JtYXQgPSBcImJhc2tldFwiLCBzZXA9XCIsXCIpXG5zdW1tYXJ5KHRyYW5zKVxuYGBgIn0= -->
+<pre class="r"><code># Read the data
+trans &lt;- read.transactions(&quot;tr-1k-canonical.csv&quot;,format = &quot;basket&quot;, sep=&quot;,&quot;)
+summary(trans)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiWFwiICBcIlAxXCIgXCJQMlwiIFwiUDNcIiBcIlA0XCIgXCJQNVwiIFwiUDZcIiBcIlA3XCIgXCJQOFwiXG4ifQ== -->
-<pre><code>[1] &quot;X&quot;  &quot;P1&quot; &quot;P2&quot; &quot;P3&quot; &quot;P4&quot; &quot;P5&quot; &quot;P6&quot; &quot;P7&quot; &quot;P8&quot;</code></pre>
+<!-- rnb-output-begin eyJkYXRhIjoidHJhbnNhY3Rpb25zIGFzIGl0ZW1NYXRyaXggaW4gc3BhcnNlIGZvcm1hdCB3aXRoXG4gMTAwMCByb3dzIChlbGVtZW50cy9pdGVtc2V0cy90cmFuc2FjdGlvbnMpIGFuZFxuIDUwIGNvbHVtbnMgKGl0ZW1zKSBhbmQgYSBkZW5zaXR5IG9mIDAuMDcwNzYgXG5cbm1vc3QgZnJlcXVlbnQgaXRlbXM6XG5Hb25nb2xhaXMgQ29va2llICAgICBUcnVmZmxlIENha2UgICAgIFR1aWxlIENvb2tpZSAgICAgICBCZXJyeSBUYXJ0ICAgICAgIEhvdCBDb2ZmZWUgICAgICAgICAgKE90aGVyKSBcbiAgICAgICAgICAgICAxMDggICAgICAgICAgICAgIDEwMyAgICAgICAgICAgICAgMTAyICAgICAgICAgICAgICAgOTUgICAgICAgICAgICAgICA5NCAgICAgICAgICAgICAzMDM2IFxuXG5lbGVtZW50IChpdGVtc2V0L3RyYW5zYWN0aW9uKSBsZW5ndGggZGlzdHJpYnV0aW9uOlxuc2l6ZXNcbiAgMSAgIDIgICAzICAgNCAgIDUgICA2ICAgNyAgIDggXG4gNjAgMTYyIDMzOCAyMTYgMTMyICA0NCAgMzIgIDE2IFxuXG4gICBNaW4uIDFzdCBRdS4gIE1lZGlhbiAgICBNZWFuIDNyZCBRdS4gICAgTWF4LiBcbiAgMS4wMDAgICAzLjAwMCAgIDMuMDAwICAgMy41MzggICA0LjAwMCAgIDguMDAwIFxuXG5pbmNsdWRlcyBleHRlbmRlZCBpdGVtIGluZm9ybWF0aW9uIC0gZXhhbXBsZXM6XG4ifQ== -->
+<pre><code>transactions as itemMatrix in sparse format with
+ 1000 rows (elements/itemsets/transactions) and
+ 50 columns (items) and a density of 0.07076 
+
+most frequent items:
+Gongolais Cookie     Truffle Cake     Tuile Cookie       Berry Tart       Hot Coffee          (Other) 
+             108              103              102               95               94             3036 
+
+element (itemset/transaction) length distribution:
+sizes
+  1   2   3   4   5   6   7   8 
+ 60 162 338 216 132  44  32  16 
+
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  1.000   3.000   3.000   3.538   4.000   8.000 
+
+includes extended item information - examples:</code></pre>
 <!-- rnb-output-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibnJvdyI6MywibmNvbCI6MSwic3VtbWFyeSI6eyJEZXNjcmlwdGlvbiI6WyJkZiBbMyDDlyAxXSJdfX0sInJkZiI6Ikg0c0lBQUFBQUFBQUExMVF3VzdDTUF4MTJtWVRRZHVROWdQOFFDdE51M0FGcG4zQXhDU3VwczFHUlVoUUVzU08rM0kyTjAwNEpGSVUrK1U5Mjg4ZmI5dFhzUlVBVUVMRlNpZzVoY0EvTisvMUFxQXFLR0ZRd1dSNGY0ajBIQUNBMmFnSUg3T2xPaHJkelZjUzdYeXQ4SkxoYTJ0NjUxRDdpRThqdmtIcnN4NWM0MUc2V0QrQmR3cDNVcm1NT3JIbTBpVDZBOTNpRjhJcDg1cXRRcGZYRkIxNmJMNHM2U203WnBKN2MvSzkwU1FxQnNNOEV6T2JBVTluUFV6UzFlMytyQS8xeTlBZ0xvckY2ZGc0MlMxbVk4dmlMNWJpeWF6VTM3MldhZlpnUFNhUDVEZ1liazYydjIxVEVPb2Fiendtbm1pTlNrandCdGQvK2pXQndlY0JBQUE9In0= -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["labels"],"name":[1],"type":["chr"],"align":["left"]}],"data":[{"1":"Almond Bear Claw","_rn_":"1"},{"1":"Almond Croissant","_rn_":"2"},{"1":"Almond Tart","_rn_":"3"}],"options":{"columns":{"min":{},"max":[10],"total":[1]},"rows":{"min":[10],"max":[10],"total":[3]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyMjIGZpbmRpbmcgdGhlIGZyZXF1ZW50IGl0ZW1zZXRzXG5mcmVxdWVudF9pdGVtc2V0cyA8LSBhcHJpb3JpKHRyYW5zLCBcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgcGFyYW1ldGVyPWxpc3Qoc3VwcG9ydD0wLjAzLCB0YXJnZXQ9XCJmcmVxdWVudCBpdGVtc2V0c1wiKSlcbmBgYCJ9 -->
+<pre class="r"><code>### finding the frequent itemsets
+frequent_itemsets &lt;- apriori(trans, 
+                             parameter=list(support=0.03, target=&quot;frequent itemsets&quot;))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiQXByaW9yaVxuXG5QYXJhbWV0ZXIgc3BlY2lmaWNhdGlvbjpcbiJ9 -->
+<pre><code>Apriori
+
+Parameter specification:</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibnJvdyI6MSwibmNvbCI6MTIsInN1bW1hcnkiOnsiRGVzY3JpcHRpb24iOlsiZGYgWzEgw5cgMTJdIl19fSwicmRmIjoiSDRzSUFBQUFBQUFBQTIxU3ZVN0RNQkIybW9Tb1VXbEJNQ05lb0pFUUN4c01pSjAvcWF0SjNXS1JuSVB0UURZbUhnSUdoajVGZVNZV25xQndUdU9RV2xpSzh0M24rKzd5M2VYcWZISWNUMkpDaUU4Q3p5ZCtpSkNFdHpjWDR4TkNnaDRHSGdsSTM3d3JUTnBETU1CbmFJaVhiNU1jTFd4OCt2bG16bnNiMS9mMTJla1VDa0FBdzNkY2MrdGpzV2UxWi91dGRsM3JZM241OVhxd1JMemR5YlU0ZG5yc3ppUjdMQm5vUTY1WnJwaFdtMDAybklWQWM2YWFDb09HakZNQk16NWxrTEtHMmNvNVBOSE11bEE1clN5bWt1VXQvc3NaQ2NubkhHaDJYUmFGa0xxaEkxUnFudHU2a2RxNE5XMHlCbTFFcTA2a3Fad3ptK216U2p0VytsSThKMTA3OW9LNG50T01LamNwbmxKTms1bEVQVVlyUnhLSlFuTUJLT3FaM3lCMHhKNTBpRkVKNWt1bTQvUytoSWZ4a2JQbS85WTRXTGZzL1RTbFF1dWJBYzdSRGl6TTZCMnpNeDZpNDlwd1VrZ09kalF4c2lyUlFyZTd3SDFtbHFtOWtkVXZsNGpIR1AwQ0FBQT0ifQ== -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["confidence"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["minval"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["smax"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["arem"],"name":[4],"type":["chr"],"align":["left"]},{"label":["aval"],"name":[5],"type":["lgl"],"align":["right"]},{"label":["originalSupport"],"name":[6],"type":["lgl"],"align":["right"]},{"label":["maxtime"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["support"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["minlen"],"name":[9],"type":["int"],"align":["right"]},{"label":["maxlen"],"name":[10],"type":["int"],"align":["right"]},{"label":["target"],"name":[11],"type":["chr"],"align":["left"]},{"label":["ext"],"name":[12],"type":["lgl"],"align":["right"]}],"data":[{"1":"NA","2":"0.1","3":"1","4":"none","5":"FALSE","6":"TRUE","7":"5","8":"0.03","9":"1","10":"10","11":"frequent itemsets","12":"TRUE","_rn_":""}],"options":{"columns":{"min":{},"max":[10],"total":[12]},"rows":{"min":[10],"max":[10],"total":[1]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG5BbGdvcml0aG1pYyBjb250cm9sOlxuIn0= -->
+<pre><code>
+Algorithmic control:</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibnJvdyI6MSwibmNvbCI6Nywic3VtbWFyeSI6eyJEZXNjcmlwdGlvbiI6WyJkZiBbMSDDlyA3XSJdfX0sInJkZiI6Ikg0c0lBQUFBQUFBQUEzVlFXMDdETUJEY1BFeFVTeFFrenBGSVZYLzQ0d2R4QUFSU2Y5MWtTeU1jTzdKZDRDcHdFeTVYMkR4V2FpMklaSGwyUEp2Wm5jZjd6VnB1SkFCa2tDY1paSUlnaU9lbmgvSVdJRStwU0NDSHhYQi9rT2lHUUVGbk9SQjMzNS9EOTBWWWpzTHAvSVVoNGkvbk96M256d3lGVVIxNkF0ZWo2VVJlN0ZvZDBNMVZIaHdpNHoycW5sVWRkcllQL0tLdGFoaDc2NWd2M3RCdHJjZklkK0hzZTNYcXpROFFEMWhyNVdPUmJGUlExYzVSUDFYSHFLV2dxVnBycUNrZG9oUlJjK0lpNHVwZ2hrbWFzdDRmekd1NStpZkdVMXhNbHVuUC9DdkJtYUI1YVEybkpiVGFvcDZMSlcwOExsejFyalVjanlUV1Y4RUd4VHBaVzgzTXVCc2Nmd0dHRk1xbFFRSUFBQT09In0= -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["filter"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["tree"],"name":[2],"type":["lgl"],"align":["right"]},{"label":["heap"],"name":[3],"type":["lgl"],"align":["right"]},{"label":["memopt"],"name":[4],"type":["lgl"],"align":["right"]},{"label":["load"],"name":[5],"type":["lgl"],"align":["right"]},{"label":["sort"],"name":[6],"type":["int"],"align":["right"]},{"label":["verbose"],"name":[7],"type":["lgl"],"align":["right"]}],"data":[{"1":"0.1","2":"TRUE","3":"TRUE","4":"FALSE","5":"TRUE","6":"2","7":"TRUE","_rn_":""}],"options":{"columns":{"min":{},"max":[10],"total":[7]},"rows":{"min":[10],"max":[10],"total":[1]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG5BYnNvbHV0ZSBtaW5pbXVtIHN1cHBvcnQgY291bnQ6IDMwIFxuXG5zZXQgaXRlbSBhcHBlYXJhbmNlcyAuLi5bMCBpdGVtKHMpXSBkb25lIFswLjAwc10uXG5zZXQgdHJhbnNhY3Rpb25zIC4uLls1MCBpdGVtKHMpLCAxMDAwIHRyYW5zYWN0aW9uKHMpXSBkb25lIFswLjAwc10uXG5zb3J0aW5nIGFuZCByZWNvZGluZyBpdGVtcyAuLi4gWzQ5IGl0ZW0ocyldIGRvbmUgWzAuMDBzXS5cbmNyZWF0aW5nIHRyYW5zYWN0aW9uIHRyZWUgLi4uIGRvbmUgWzAuMDBzXS5cbmNoZWNraW5nIHN1YnNldHMgb2Ygc2l6ZSAxIDIgMyA0IGRvbmUgWzAuMDBzXS5cbnNvcnRpbmcgdHJhbnNhY3Rpb25zIC4uLiBkb25lIFswLjAwc10uXG53cml0aW5nIC4uLiBbODUgc2V0KHMpXSBkb25lIFswLjAwc10uXG5jcmVhdGluZyBTNCBvYmplY3QgIC4uLiBkb25lIFswLjAwc10uXG4ifQ== -->
+<pre><code>
+Absolute minimum support count: 30 
+
+set item appearances ...[0 item(s)] done [0.00s].
+set transactions ...[50 item(s), 1000 transaction(s)] done [0.00s].
+sorting and recoding items ... [49 item(s)] done [0.00s].
+creating transaction tree ... done [0.00s].
+checking subsets of size 1 2 3 4 done [0.00s].
+sorting transactions ... done [0.00s].
+writing ... [85 set(s)] done [0.00s].
+creating S4 object  ... done [0.00s].</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuaW5zcGVjdChmcmVxdWVudF9pdGVtc2V0cylcbmBgYCJ9 -->
+<pre class="r"><code>inspect(frequent_itemsets)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibnJvdyI6ODUsIm5jb2wiOjMsInN1bW1hcnkiOnsiRGVzY3JpcHRpb24iOlsiZGYgWzg1IMOXIDNdIl19fSwicmRmIjoiSDRzSUFBQUFBQUFBQTQyWWEyd1VWUlNBbHo1QTF0SVhZT1RSZGlnSVJiYkY3dXp1TENKTzJnTGxWUXFsUEFLQ1hyYlQ3dGhoWmpNeks4S29pVEhHR0dPTS92R0hMNTRpaUlBdENFRmpqQnBqTkRGR2Z4aGpqREhFR0RYR0VFT01VZEV6dS9mT25MazdXeVE1ekxuM25udStjOC9jYzloaFlPVU9NYm9qR29sRUtpTlZreW9qbGRXZ1JxcTNEcTV1VDBjaVZSVXdtQlNwaWt4MW53K0MwZlNDWlNSU0Q3S1ZMalE2UFZralkyakVWb1JWR1kybzVzTjBwZDdaUm5SVjB3ZzNQeFB0NkRFTjFiS0liclBGR21lVGtpRzZNRWhNYjI0RzJ0Q25tS28ra2xmWTJqU25TOXRuNkVPQkRZMXNzc1I5UFhLRmQ5UTd2VVFubVN4RVpCaWpxdUo3WW1mZ3diVk9WODVVTTRZZDhOUGdiQUVyRFZKaDVVekZzZ3pmVWJlV1YvWXFwbmxBV0FrdXJTeGJxWE8yRTAzUDJ4eTVBVGFRekdoeFJ6RFVEUW9jVGlqOFRZYThEVGM3dmFhaVFPWVU0azkxNVhJUXpDWVZoMDN6dFYrMVVOYUxQakZubXRORExGVTNoQjR5Nm0yZjdwMjZKTFYxVHJkaDI1b3lKR3lIN0pvK3NPZzZlTG9hcHorbm1DVGdlNmFYNjlVbXllWHltUXpRL1ZNemNEQjc5U2l2d1RzelFLeGNjWjdQVkszVGJ4SjlSQkhXNWRVTWV0VTlXVVd4UXU5a01ZMWNkcklGNTF1TUljS25FWjhLM3pnODMrRDBFZk9nbWlOOGF1QUsyU2JaWHd3ZDcvQ1FPSTQ2WnlQSkdackNVV3RweU1Ga05hS2s4UGNjUldrTUR5dUtEeWlPdVNLdWNicExZcWwxQnZPcXhwZFFBdzBsSksxcjNIc1VvSUVMTXo4OHJBVnoxZWowR3ZvSVJLZGFuSE9CcjVLWUVCcHVjK0FXeG9Ud0VtcmxTaXNtbE12WGJMK3l5aENiQW9WV3h1aFdkR0ZZVURpalRiZ0d3VWZvVFdvcGF4Ukk3ZnpTMG8wSjRjWFRFbVphK3JMbW9Ec0Fyc0txdjVYTGUvbWlGTXBhQmpNL2wyc0VNYUcwazh6Q2xSSm0wRlRpSktTMDVuS3RKU3dGUWtuVEFGeEljNW1GV29nSHc2MWpkcUJnWTBKcHgybmk2eWpNYUE3bkpvVFVYT29ueEtxVmExdmw3MVVMMzhoaVFsZ2JFSUtOS2lhVTZYSXQ1WTRaYkdWQ1NVc0FiRWpyV0RwUkJaVS8xTkliRjB2WWRWZzgwYjBLdTRpTHlyNzIwTGR5KzBSM0lIVEhrb25UR1hhSFlqZmFFb0pKLzM4TXR4OTZ2dnRyVWo2Y05jOEpINzRvSDdsNjhxOGZ0YWZrNDQ5T1h2RHQwam55c1lQZjk1Nlo0Y2hIN1hmdWYrVFBiK1JqLy96KzFxckRuOG9uYjNsaVNVWE5Pdm5VM05NM2RTNzhXWDdWSGE2OUxMOVd2N2Z2aTZ1bjVOUHU5RThINUROSithRmZuMVhsMDIzWDNuL21uc1h5MmVWRE8yR0xQQWEwRjQ1ZmtjLzljRi9YazlJRytleTdEM3g4ZnRrTytVMGF4N21qWDBWWDVJN0o0NVE3cGovL2RQOTNkM25qY1lqaWsvY2U4L2FQLy9IWjF4Q1NQRWJqSHhjTGYrVHpCZlA1M3Y3ek5INW1EMHlJK0V2UDN3V0lzdTNhQi9JRmV2NkxFQVdFSWw5Yy85R0ozMTRhSzVsblkrYVg3YjlZY0Y4aFg5cjh5K1BObHdia3l6UlB6TThsbXFmTGU5d0VQU2UvZmZ6S0ZnaEpmb1htZ1g4ZW91ZDh1ZWpRZXkvZSs2SG5ZZU5EcnZ1VGYzdnZsZTFqZmp4N0d2Y0p5QTY4R24rZDV2a0l6UnV6WSsrWjJiRW5lKyt2dDM3dXpuajNnOTJqTjhiYWE3ZFZ6Zkw4c3ZqWW1EOHZPd2MzNy80T0szejlRSXNFdWMwdFNwQTJrSVZ1QXdEcEJCSGRPbkw3aUZzYklNdEJKSkFWSUd0QnVrSHVCbGtKMGdXeUFXUU5mZmJSOVkwZzYwRFdnMnltNndOMHZwL2F1WEVNZ3V3RTJZWDBRV3JycnU4R3VSZGttTnJzQVJrQjBkeHVpMlNlKzQ4RFBZc3JpK2hUb0dkdHBqYUw2RGs3Nk5nOTl3STZGNk56OCtqWmt6UWZibzd1cExZQ2ZUSnVtNjhIUGptcmRiSlBzU0xGejgxS05xbmF5ajZMRHFaWStWek9NRzIybGpIeXVzMTVtV29hK3p1d0ovYmhXcm1yYzdlbnhuMVY5TldFcnlaOU5lV3JrcSttZlhVWlU2dDJkZDZCOUU2a3g1RXVJajJCOUNUU1UwaVhrSjVHT3VMR0VUZU91SEhFalNOdUhISGppQnRIM0RqaXhoRTNqcmdpNG9xSUt5S3VpTGdpNG9xSUt5S3VpTGdpNG9xSW0wRGNCT0ltRURlQnVBbkVUU0J1QW5FVGlKdEEzQVRpSmhFM2liaEp4RTBpYmhKeGs0aWJSTndrNGlZUk40bTRLY1JOSVc0S2NWT0ltMExjRk9LbUVEZUZ1Q25FVFNHdWhMZ1M0a3FJS3lHdWhMZ1M0a3FJS3lHdWhMZ1M0cVlSTjQyNGFjUk5JMjRhY2RQQTVUb0xmSVJackIrd3llZ1FzVW5Ic0FtdEFrYlh1UzFUakp5dEdqcHNxbkQvRjZ5YTJ6eko1Q2JxOHJyYmRJYmFNOW04UHRydTlzQm9ZYmtvMCtoeks5SXJpOGlLZjZtcmF1cHFzcUtQcUxyQ1l0ZklYa1dqZzFwb2JvWGUxZ0UvTzNYV0I2TXdhM1hZaGsyWVhSUis1TEtad3RraTEvOERYNlRtZy93VEFBQT0ifQ== -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["items"],"name":[1],"type":["chr"],"align":["left"]},{"label":["support"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["count"],"name":[3],"type":["int"],"align":["right"]}],"data":[{"1":"{Chocolate Eclair}","2":"0.034","3":"34","_rn_":"[1]"},{"1":"{Vanilla Eclair}","2":"0.037","3":"37","_rn_":"[2]"},{"1":"{Chocolate Croissant}","2":"0.042","3":"42","_rn_":"[3]"},{"1":"{Pecan Tart}","2":"0.040","3":"40","_rn_":"[4]"},{"1":"{Chocolate Meringue}","2":"0.038","3":"38","_rn_":"[5]"},{"1":"{Almond Tart}","2":"0.041","3":"41","_rn_":"[6]"},{"1":"{Almond Croissant}","2":"0.049","3":"49","_rn_":"[7]"},{"1":"{Chocolate Tart}","2":"0.051","3":"51","_rn_":"[8]"},{"1":"{Ganache Cookie}","2":"0.044","3":"44","_rn_":"[9]"},{"1":"{Vanilla Meringue}","2":"0.047","3":"47","_rn_":"[10]"},{"1":"{Apricot Tart}","2":"0.056","3":"56","_rn_":"[11]"},{"1":"{Single Espresso}","2":"0.059","3":"59","_rn_":"[12]"},{"1":"{Blueberry Danish}","2":"0.055","3":"55","_rn_":"[13]"},{"1":"{Walnut Cookie}","2":"0.061","3":"61","_rn_":"[14]"},{"1":"{Blackberry Tart}","2":"0.073","3":"73","_rn_":"[15]"},{"1":"{Lemon Lemonade}","2":"0.066","3":"66","_rn_":"[16]"},{"1":"{Green Tea}","2":"0.062","3":"62","_rn_":"[17]"},{"1":"{Apple Pie}","2":"0.068","3":"68","_rn_":"[18]"},{"1":"{Almond Twist}","2":"0.065","3":"65","_rn_":"[19]"},{"1":"{Lemon Tart}","2":"0.076","3":"76","_rn_":"[20]"},{"1":"{Casino Cake}","2":"0.072","3":"72","_rn_":"[21]"},{"1":"{Apricot Croissant}","2":"0.076","3":"76","_rn_":"[22]"},{"1":"{Bottled Water}","2":"0.077","3":"77","_rn_":"[23]"},{"1":"{Lemon Cookie}","2":"0.066","3":"66","_rn_":"[24]"},{"1":"{Opera Cake}","2":"0.078","3":"78","_rn_":"[25]"},{"1":"{Vanilla Frappuccino}","2":"0.074","3":"74","_rn_":"[26]"},{"1":"{Apricot Danish}","2":"0.075","3":"75","_rn_":"[27]"},{"1":"{Blueberry Tart}","2":"0.081","3":"81","_rn_":"[28]"},{"1":"{Raspberry Lemonade}","2":"0.072","3":"72","_rn_":"[29]"},{"1":"{Orange Juice}","2":"0.082","3":"82","_rn_":"[30]"},{"1":"{Cheese Croissant}","2":"0.078","3":"78","_rn_":"[31]"},{"1":"{Apple Tart}","2":"0.079","3":"79","_rn_":"[32]"},{"1":"{Cherry Soda}","2":"0.077","3":"77","_rn_":"[33]"},{"1":"{Lemon Cake}","2":"0.085","3":"85","_rn_":"[34]"},{"1":"{Chocolate Cake}","2":"0.084","3":"84","_rn_":"[35]"},{"1":"{Marzipan Cookie}","2":"0.090","3":"90","_rn_":"[36]"},{"1":"{Strawberry Cake}","2":"0.091","3":"91","_rn_":"[37]"},{"1":"{Cherry Tart}","2":"0.084","3":"84","_rn_":"[38]"},{"1":"{Napoleon Cake}","2":"0.090","3":"90","_rn_":"[39]"},{"1":"{Apple Danish}","2":"0.084","3":"84","_rn_":"[40]"},{"1":"{Raspberry Cookie}","2":"0.082","3":"82","_rn_":"[41]"},{"1":"{Chocolate Coffee}","2":"0.085","3":"85","_rn_":"[42]"},{"1":"{Coffee Eclair}","2":"0.093","3":"93","_rn_":"[43]"},{"1":"{Berry Tart}","2":"0.095","3":"95","_rn_":"[44]"},{"1":"{Tuile Cookie}","2":"0.102","3":"102","_rn_":"[45]"},{"1":"{Apple Croissant}","2":"0.091","3":"91","_rn_":"[46]"},{"1":"{Hot Coffee}","2":"0.094","3":"94","_rn_":"[47]"},{"1":"{Truffle Cake}","2":"0.103","3":"103","_rn_":"[48]"},{"1":"{Gongolais Cookie}","2":"0.108","3":"108","_rn_":"[49]"},{"1":"{Blackberry Tart, Coffee Eclair}","2":"0.031","3":"31","_rn_":"[50]"},{"1":"{Lemon Cookie, Lemon Lemonade}","2":"0.031","3":"31","_rn_":"[51]"},{"1":"{Lemon Lemonade, Raspberry Cookie}","2":"0.031","3":"31","_rn_":"[52]"},{"1":"{Apple Pie, Coffee Eclair}","2":"0.033","3":"33","_rn_":"[53]"},{"1":"{Almond Twist, Coffee Eclair}","2":"0.030","3":"30","_rn_":"[54]"},{"1":"{Lemon Cake, Lemon Tart}","2":"0.040","3":"40","_rn_":"[55]"},{"1":"{Casino Cake, Chocolate Cake}","2":"0.040","3":"40","_rn_":"[56]"},{"1":"{Casino Cake, Chocolate Coffee}","2":"0.039","3":"39","_rn_":"[57]"},{"1":"{Apricot Croissant, Blueberry Tart}","2":"0.040","3":"40","_rn_":"[58]"},{"1":"{Apricot Croissant, Hot Coffee}","2":"0.032","3":"32","_rn_":"[59]"},{"1":"{Berry Tart, Bottled Water}","2":"0.034","3":"34","_rn_":"[60]"},{"1":"{Lemon Cookie, Raspberry Lemonade}","2":"0.030","3":"30","_rn_":"[61]"},{"1":"{Lemon Cookie, Raspberry Cookie}","2":"0.033","3":"33","_rn_":"[62]"},{"1":"{Apricot Danish, Opera Cake}","2":"0.039","3":"39","_rn_":"[63]"},{"1":"{Cherry Tart, Opera Cake}","2":"0.041","3":"41","_rn_":"[64]"},{"1":"{Apricot Danish, Cherry Tart}","2":"0.046","3":"46","_rn_":"[65]"},{"1":"{Blueberry Tart, Hot Coffee}","2":"0.033","3":"33","_rn_":"[66]"},{"1":"{Cheese Croissant, Orange Juice}","2":"0.038","3":"38","_rn_":"[67]"},{"1":"{Apple Tart, Cherry Soda}","2":"0.036","3":"36","_rn_":"[68]"},{"1":"{Apple Danish, Apple Tart}","2":"0.041","3":"41","_rn_":"[69]"},{"1":"{Apple Croissant, Apple Tart}","2":"0.044","3":"44","_rn_":"[70]"},{"1":"{Apple Danish, Cherry Soda}","2":"0.033","3":"33","_rn_":"[71]"},{"1":"{Apple Croissant, Cherry Soda}","2":"0.033","3":"33","_rn_":"[72]"},{"1":"{Chocolate Cake, Chocolate Coffee}","2":"0.047","3":"47","_rn_":"[73]"},{"1":"{Marzipan Cookie, Tuile Cookie}","2":"0.053","3":"53","_rn_":"[74]"},{"1":"{Napoleon Cake, Strawberry Cake}","2":"0.049","3":"49","_rn_":"[75]"},{"1":"{Apple Croissant, Apple Danish}","2":"0.042","3":"42","_rn_":"[76]"},{"1":"{Gongolais Cookie, Truffle Cake}","2":"0.058","3":"58","_rn_":"[77]"},{"1":"{Casino Cake, Chocolate Cake, Chocolate Coffee}","2":"0.038","3":"38","_rn_":"[78]"},{"1":"{Apricot Croissant, Blueberry Tart, Hot Coffee}","2":"0.032","3":"32","_rn_":"[79]"},{"1":"{Apricot Danish, Cherry Tart, Opera Cake}","2":"0.038","3":"38","_rn_":"[80]"},{"1":"{Apple Danish, Apple Tart, Cherry Soda}","2":"0.031","3":"31","_rn_":"[81]"},{"1":"{Apple Croissant, Apple Tart, Cherry Soda}","2":"0.031","3":"31","_rn_":"[82]"},{"1":"{Apple Croissant, Apple Danish, Apple Tart}","2":"0.040","3":"40","_rn_":"[83]"},{"1":"{Apple Croissant, Apple Danish, Cherry Soda}","2":"0.031","3":"31","_rn_":"[84]"},{"1":"{Apple Croissant, Apple Danish, Apple Tart, Cherry Soda}","2":"0.031","3":"31","_rn_":"[85]"}],"options":{"columns":{"min":{},"max":[10],"total":[3]},"rows":{"min":[10],"max":[10],"total":[85]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuTkFcbmBgYCJ9 -->
+<pre class="r"><code>NA</code></pre>
+<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-<p>finding the frequent itemsets</p>
-<p>discovering strong association rules within them.</p>
+<p>Discovering strong association rules within them.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyMjIGdldCBydWxlc1xucGFyYW1ldGVyIDwtIGxpc3Qoc3VwcG9ydD0wLjAzLGNvbmZpZGVuY2UgPSAwLjksIHRhcmdldD1cInJ1bGVzXCIpXG5ydWxlcyA8LSBhcHJpb3JpKHRyYW5zLCBwYXJhbWV0ZXI9cGFyYW1ldGVyKVxuYGBgIn0= -->
+<pre class="r"><code>### get rules
+parameter &lt;- list(support=0.03,confidence = 0.9, target=&quot;rules&quot;)
+rules &lt;- apriori(trans, parameter=parameter)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiQXByaW9yaVxuXG5QYXJhbWV0ZXIgc3BlY2lmaWNhdGlvbjpcbiJ9 -->
+<pre><code>Apriori
+
+Parameter specification:</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibnJvdyI6MSwibmNvbCI6MTIsInN1bW1hcnkiOnsiRGVzY3JpcHRpb24iOlsiZGYgWzEgw5cgMTJdIl19fSwicmRmIjoiSDRzSUFBQUFBQUFBQTIxUlMwN0RNQkIxbXBpcVZta3J3Wm9iTkJKaXd3NFdpRDAvcVZ1VHVzVWlzU1BIZ1Z5QVE4Q0NjNVE3d0VsZ3dRa0s0NlFUVW91Um9yeDVuamYybTdrOG14MnhHU09FaENRS1FoSlNnSVRlWEo5UGp3bUplcEFFSkNJRDk2K2dhQS9BRUw2UkkwNiszbDE4dFBuYnM0dVhOdjhtR0pOT28waHBKZURQYXE0SnhBRnFUL2RiYmRQcmRYWHgrWFN3QXJ6YnFVWE12RHVvS1ZOUmJEZmVja01WeitxQ1NlMm9JVm1pMVVMT2hVckVodG5KcEhyZ0tiNjh5SGlGbUJ1UnRmaXZacXlOWEVyRjA2c3l6N1d4RzdvUFNpc3o3TnN2dGs3ZE5hbFFiY2FyVG1hNVdRcXNERVZsUFNzRG94L2pyaDA4SUw3bkpPV0ZYOFRtM1BKNFlVQVAyZHFUOUhWdXBWWWc2cm5WVTA4Y0dJOFlsOHE5WkQ1TjdrcDFQejMwVnZ2ZjZvYk5sYjJmVFN1S3ZvV0NPZUxBYU1wdkJjNTRCSTVydzNGdXBNTFJNR0NMMkdyYjdnTDJtU0pUZXlQclgwcWVCNmp4QWdBQSJ9 -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["confidence"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["minval"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["smax"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["arem"],"name":[4],"type":["chr"],"align":["left"]},{"label":["aval"],"name":[5],"type":["lgl"],"align":["right"]},{"label":["originalSupport"],"name":[6],"type":["lgl"],"align":["right"]},{"label":["maxtime"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["support"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["minlen"],"name":[9],"type":["int"],"align":["right"]},{"label":["maxlen"],"name":[10],"type":["int"],"align":["right"]},{"label":["target"],"name":[11],"type":["chr"],"align":["left"]},{"label":["ext"],"name":[12],"type":["lgl"],"align":["right"]}],"data":[{"1":"0.9","2":"0.1","3":"1","4":"none","5":"FALSE","6":"TRUE","7":"5","8":"0.03","9":"1","10":"10","11":"rules","12":"TRUE","_rn_":""}],"options":{"columns":{"min":{},"max":[10],"total":[12]},"rows":{"min":[10],"max":[10],"total":[1]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG5BbGdvcml0aG1pYyBjb250cm9sOlxuIn0= -->
+<pre><code>
+Algorithmic control:</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibnJvdyI6MSwibmNvbCI6Nywic3VtbWFyeSI6eyJEZXNjcmlwdGlvbiI6WyJkZiBbMSDDlyA3XSJdfX0sInJkZiI6Ikg0c0lBQUFBQUFBQUEzVlFXMDdETUJEY1BFeFVTeFFrenBGSVZYLzQ0d2R4QUFSU2Y5MWtTeU1jTzdKZDRDcHdFeTVYMkR4V2FpMklaSGwyUEp2Wm5jZjd6VnB1SkFCa2tDY1paSUlnaU9lbmgvSVdJRStwU0NDSHhYQi9rT2lHUUVGbk9SQjMzNS9EOTBWWWpzTHAvSVVoNGkvbk96M256d3lGVVIxNkF0ZWo2VVJlN0ZvZDBNMVZIaHdpNHoycW5sVWRkcllQL0tLdGFoaDc2NWd2M3RCdHJjZklkK0hzZTNYcXpROFFEMWhyNVdPUmJGUlExYzVSUDFYSHFLV2dxVnBycUNrZG9oUlJjK0lpNHVwZ2hrbWFzdDRmekd1NStpZkdVMXhNbHVuUC9DdkJtYUI1YVEybkpiVGFvcDZMSlcwOExsejFyalVjanlUV1Y4RUd4VHBaVzgzTXVCc2Nmd0dHRk1xbFFRSUFBQT09In0= -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["filter"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["tree"],"name":[2],"type":["lgl"],"align":["right"]},{"label":["heap"],"name":[3],"type":["lgl"],"align":["right"]},{"label":["memopt"],"name":[4],"type":["lgl"],"align":["right"]},{"label":["load"],"name":[5],"type":["lgl"],"align":["right"]},{"label":["sort"],"name":[6],"type":["int"],"align":["right"]},{"label":["verbose"],"name":[7],"type":["lgl"],"align":["right"]}],"data":[{"1":"0.1","2":"TRUE","3":"TRUE","4":"FALSE","5":"TRUE","6":"2","7":"TRUE","_rn_":""}],"options":{"columns":{"min":{},"max":[10],"total":[7]},"rows":{"min":[10],"max":[10],"total":[1]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG5BYnNvbHV0ZSBtaW5pbXVtIHN1cHBvcnQgY291bnQ6IDMwIFxuXG5zZXQgaXRlbSBhcHBlYXJhbmNlcyAuLi5bMCBpdGVtKHMpXSBkb25lIFswLjAwc10uXG5zZXQgdHJhbnNhY3Rpb25zIC4uLls1MCBpdGVtKHMpLCAxMDAwIHRyYW5zYWN0aW9uKHMpXSBkb25lIFswLjAwc10uXG5zb3J0aW5nIGFuZCByZWNvZGluZyBpdGVtcyAuLi4gWzQ5IGl0ZW0ocyldIGRvbmUgWzAuMDBzXS5cbmNyZWF0aW5nIHRyYW5zYWN0aW9uIHRyZWUgLi4uIGRvbmUgWzAuMDBzXS5cbmNoZWNraW5nIHN1YnNldHMgb2Ygc2l6ZSAxIDIgMyA0IGRvbmUgWzAuMDBzXS5cbndyaXRpbmcgLi4uIFsxNiBydWxlKHMpXSBkb25lIFswLjAwc10uXG5jcmVhdGluZyBTNCBvYmplY3QgIC4uLiBkb25lIFswLjAwc10uXG4ifQ== -->
+<pre><code>
+Absolute minimum support count: 30 
+
+set item appearances ...[0 item(s)] done [0.00s].
+set transactions ...[50 item(s), 1000 transaction(s)] done [0.00s].
+sorting and recoding items ... [49 item(s)] done [0.00s].
+creating transaction tree ... done [0.00s].
+checking subsets of size 1 2 3 4 done [0.00s].
+writing ... [16 rule(s)] done [0.00s].
+creating S4 object  ... done [0.00s].</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyMjIyBMZXQncyBpbnNwZWN0IHRoZSBydWxlcywgc29ydGVkIGJ5IGNvbmZpZGVuY2VcbnJ1bGVzLnNvcnRlZF9jb25mZCA8LSBhcnVsZXM6OnNvcnQocnVsZXMsIGRlY3JlYXNpbmcgPSBULGJ5ID0gXCJjb25maWRlbmNlXCIpXG5cbiMjIyBEaXNjb3ZlcmluZyB0aGUgZmlyc3QgNSBzdHJvbmcgYXNzb2NpYXRpb24gcnVsZXMgd2l0aGluIHRoZW0uXG5pbnNwZWN0KGhlYWQocnVsZXMuc29ydGVkX2NvbmZkWzE6NV0pKVxuYGBgIn0= -->
+<pre class="r"><code>#### Let&#39;s inspect the rules, sorted by confidence
+rules.sorted_confd &lt;- arules::sort(rules, decreasing = T,by = &quot;confidence&quot;)
+
+### Discovering the first 5 strong association rules within them.
+inspect(head(rules.sorted_confd[1:5]))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibnJvdyI6NSwibmNvbCI6OCwic3VtbWFyeSI6eyJEZXNjcmlwdGlvbiI6WyJkZiBbNSDDlyA4XSJdfX0sInJkZiI6Ikg0c0lBQUFBQUFBQUF3dHlpVERtaXVCaVlHQmdabUJoWkdaZ1pnVXlHVmhEUTl4MExSZ1lXSmlBSEVZR0ZnWk9FRjBCVkNRTVpIQUFzUUJJRlZSQ3Z0cXhvQ2d6T2I5RXdia29QN080T0RHdlJFZkJBOFROVDB0TFRhMkZLbE1IS2l2SVNWVndTY3pMTE03UVVZRHdRaEtMZ0txZE0xS0xpaW9WZ3ZOVEVtSEt0YURLa2N3a29FTUhsdzZZalZqMFNPRjBWQzJhTDVsczdZaG1vZW9VcUhiS0tVMU5BdHNOTVJraUxvanVYcGdFSDRxallLSTgxY2lPdzJrRVVEdklidnNGU2I2WFBxNzhZejkvWDltSkxaWVJHUFNTcW9mdTYwU3E0ZW8vTUlBQlR2cTloZUhuWm5rTDRzMy8rM21iNjhMVE1QVU9HaHYrWEh2NUlOVkI5VmY4MGwveHl4elV6OXQ4UG0venhVRXprTmwyNHFWRkRxcUZxbkxuem00RnF1VUZoeDBEZ3dJb2JTRmhEYlFFeVpxWG1KdGFEQTFzRHFnZ2MwNUdNWlRKQUJNcWdndXhGNWNXRk9RWGxVQzVYTW41ZVdtWkthbDV5YWxRRVk3ay9MTFVvc1IwR0o4bEp6TU5wcG8xT2I4MHJ3VE5FWnhGK2VWNnlBNkJ4VHB6dEdFc25HbUVZQm9qbUNZSXBta3N1dWVTY3hLTFlXYkNCTGxTRWtzUzlkS0tnTllCZWYvUXRMRG5GNVJrNXVjQk5URUpRNE1RV1ROakVab0FmMmtleU9FcHVza1pwWG5adW9ZZ0M4RFNFTXdMcFZtUjJCd1FLNW4rbzNtV0xUVXZQVE1QRm1pc09ZbEpxVG13eEF3TUlIRDQ2QUVMaVR4NHlBTkZpL1ZLOGtzU2N4QnhrUU1UQWZ1TjRSOEE0Q0diMFowRUFBQT0ifQ== -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["lhs"],"name":[1],"type":["chr"],"align":["left"]},{"label":[""],"name":[2],"type":["chr"],"align":["left"]},{"label":["rhs"],"name":[3],"type":["chr"],"align":["left"]},{"label":["support"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["confidence"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["coverage"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["lift"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["count"],"name":[8],"type":["int"],"align":["right"]}],"data":[{"1":"{Apricot Croissant, Hot Coffee}","2":"=>","3":"{Blueberry Tart}","4":"0.032","5":"1.0000000","6":"0.032","7":"12.34568","8":"32","_rn_":"[1]"},{"1":"{Apple Danish, Apple Tart, Cherry Soda}","2":"=>","3":"{Apple Croissant}","4":"0.031","5":"1.0000000","6":"0.031","7":"10.98901","8":"31","_rn_":"[2]"},{"1":"{Apple Croissant, Apple Tart, Cherry Soda}","2":"=>","3":"{Apple Danish}","4":"0.031","5":"1.0000000","6":"0.031","7":"11.90476","8":"31","_rn_":"[3]"},{"1":"{Apple Croissant, Apple Danish, Cherry Soda}","2":"=>","3":"{Apple Tart}","4":"0.031","5":"1.0000000","6":"0.031","7":"12.65823","8":"31","_rn_":"[4]"},{"1":"{Apple Danish, Apple Tart}","2":"=>","3":"{Apple Croissant}","4":"0.040","5":"0.9756098","6":"0.041","7":"10.72099","8":"40","_rn_":"[5]"}],"options":{"columns":{"min":{},"max":[10],"total":[8]},"rows":{"min":[10],"max":[10],"total":[5]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuTkFcbmBgYCJ9 -->
+<pre class="r"><code>NA</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudHJhbnMgPC0gcmVhZC50cmFuc2FjdGlvbnMoXCJ0ci01ay1jYW5vbmljYWwuY3N2XCIsc2VwPVwiLFwiKVxuXG4jIyMgZ2V0IHJ1bGVzXG5wYXJhbWV0ZXIgPC0gbGlzdChzdXBwb3J0PTAuMDMsY29uZmlkZW5jZSA9IDAuOSwgdGFyZ2V0PVwicnVsZXNcIilcbnJ1bGVzIDwtIGFwcmlvcmkodHJhbnMsIHBhcmFtZXRlcj1wYXJhbWV0ZXIpXG4jIyMjIExldCdzIGluc3BlY3QgdGhlIHJ1bGVzLCBzb3J0ZWQgYnkgY29uZmlkZW5jZVxucnVsZXMuc29ydGVkX2NvbmZkIDwtIGFydWxlczo6c29ydChydWxlcywgZGVjcmVhc2luZyA9IFQsYnkgPSBcImNvbmZpZGVuY2VcIilcblxuIyMjIERpc2NvdmVyaW5nIHRoZSBmaXJzdCA1IHN0cm9uZyBhc3NvY2lhdGlvbiBydWxlcyB3aXRoaW4gdGhlbS5cbmluc3BlY3QoaGVhZChydWxlcy5zb3J0ZWRfY29uZmRbMTo1XSkpXG5cbmBgYCJ9 -->
+<pre class="r"><code>trans &lt;- read.transactions(&quot;tr-5k-canonical.csv&quot;,sep=&quot;,&quot;)
+
+### get rules
+parameter &lt;- list(support=0.03,confidence = 0.9, target=&quot;rules&quot;)
+rules &lt;- apriori(trans, parameter=parameter)
+#### Let&#39;s inspect the rules, sorted by confidence
+rules.sorted_confd &lt;- arules::sort(rules, decreasing = T,by = &quot;confidence&quot;)
+
+### Discovering the first 5 strong association rules within them.
+inspect(head(rules.sorted_confd[1:5]))
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudHJhbnMgPC0gcmVhZC50cmFuc2FjdGlvbnMoXCJ0ci0yMGstY2Fub25pY2FsLmNzdlwiLHNlcD1cIixcIilcblxuIyMjIGdldCBydWxlc1xucGFyYW1ldGVyIDwtIGxpc3Qoc3VwcG9ydD0wLjAzLGNvbmZpZGVuY2UgPSAwLjksIHRhcmdldD1cInJ1bGVzXCIpXG5ydWxlcyA8LSBhcHJpb3JpKHRyYW5zLCBwYXJhbWV0ZXI9cGFyYW1ldGVyKVxuIyMjIyBMZXQncyBpbnNwZWN0IHRoZSBydWxlcywgc29ydGVkIGJ5IGNvbmZpZGVuY2VcbnJ1bGVzLnNvcnRlZF9jb25mZCA8LSBhcnVsZXM6OnNvcnQocnVsZXMsIGRlY3JlYXNpbmcgPSBULGJ5ID0gXCJjb25maWRlbmNlXCIpXG5cbiMjIyBEaXNjb3ZlcmluZyB0aGUgZmlyc3QgNSBzdHJvbmcgYXNzb2NpYXRpb24gcnVsZXMgd2l0aGluIHRoZW0uXG5pbnNwZWN0KGhlYWQocnVsZXMuc29ydGVkX2NvbmZkWzE6NV0pKVxuXG5gYGAifQ== -->
+<pre class="r"><code>trans &lt;- read.transactions(&quot;tr-20k-canonical.csv&quot;,sep=&quot;,&quot;)
+
+### get rules
+parameter &lt;- list(support=0.03,confidence = 0.9, target=&quot;rules&quot;)
+rules &lt;- apriori(trans, parameter=parameter)
+#### Let&#39;s inspect the rules, sorted by confidence
+rules.sorted_confd &lt;- arules::sort(rules, decreasing = T,by = &quot;confidence&quot;)
+
+### Discovering the first 5 strong association rules within them.
+inspect(head(rules.sorted_confd[1:5]))
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudHJhbnMgPC0gcmVhZC50cmFuc2FjdGlvbnMoXCJ0ci0yMGstY2Fub25pY2FsLmNzdlwiLHNlcD1cIixcIilcblxuIyMjIGdldCBydWxlc1xucGFyYW1ldGVyIDwtIGxpc3Qoc3VwcG9ydD0wLjAzLGNvbmZpZGVuY2UgPSAwLjksIHRhcmdldD1cInJ1bGVzXCIpXG5ydWxlcyA8LSBhcHJpb3JpKHRyYW5zLCBwYXJhbWV0ZXI9cGFyYW1ldGVyKVxuIyMjIyBMZXQncyBpbnNwZWN0IHRoZSBydWxlcywgc29ydGVkIGJ5IGNvbmZpZGVuY2VcbnJ1bGVzLnNvcnRlZF9jb25mZCA8LSBhcnVsZXM6OnNvcnQocnVsZXMsIGRlY3JlYXNpbmcgPSBULGJ5ID0gXCJjb25maWRlbmNlXCIpXG5cbiMjIyBEaXNjb3ZlcmluZyB0aGUgZmlyc3QgNSBzdHJvbmcgYXNzb2NpYXRpb24gcnVsZXMgd2l0aGluIHRoZW0uXG5pbnNwZWN0KGhlYWQocnVsZXMuc29ydGVkX2NvbmZkWzE6NV0pKVxuXG5gYGAifQ== -->
+<pre class="r"><code>trans &lt;- read.transactions(&quot;tr-20k-canonical.csv&quot;,sep=&quot;,&quot;)
+
+### get rules
+parameter &lt;- list(support=0.03,confidence = 0.9, target=&quot;rules&quot;)
+rules &lt;- apriori(trans, parameter=parameter)
+#### Let&#39;s inspect the rules, sorted by confidence
+rules.sorted_confd &lt;- arules::sort(rules, decreasing = T,by = &quot;confidence&quot;)
+
+### Discovering the first 5 strong association rules within them.
+inspect(head(rules.sorted_confd[1:5]))
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
 </div>
 <div id="c" class="section level3">
 <h3>2.1-(c)</h3>
@@ -2974,21 +3150,203 @@ names(df)</code></pre>
 75,000 transactions). How does the number of transactions affect the
 results you observed? (Write the answer in your R markup file, easily
 identified.)</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudHJhbnMgPC0gcmVhZC50cmFuc2FjdGlvbnMoXCJ0ci0xay1jYW5vbmljYWwuY3N2XCIsc2VwPVwiLFwiKVxuXG4jIyMgZ2V0IHJ1bGVzXG5wYXJhbWV0ZXIgPC0gbGlzdChzdXBwb3J0PTAuMDMsY29uZmlkZW5jZSA9IDAuOSwgdGFyZ2V0PVwicnVsZXNcIilcbnJ1bGVzIDwtIGFwcmlvcmkodHJhbnMsIHBhcmFtZXRlcj1wYXJhbWV0ZXIpXG4jIyMjIExldCdzIGluc3BlY3QgdGhlIHJ1bGVzLCBzb3J0ZWQgYnkgY29uZmlkZW5jZVxucnVsZXMuc29ydGVkX2NvbmZkIDwtIGFydWxlczo6c29ydChydWxlcywgZGVjcmVhc2luZyA9IFQsYnkgPSBcImNvbmZpZGVuY2VcIilcblxuIyMjIERpc2NvdmVyaW5nIHRoZSBmaXJzdCA1IHN0cm9uZyBhc3NvY2lhdGlvbiBydWxlcyB3aXRoaW4gdGhlbS5cbmluc3BlY3QoaGVhZChydWxlcy5zb3J0ZWRfY29uZmRbMTo1XSkpXG5gYGAifQ== -->
+<pre class="r"><code>trans &lt;- read.transactions(&quot;tr-1k-canonical.csv&quot;,sep=&quot;,&quot;)
+
+### get rules
+parameter &lt;- list(support=0.03,confidence = 0.9, target=&quot;rules&quot;)
+rules &lt;- apriori(trans, parameter=parameter)
+#### Let&#39;s inspect the rules, sorted by confidence
+rules.sorted_confd &lt;- arules::sort(rules, decreasing = T,by = &quot;confidence&quot;)
+
+### Discovering the first 5 strong association rules within them.
+inspect(head(rules.sorted_confd[1:5]))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudHJhbnMgPC0gcmVhZC50cmFuc2FjdGlvbnMoXCJ0ci01ay1jYW5vbmljYWwuY3N2XCIsc2VwPVwiLFwiKVxuXG4jIyMgZ2V0IHJ1bGVzXG5wYXJhbWV0ZXIgPC0gbGlzdChzdXBwb3J0PTAuMDMsY29uZmlkZW5jZSA9IDAuOSwgdGFyZ2V0PVwicnVsZXNcIilcbnJ1bGVzIDwtIGFwcmlvcmkodHJhbnMsIHBhcmFtZXRlcj1wYXJhbWV0ZXIpXG4jIyMjIExldCdzIGluc3BlY3QgdGhlIHJ1bGVzLCBzb3J0ZWQgYnkgY29uZmlkZW5jZVxucnVsZXMuc29ydGVkX2NvbmZkIDwtIGFydWxlczo6c29ydChydWxlcywgZGVjcmVhc2luZyA9IFQsYnkgPSBcImNvbmZpZGVuY2VcIilcblxuIyMjIERpc2NvdmVyaW5nIHRoZSBmaXJzdCA1IHN0cm9uZyBhc3NvY2lhdGlvbiBydWxlcyB3aXRoaW4gdGhlbS5cbmluc3BlY3QoaGVhZChydWxlcy5zb3J0ZWRfY29uZmRbMTo1XSkpXG5cbmBgYCJ9 -->
+<pre class="r"><code>trans &lt;- read.transactions(&quot;tr-5k-canonical.csv&quot;,sep=&quot;,&quot;)
+
+### get rules
+parameter &lt;- list(support=0.03,confidence = 0.9, target=&quot;rules&quot;)
+rules &lt;- apriori(trans, parameter=parameter)
+#### Let&#39;s inspect the rules, sorted by confidence
+rules.sorted_confd &lt;- arules::sort(rules, decreasing = T,by = &quot;confidence&quot;)
+
+### Discovering the first 5 strong association rules within them.
+inspect(head(rules.sorted_confd[1:5]))
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudHJhbnMgPC0gcmVhZC50cmFuc2FjdGlvbnMoXCJ0ci0yMGstY2Fub25pY2FsLmNzdlwiLHNlcD1cIixcIilcblxuIyMjIGdldCBydWxlc1xucGFyYW1ldGVyIDwtIGxpc3Qoc3VwcG9ydD0wLjAzLGNvbmZpZGVuY2UgPSAwLjksIHRhcmdldD1cInJ1bGVzXCIpXG5ydWxlcyA8LSBhcHJpb3JpKHRyYW5zLCBwYXJhbWV0ZXI9cGFyYW1ldGVyKVxuIyMjIyBMZXQncyBpbnNwZWN0IHRoZSBydWxlcywgc29ydGVkIGJ5IGNvbmZpZGVuY2VcbnJ1bGVzLnNvcnRlZF9jb25mZCA8LSBhcnVsZXM6OnNvcnQocnVsZXMsIGRlY3JlYXNpbmcgPSBULGJ5ID0gXCJjb25maWRlbmNlXCIpXG5cbiMjIyBEaXNjb3ZlcmluZyB0aGUgZmlyc3QgNSBzdHJvbmcgYXNzb2NpYXRpb24gcnVsZXMgd2l0aGluIHRoZW0uXG5pbnNwZWN0KGhlYWQocnVsZXMuc29ydGVkX2NvbmZkWzE6NV0pKVxuYGBgIn0= -->
+<pre class="r"><code>trans &lt;- read.transactions(&quot;tr-20k-canonical.csv&quot;,sep=&quot;,&quot;)
+
+### get rules
+parameter &lt;- list(support=0.03,confidence = 0.9, target=&quot;rules&quot;)
+rules &lt;- apriori(trans, parameter=parameter)
+#### Let&#39;s inspect the rules, sorted by confidence
+rules.sorted_confd &lt;- arules::sort(rules, decreasing = T,by = &quot;confidence&quot;)
+
+### Discovering the first 5 strong association rules within them.
+inspect(head(rules.sorted_confd[1:5]))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudHJhbnMgPC0gcmVhZC50cmFuc2FjdGlvbnMoXCJ0ci03NWstY2Fub25pY2FsLmNzdlwiLHNlcD1cIixcIilcblxuIyMjIGdldCBydWxlc1xucGFyYW1ldGVyIDwtIGxpc3Qoc3VwcG9ydD0wLjAzLGNvbmZpZGVuY2UgPSAwLjksIHRhcmdldD1cInJ1bGVzXCIpXG5ydWxlcyA8LSBhcHJpb3JpKHRyYW5zLCBwYXJhbWV0ZXI9cGFyYW1ldGVyKVxuIyMjIyBMZXQncyBpbnNwZWN0IHRoZSBydWxlcywgc29ydGVkIGJ5IGNvbmZpZGVuY2VcbnJ1bGVzLnNvcnRlZF9jb25mZCA8LSBhcnVsZXM6OnNvcnQocnVsZXMsIGRlY3JlYXNpbmcgPSBULGJ5ID0gXCJjb25maWRlbmNlXCIpXG5cbiMjIyBEaXNjb3ZlcmluZyB0aGUgZmlyc3QgNSBzdHJvbmcgYXNzb2NpYXRpb24gcnVsZXMgd2l0aGluIHRoZW0uXG5pbnNwZWN0KGhlYWQocnVsZXMuc29ydGVkX2NvbmZkWzE6NV0pKVxuYGBgIn0= -->
+<pre class="r"><code>trans &lt;- read.transactions(&quot;tr-75k-canonical.csv&quot;,sep=&quot;,&quot;)
+
+### get rules
+parameter &lt;- list(support=0.03,confidence = 0.9, target=&quot;rules&quot;)
+rules &lt;- apriori(trans, parameter=parameter)
+#### Let&#39;s inspect the rules, sorted by confidence
+rules.sorted_confd &lt;- arules::sort(rules, decreasing = T,by = &quot;confidence&quot;)
+
+### Discovering the first 5 strong association rules within them.
+inspect(head(rules.sorted_confd[1:5]))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Answer: With the increase of transaction data, the computation
+process takes more and more time.</p>
 </div>
 <div id="d-i" class="section level3">
 <h3>2.1-(d)-(i)</h3>
-<p>for the 75,000 transactions dataset using the same support level as
-determined in (b):</p>
-<p>What is the most frequently purchased item or itemset?</p>
+<p>For the 75,000 transactions dataset using the same support level as
+determined in (b): What is the most frequently purchased item or
+itemset?</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudHJhbnMgPC0gcmVhZC50cmFuc2FjdGlvbnMoXCJ0ci03NWstY2Fub25pY2FsLmNzdlwiLHNlcD1cIixcIilcblxuIyMjIGZpbmRpbmcgdGhlIGZyZXF1ZW50IGl0ZW1zZXRzXG5mcmVxdWVudF9pdGVtc2V0cyA8LSBhcHJpb3JpKHRyYW5zLCBcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgcGFyYW1ldGVyPWxpc3Qoc3VwcG9ydD0wLjAzLCB0YXJnZXQ9XCJmcmVxdWVudCBpdGVtc2V0c1wiKSlcbmBgYCJ9 -->
+<pre class="r"><code>trans &lt;- read.transactions(&quot;tr-75k-canonical.csv&quot;,sep=&quot;,&quot;)
+
+### finding the frequent itemsets
+frequent_itemsets &lt;- apriori(trans, 
+                             parameter=list(support=0.03, target=&quot;frequent itemsets&quot;))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiQXByaW9yaVxuXG5QYXJhbWV0ZXIgc3BlY2lmaWNhdGlvbjpcbiJ9 -->
+<pre><code>Apriori
+
+Parameter specification:</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibnJvdyI6MSwibmNvbCI6MTIsInN1bW1hcnkiOnsiRGVzY3JpcHRpb24iOlsiZGYgWzEgw5cgMTJdIl19fSwicmRmIjoiSDRzSUFBQUFBQUFBQTIxU3ZVN0RNQkIybW9Tb1VXbEJNQ05lb0pFUUN4c01pSjAvcWF0SjNXS1JuSVB0UURZbUhnSUdoajVGZVNZV25xQndUdU9RV2xpSzh0M24rKzd5M2VYcWZISWNUMkpDaUU4Q3p5ZCtpSkNFdHpjWDR4TkNnaDRHSGdsSTM3d3JUTnBETU1CbmFJaVhiNU1jTFd4OCt2bG16bnNiMS9mMTJla1VDa0FBdzNkY2MrdGpzV2UxWi91dGRsM3JZM241OVhxd1JMemR5YlU0ZG5yc3ppUjdMQm5vUTY1WnJwaFdtMDAybklWQWM2YWFDb09HakZNQk16NWxrTEtHMmNvNVBOSE11bEE1clN5bWt1VXQvc3NaQ2NubkhHaDJYUmFGa0xxaEkxUnFudHU2a2RxNE5XMHlCbTFFcTA2a3Fad3ptK216U2p0VytsSThKMTA3OW9LNG50T01LamNwbmxKTms1bEVQVVlyUnhLSlFuTUJLT3FaM3lCMHhKNTBpRkVKNWt1bTQvUytoSWZ4a2JQbS85WTRXTGZzL1RTbFF1dWJBYzdSRGl6TTZCMnpNeDZpNDlwd1VrZ09kalF4c2lyUlFyZTd3SDFtbHFtOWtkVXZsNGpIR1AwQ0FBQT0ifQ== -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["confidence"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["minval"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["smax"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["arem"],"name":[4],"type":["chr"],"align":["left"]},{"label":["aval"],"name":[5],"type":["lgl"],"align":["right"]},{"label":["originalSupport"],"name":[6],"type":["lgl"],"align":["right"]},{"label":["maxtime"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["support"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["minlen"],"name":[9],"type":["int"],"align":["right"]},{"label":["maxlen"],"name":[10],"type":["int"],"align":["right"]},{"label":["target"],"name":[11],"type":["chr"],"align":["left"]},{"label":["ext"],"name":[12],"type":["lgl"],"align":["right"]}],"data":[{"1":"NA","2":"0.1","3":"1","4":"none","5":"FALSE","6":"TRUE","7":"5","8":"0.03","9":"1","10":"10","11":"frequent itemsets","12":"TRUE","_rn_":""}],"options":{"columns":{"min":{},"max":[10],"total":[12]},"rows":{"min":[10],"max":[10],"total":[1]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG5BbGdvcml0aG1pYyBjb250cm9sOlxuIn0= -->
+<pre><code>
+Algorithmic control:</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibnJvdyI6MSwibmNvbCI6Nywic3VtbWFyeSI6eyJEZXNjcmlwdGlvbiI6WyJkZiBbMSDDlyA3XSJdfX0sInJkZiI6Ikg0c0lBQUFBQUFBQUEzVlFXMDdETUJEY1BFeFVTeFFrenBGSVZYLzQ0d2R4QUFSU2Y5MWtTeU1jTzdKZDRDcHdFeTVYMkR4V2FpMklaSGwyUEp2Wm5jZjd6VnB1SkFCa2tDY1paSUlnaU9lbmgvSVdJRStwU0NDSHhYQi9rT2lHUUVGbk9SQjMzNS9EOTBWWWpzTHAvSVVoNGkvbk96M256d3lGVVIxNkF0ZWo2VVJlN0ZvZDBNMVZIaHdpNHoycW5sVWRkcllQL0tLdGFoaDc2NWd2M3RCdHJjZklkK0hzZTNYcXpROFFEMWhyNVdPUmJGUlExYzVSUDFYSHFLV2dxVnBycUNrZG9oUlJjK0lpNHVwZ2hrbWFzdDRmekd1NStpZkdVMXhNbHVuUC9DdkJtYUI1YVEybkpiVGFvcDZMSlcwOExsejFyalVjanlUV1Y4RUd4VHBaVzgzTXVCc2Nmd0dHRk1xbFFRSUFBQT09In0= -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["filter"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["tree"],"name":[2],"type":["lgl"],"align":["right"]},{"label":["heap"],"name":[3],"type":["lgl"],"align":["right"]},{"label":["memopt"],"name":[4],"type":["lgl"],"align":["right"]},{"label":["load"],"name":[5],"type":["lgl"],"align":["right"]},{"label":["sort"],"name":[6],"type":["int"],"align":["right"]},{"label":["verbose"],"name":[7],"type":["lgl"],"align":["right"]}],"data":[{"1":"0.1","2":"TRUE","3":"TRUE","4":"FALSE","5":"TRUE","6":"2","7":"TRUE","_rn_":""}],"options":{"columns":{"min":{},"max":[10],"total":[7]},"rows":{"min":[10],"max":[10],"total":[1]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG5BYnNvbHV0ZSBtaW5pbXVtIHN1cHBvcnQgY291bnQ6IDIyNTAgXG5cbnNldCBpdGVtIGFwcGVhcmFuY2VzIC4uLlswIGl0ZW0ocyldIGRvbmUgWzAuMDBzXS5cbnNldCB0cmFuc2FjdGlvbnMgLi4uWzUwIGl0ZW0ocyksIDc1MDAwIHRyYW5zYWN0aW9uKHMpXSBkb25lIFswLjAyc10uXG5zb3J0aW5nIGFuZCByZWNvZGluZyBpdGVtcyAuLi4gWzUwIGl0ZW0ocyldIGRvbmUgWzAuMDBzXS5cbmNyZWF0aW5nIHRyYW5zYWN0aW9uIHRyZWUgLi4uIGRvbmUgWzAuMDNzXS5cbmNoZWNraW5nIHN1YnNldHMgb2Ygc2l6ZSAxIDIgMyBkb25lIFswLjAxc10uXG5zb3J0aW5nIHRyYW5zYWN0aW9ucyAuLi4gZG9uZSBbMC4wMnNdLlxud3JpdGluZyAuLi4gWzc3IHNldChzKV0gZG9uZSBbMC4wMHNdLlxuY3JlYXRpbmcgUzQgb2JqZWN0ICAuLi4gZG9uZSBbMC4wMXNdLlxuIn0= -->
+<pre><code>
+Absolute minimum support count: 2250 
+
+set item appearances ...[0 item(s)] done [0.00s].
+set transactions ...[50 item(s), 75000 transaction(s)] done [0.02s].
+sorting and recoding items ... [50 item(s)] done [0.00s].
+creating transaction tree ... done [0.03s].
+checking subsets of size 1 2 3 done [0.01s].
+sorting transactions ... done [0.02s].
+writing ... [77 set(s)] done [0.00s].
+creating S4 object  ... done [0.01s].</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuaW5zcGVjdChmcmVxdWVudF9pdGVtc2V0cylcbmBgYCJ9 -->
+<pre class="r"><code>inspect(frequent_itemsets)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibnJvdyI6NzcsIm5jb2wiOjMsInN1bW1hcnkiOnsiRGVzY3JpcHRpb24iOlsiZGYgWzc3IMOXIDNdIl19fSwicmRmIjoiSDRzSUFBQUFBQUFBQTRXWWZYQVQxeEhBejlnT3RSQ1dzVEVZRytvcjRTTUUyY2I2TkVuTFlwdmlFREJnTUNWOHBUMUxKL3Z3Y2FlZVRtTVNwVzNhQXZuQVRkTFNwR21nQlF1a1VBS21RbEVVbkxhWmxBUmEyaUdrRXhwZ0pwQ1FwRXpUU2RNL1FqL0NGTHF5SmQzcWRLWi83THk5ZmUvdDcrMTd1KzlPV3JYb1BydnBQaFBETUlWTVVVRWhVMWlNS2xPOHBuTnhYUlBERkkzQmh3S21pQ2xKdFZ0eFVNWHdTSVlwUTJsUGQwd010ZmJJSGxua1ZKNXQ1eFZCNmc3eTMwcjNqUTgxaTF0a3ljdDJjb3FhTVphSHZzWkpnaWh5ZWNQTHNqMWY5WWljb0dnejBtNWFGVmtJQkRpSitOTGd1WE5LUTgxK1JmRElhZzY3a293M2NKYkd0UENjd3JhS1hKKzJzRFpPNGp3OU9FbVdlNFhzZ3MyaGxieUhrM1RodFloQnZvdFhsQWZZUlJoT29FZmJqZGFlWWZOcTJjdGxqSmJRV2s2VWdxck84NFRRYXR3YUVhTUsrQlUrRUpBekhlTkNiUXJQSTVMbnRMSE5mcjlvRUZCcHVpTjNHZWEwbFM3YUVtcVJWVlhrdmV4YTNCcEZpMXZiTGpyY0hGckc0MDdsMkRBNkxpQklNdHZLOVpJd1drVE8wenV5RzNSMGFkcERidFRsb1ZWY3dEOHlPcmRuSXVrWm5zbDVTZHFNK05MYks3UHB0RmpoL1A2Z3g0UExvNW5EOHdIRFhldFVnajVmYWtOSkpKYlFjczR2aTN4cXpjU2MyWWxjVzB0ZXZPUFNtNzVTQzZrMFd4eDlRa0RWZ3RIU0p6ZXRTT2JLUGgvUEd4MVM3akpXK0htRnk3RlZaS3ZDSVB2YlpLa2IzUWlCdkZ4czU1UUhCVCtuUDY3UzBBcUZrN3A1OXQ2ZzRLR3BxeXBjWC9vVUNid3NDeCtsTG5JVHBETW9pUGtGZDA5cTdUbnhXMElqejdvTG9JYWNncFUxVE8rWnV2UzJzcmRJbUNweTBsWTJQLzlyYWY1YjJkRk9hOXFvdzhoT3NmcXlzYktHTWJKNVNXeGxqWTZFelR0YksydVU1R3h1a2x2WlVVNXlTazdxV3RtODNKNnNwYnVWelQreWF0cHRHRm0xanBEdlk1cHVoS0diMi9QekhYUEJzTUNtNmdyUGlEbGRWMnFqSC9OVVhhN2p1ZVFWNHhTYTkwWURhbzFXbjcrcVduMTk0dUVhMU02MHZDVVpsRjFOYmpFWjRScHVsY0dqNzhnZG8rWE1LRWZYOFArUHptaDFjMjRWWmU0bTR5V1QrbzZCeU5ZbDlVK2NYUStSSFl0V1FmYzFpTVJmM1BHVnprR0l2Rkd2WEN5ZkI1SDNad3pkM2V5RFNPemFsMDQxRDBIa2w4NWZkOVNmZ3VqdFA5ai8yd21QUW1Ub1dGWGx2bEQyT2VvYys5VDliNW9ndXN2MzJ1SXpYWEQwVjBudmdsazh4TzcvODlpZmJPUWc1b3N2UFJRN0NFZXZEMnc3ZjNZdnhPNmEvdnVyWndTSWRhNDcvS2VQRDBPc3IzMkhtWTlCZk9IeUF3ZGZXd1BITHEvY1pJazhDZkh1ZmY4cDZSMkN1S1A4SStuTFJ5RGVlMU9kdDdzYVlzS3FyZzFuS2lHMjh1SUhmM245Sk1UV25nKytXcllMWWx2cm10cmtPeUgrOXNXYjc1cG5RMkxjM3kvOGM3NFBFdU1IRjRqTDFrR2kva3E4NGNYTmtPZ2UvS3h1YWdja2t2WVZjeDc4TWNSL00vMmpTNVduSVg2Q3ExaTRQQUtKdTIvTWlMVDBRMkxKbEdlcXp4NkJSSmYvNU9rUCtpQlJOT0hwS3gvV1F1TGhXVXA0NWdBa1oxZHNYbWg1QlY2NjN2WGN5ODVya0F6OGUzQm54dzhobVd5K3QzMnVGWkxIcnJ3NTgvb2ZJSGxoelRlWDdua0pqcDkrOUpudkg1NFBRL2RzZk9jNGN4UmUrVmZLUVJuc1g3LzlrVjN2UGd0aFlkM1hQNGx5RUw3a1AvVDJua2tRTm4zZVVQeDhDWVFieGJmbXRuMEc0UU92Si9mY21ZQ28rZHhqSjJxc0VIMW84UG0yODdkQmRITEhoNC8wdndmaFV5OC9kUzV5SFBhK29hN3YzejRMOWsvODJUbjI2cE93OXhmZnJwaTc1bFBZWCtEZFZqcTVHcUtMdi92UTlmNStHUGpIaVdYVmo1K0VhTC9RSUgzdmFZamlhWDNqU2tmMlBNTlQxWnF3ZHljY0ttODRJaWFjOEVLRCtjQnpKeHRoM3gwRGw0ODM3WWFCcXRMd1h6ZGVob0VmZVd0c095WFlkK2JnN01jWGZncVJrWDFQdmVtR3Y1c1o4eEtVRHBSZWxDREtkcFROS0FMS0N5aHl1azJnL0ExZnpYUHd6ZjAreXNlbzQveUtKTW81bFA4eXpLUXY0SWZPVDdGMVl2czV0bmVoL1JPVXQxQXVvTnhBMnpGOGZVMUNxVUpaZ1BJZGxJdG9meGJsNTZpano2cU5LQStnNEJxcmR1TUZqR09xMFY3OURsNEtNMUJxVVpiaUxiS05ZYjQ0RVY4VkJmaFJnNzhIVEkraC9CRmxOUXF1MzVSYU4vbzBYMEk1Z00rdk1rekpaR3d4amhJTHR1K2hIVzJtUmRoZVJkazlFcWRwRTVZampyRThnZU1BNVhkb3cvb3NTZmthcC9zeFVpeHhXL2hBK29kSVljWW9xUHlXUVBwaGJDRG85OHVLbXVuenlFRkoxWGtwVWVTK2V1b3A4NU9tY0VQanBxeHEwMVM3cGpvMDFhbXBMazExYTJxVHBzN1BxRVViR3VjUnZaSG9OcUxiaWU0Z3VwUG9McUs3aWQ1RWRNSzFFYTZOY0cyRWF5TmNHK0hhQ05kR3VEYkN0Ukd1alhEdGhHc25YRHZoMmduWFRyaDJ3clVUcnAxdzdZUnJKMXdINFRvSTEwRzREc0oxRUs2RGNCMkU2eUJjQitFNkNOZEp1RTdDZFJLdWszQ2RoT3NrWENmaE9nblhTYmhPd25VUnJvdHdYWVRySWx3WDRib0kxMFc0THNKMUVhNkxjTjJFNnlaY04rRzZDZGROdUc3Q2RST3VHN202eXNkdmhFQ21Yak5HazVkVHVYcWZncVdNVHpkMFU4YktmbFdRSlp3MEp2WC9SYkZ1Y29HaU0xaUNVdXBTOE5aNWVvSlNiMTFqQ2pEY1BTTGowMjA3MFF0SGtHTnVwbDBWcDEzZHhrdmRnc1JuMWk1eVhieVkrWDJEbDgvdzNWT1BueXRTNXA0eW9UVlFyOG9xbHhsbndvK3BqR1U0TnViRy93QnRVdGhndGhFQUFBPT0ifQ== -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["items"],"name":[1],"type":["chr"],"align":["left"]},{"label":["support"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["count"],"name":[3],"type":["int"],"align":["right"]}],"data":[{"1":"{Chocolate Meringue}","2":"0.04193333","3":"3145","_rn_":"[1]"},{"1":"{Almond Tart}","2":"0.04204000","3":"3153","_rn_":"[2]"},{"1":"{Vanilla Meringue}","2":"0.04238667","3":"3179","_rn_":"[3]"},{"1":"{Vanilla Eclair}","2":"0.04252000","3":"3189","_rn_":"[4]"},{"1":"{Almond Croissant}","2":"0.04273333","3":"3205","_rn_":"[5]"},{"1":"{Chocolate Eclair}","2":"0.04237333","3":"3178","_rn_":"[6]"},{"1":"{Apricot Tart}","2":"0.04236000","3":"3177","_rn_":"[7]"},{"1":"{Chocolate Croissant}","2":"0.04324000","3":"3243","_rn_":"[8]"},{"1":"{Almond Bear Claw}","2":"0.04244000","3":"3183","_rn_":"[9]"},{"1":"{Ganache Cookie}","2":"0.04324000","3":"3243","_rn_":"[10]"},{"1":"{Pecan Tart}","2":"0.04337333","3":"3253","_rn_":"[11]"},{"1":"{Blueberry Danish}","2":"0.04409333","3":"3307","_rn_":"[12]"},{"1":"{Cherry Soda}","2":"0.06198667","3":"4649","_rn_":"[13]"},{"1":"{Walnut Cookie}","2":"0.06785333","3":"5089","_rn_":"[14]"},{"1":"{Single Espresso}","2":"0.06797333","3":"5098","_rn_":"[15]"},{"1":"{Green Tea}","2":"0.06246667","3":"4685","_rn_":"[16]"},{"1":"{Apple Croissant}","2":"0.06729333","3":"5047","_rn_":"[17]"},{"1":"{Apple Danish}","2":"0.06769333","3":"5077","_rn_":"[18]"},{"1":"{Apple Tart}","2":"0.06822667","3":"5117","_rn_":"[19]"},{"1":"{Bottled Water}","2":"0.07520000","3":"5640","_rn_":"[20]"},{"1":"{Chocolate Tart}","2":"0.07372000","3":"5529","_rn_":"[21]"},{"1":"{Lemon Tart}","2":"0.07580000","3":"5685","_rn_":"[22]"},{"1":"{Casino Cake}","2":"0.07501333","3":"5626","_rn_":"[23]"},{"1":"{Blackberry Tart}","2":"0.07586667","3":"5690","_rn_":"[24]"},{"1":"{Lemon Cookie}","2":"0.06801333","3":"5101","_rn_":"[25]"},{"1":"{Raspberry Cookie}","2":"0.06764000","3":"5073","_rn_":"[26]"},{"1":"{Raspberry Lemonade}","2":"0.06774667","3":"5081","_rn_":"[27]"},{"1":"{Lemon Lemonade}","2":"0.06824000","3":"5118","_rn_":"[28]"},{"1":"{Vanilla Frappuccino}","2":"0.07746667","3":"5810","_rn_":"[29]"},{"1":"{Cheese Croissant}","2":"0.08221333","3":"6166","_rn_":"[30]"},{"1":"{Truffle Cake}","2":"0.08224000","3":"6168","_rn_":"[31]"},{"1":"{Napoleon Cake}","2":"0.08274667","3":"6206","_rn_":"[32]"},{"1":"{Lemon Cake}","2":"0.08361333","3":"6271","_rn_":"[33]"},{"1":"{Berry Tart}","2":"0.08482667","3":"6362","_rn_":"[34]"},{"1":"{Apple Pie}","2":"0.07712000","3":"5784","_rn_":"[35]"},{"1":"{Almond Twist}","2":"0.07720000","3":"5790","_rn_":"[36]"},{"1":"{Blueberry Tart}","2":"0.08294667","3":"6221","_rn_":"[37]"},{"1":"{Chocolate Coffee}","2":"0.08314667","3":"6236","_rn_":"[38]"},{"1":"{Chocolate Cake}","2":"0.08353333","3":"6265","_rn_":"[39]"},{"1":"{Opera Cake}","2":"0.08209333","3":"6157","_rn_":"[40]"},{"1":"{Apricot Croissant}","2":"0.08398667","3":"6299","_rn_":"[41]"},{"1":"{Gongolais Cookie}","2":"0.09044000","3":"6783","_rn_":"[42]"},{"1":"{Marzipan Cookie}","2":"0.08977333","3":"6733","_rn_":"[43]"},{"1":"{Orange Juice}","2":"0.09161333","3":"6871","_rn_":"[44]"},{"1":"{Strawberry Cake}","2":"0.09264000","3":"6948","_rn_":"[45]"},{"1":"{Apricot Danish}","2":"0.09257333","3":"6943","_rn_":"[46]"},{"1":"{Cherry Tart}","2":"0.09316000","3":"6987","_rn_":"[47]"},{"1":"{Tuile Cookie}","2":"0.10074667","3":"7556","_rn_":"[48]"},{"1":"{Hot Coffee}","2":"0.10266667","3":"7700","_rn_":"[49]"},{"1":"{Coffee Eclair}","2":"0.10924000","3":"8193","_rn_":"[50]"},{"1":"{Berry Tart, Bottled Water}","2":"0.03780000","3":"2835","_rn_":"[51]"},{"1":"{Chocolate Tart, Vanilla Frappuccino}","2":"0.03596000","3":"2697","_rn_":"[52]"},{"1":"{Lemon Cake, Lemon Tart}","2":"0.03685333","3":"2764","_rn_":"[53]"},{"1":"{Casino Cake, Chocolate Coffee}","2":"0.03524000","3":"2643","_rn_":"[54]"},{"1":"{Casino Cake, Chocolate Cake}","2":"0.03553333","3":"2665","_rn_":"[55]"},{"1":"{Blackberry Tart, Coffee Eclair}","2":"0.03641333","3":"2731","_rn_":"[56]"},{"1":"{Cheese Croissant, Orange Juice}","2":"0.04306667","3":"3230","_rn_":"[57]"},{"1":"{Gongolais Cookie, Truffle Cake}","2":"0.04392000","3":"3294","_rn_":"[58]"},{"1":"{Napoleon Cake, Strawberry Cake}","2":"0.04314667","3":"3236","_rn_":"[59]"},{"1":"{Almond Twist, Apple Pie}","2":"0.03668000","3":"2751","_rn_":"[60]"},{"1":"{Apple Pie, Hot Coffee}","2":"0.03102667","3":"2327","_rn_":"[61]"},{"1":"{Apple Pie, Coffee Eclair}","2":"0.03726667","3":"2795","_rn_":"[62]"},{"1":"{Almond Twist, Hot Coffee}","2":"0.03092000","3":"2319","_rn_":"[63]"},{"1":"{Almond Twist, Coffee Eclair}","2":"0.03712000","3":"2784","_rn_":"[64]"},{"1":"{Apricot Croissant, Blueberry Tart}","2":"0.04350667","3":"3263","_rn_":"[65]"},{"1":"{Blueberry Tart, Hot Coffee}","2":"0.03504000","3":"2628","_rn_":"[66]"},{"1":"{Chocolate Cake, Chocolate Coffee}","2":"0.04404000","3":"3303","_rn_":"[67]"},{"1":"{Apricot Danish, Opera Cake}","2":"0.04302667","3":"3227","_rn_":"[68]"},{"1":"{Cherry Tart, Opera Cake}","2":"0.04337333","3":"3253","_rn_":"[69]"},{"1":"{Apricot Croissant, Hot Coffee}","2":"0.03537333","3":"2653","_rn_":"[70]"},{"1":"{Marzipan Cookie, Tuile Cookie}","2":"0.05092000","3":"3819","_rn_":"[71]"},{"1":"{Apricot Danish, Cherry Tart}","2":"0.05309333","3":"3982","_rn_":"[72]"},{"1":"{Coffee Eclair, Hot Coffee}","2":"0.03156000","3":"2367","_rn_":"[73]"},{"1":"{Casino Cake, Chocolate Cake, Chocolate Coffee}","2":"0.03338667","3":"2504","_rn_":"[74]"},{"1":"{Almond Twist, Apple Pie, Coffee Eclair}","2":"0.03432000","3":"2574","_rn_":"[75]"},{"1":"{Apricot Croissant, Blueberry Tart, Hot Coffee}","2":"0.03282667","3":"2462","_rn_":"[76]"},{"1":"{Apricot Danish, Cherry Tart, Opera Cake}","2":"0.04110667","3":"3083","_rn_":"[77]"}],"options":{"columns":{"min":{},"max":[10],"total":[3]},"rows":{"min":[10],"max":[10],"total":[77]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG5zdW1tYXJ5KGZyZXF1ZW50X2l0ZW1zZXRzKVxuYGBgIn0= -->
+<pre class="r"><code>
+summary(frequent_itemsets)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoic2V0IG9mIDc3IGl0ZW1zZXRzXG5cbm1vc3QgZnJlcXVlbnQgaXRlbXM6XG4gICAgICAgSG90IENvZmZlZSAgICAgQ29mZmVlIEVjbGFpciAgICAgIEFsbW9uZCBUd2lzdCAgICAgICAgIEFwcGxlIFBpZSBBcHJpY290IENyb2lzc2FudCAgICAgICAgICAgKE90aGVyKSBcbiAgICAgICAgICAgICAgICA3ICAgICAgICAgICAgICAgICA2ICAgICAgICAgICAgICAgICA1ICAgICAgICAgICAgICAgICA1ICAgICAgICAgICAgICAgICA0ICAgICAgICAgICAgICAgIDgxIFxuXG5lbGVtZW50IChpdGVtc2V0L3RyYW5zYWN0aW9uKSBsZW5ndGggZGlzdHJpYnV0aW9uOnNpemVzXG4gMSAgMiAgMyBcbjUwIDIzICA0IFxuXG4gICBNaW4uIDFzdCBRdS4gIE1lZGlhbiAgICBNZWFuIDNyZCBRdS4gICAgTWF4LiBcbiAgMS4wMDAgICAxLjAwMCAgIDEuMDAwICAgMS40MDMgICAyLjAwMCAgIDMuMDAwIFxuXG5zdW1tYXJ5IG9mIHF1YWxpdHkgbWVhc3VyZXM6XG4gICAgc3VwcG9ydCAgICAgICAgICAgIGNvdW50ICAgICBcbiBNaW4uICAgOjAuMDMwOTIgICBNaW4uICAgOjIzMTkgIFxuIDFzdCBRdS46MC4wNDIwNCAgIDFzdCBRdS46MzE1MyAgXG4gTWVkaWFuIDowLjA1MzA5ICAgTWVkaWFuIDozOTgyICBcbiBNZWFuICAgOjAuMDU5NjQgICBNZWFuICAgOjQ0NzMgIFxuIDNyZCBRdS46MC4wNzc0NyAgIDNyZCBRdS46NTgxMCAgXG4gTWF4LiAgIDowLjEwOTI0ICAgTWF4LiAgIDo4MTkzICBcblxuaW5jbHVkZXMgdHJhbnNhY3Rpb24gSUQgbGlzdHM6IEZBTFNFIFxuXG5taW5pbmcgaW5mbzpcbiJ9 -->
+<pre><code>set of 77 itemsets
+
+most frequent items:
+       Hot Coffee     Coffee Eclair      Almond Twist         Apple Pie Apricot Croissant           (Other) 
+                7                 6                 5                 5                 4                81 
+
+element (itemset/transaction) length distribution:sizes
+ 1  2  3 
+50 23  4 
+
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  1.000   1.000   1.000   1.403   2.000   3.000 
+
+summary of quality measures:
+    support            count     
+ Min.   :0.03092   Min.   :2319  
+ 1st Qu.:0.04204   1st Qu.:3153  
+ Median :0.05309   Median :3982  
+ Mean   :0.05964   Mean   :4473  
+ 3rd Qu.:0.07747   3rd Qu.:5810  
+ Max.   :0.10924   Max.   :8193  
+
+includes transaction ID lists: FALSE 
+
+mining info:</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibnJvdyI6MSwibmNvbCI6NSwic3VtbWFyeSI6eyJEZXNjcmlwdGlvbiI6WyJkZiBbMSDDlyA1XSJdfX0sInJkZiI6Ikg0c0lBQUFBQUFBQUEyMVJUVXNETVJDZDdXNHNYV2dWdk10U1BMVFFMcFZldklnWDhhNVk2RFZ1MHhwTWt6WEpvbi9BditIdjZIL3kwcU9uNm1RL2Fna05oTXg3azh5Yk4zbThtMC9qZVF3QUlVUkJDQ0hCRU1qczZYNThEUkMxRUFRUVFjZWRIM2pwM0dWeG54MGtpTlZVR2d5NkpSbGMvdURaYy9IdDErYmgrL05pczhkYmFOWmhnUm5OTlZlYUR4YlUwdVFtS2V1TmtweHF1bWFXYWFRRU4zWmdpanhYMmlLY3BKUHBLTEZVcjVpRC9hVm1id1dUTnVHV3JRMnpwajhjZXUwVGljVk1yVXhxTW5LS2RkeVZwUzdOTEZkb3B5TGJ0V1lONDB6SkpWOHdtYkdtUWthRjhLUTZXcjJuaDNKTkF2eWVNa0dOZnlsMlBhVkw1eDNSem52U1ZublZIN1NPL1VXZ1BlSzBrSzZUeFRoN0tlVHIrTW9KbE9scWQ0L0VwSkpzL1hyRE9tRnl4V1ZqbkFqNnpFUU5ldWk0Tkp6aVQ4cjl0SkExcVZXV2l2LzVpWVlwdmNIdUQ5bDRRYjJDQWdBQSJ9 -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["data"],"name":[1],"type":["chr"],"align":["left"]},{"label":["ntransactions"],"name":[2],"type":["int"],"align":["right"]},{"label":["support"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["confidence"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["call"],"name":[5],"type":["chr"],"align":["left"]}],"data":[{"1":"trans","2":"75000","3":"0.03","4":"1","5":"apriori(data = trans, parameter = list(support = 0.03, target = \"frequent itemsets\"))","_rn_":""}],"options":{"columns":{"min":{},"max":[10],"total":[5]},"rows":{"min":[10],"max":[10],"total":[1]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Answer: most frequent items: Hot Coffee, Coffee Eclair, Almond Twist,
+Apple Pie Apricot, Croissant</p>
 </div>
 <div id="d-ii" class="section level3">
 <h3>2.1-(d)-(ii)</h3>
 <p>What is the least frequently purchased item or itemset?</p>
 <!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGF0YV9kZiA8LSBhcyhmcmVxdWVudF9pdGVtc2V0cyxcImRhdGEuZnJhbWVcIilcblxuZGF0YV9kZlt3aGljaC5taW4oZGF0YV9kZiRjb3VudCksXSBcbmBgYCJ9 -->
+<pre class="r"><code>data_df &lt;- as(frequent_itemsets,&quot;data.frame&quot;)
+
+data_df[which.min(data_df$count),] </code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibnJvdyI6MSwibmNvbCI6Mywic3VtbWFyeSI6eyJEZXNjcmlwdGlvbiI6WyJkZiBbMSDDlyAzXSJdfX0sInJkZiI6Ikg0c0lBQUFBQUFBQUExMVF3VXJFTUJDZE5xMUxBKzRLZS9LMmQyMUJ2SGhiUkJIUHNndDdqVzJxd1RRcFNjb0tvci9pMmEvekQ5Wk5hZ0lscDh5OG1mZm12VHpkNzY3eERnTUFnaXhCZ0hKYlFyN2RQSlEzQUZscW13UXlLTno3YnBlVzR5YkEyV1J3L25ITE95bWExV2JQdExsOGxHWjFKOXVXMGs4N25MdkY5ZmZQMS9KaSsydnIwNUVJeFNKU3p3WHBxUGJLS0lETTBFNzdacWFIdnBmS2hGa3RCMkVpbFVMSmZSV1UvQ2xZeDZkcVRyU09RdUNHR0ZLMXluSnRkNGdvTTlrYkpvVWxwZTRIOG9pY3FBaFlETUs1YU1yNmRSQnY1WlU3NE4wa0UyZlRHdjJmVFArOFZPNmxUcWg0WVlJRzc1dzhVKzZidVUwN2hxMTZ4VVQ0R0d4UlhSbHBTTmpEdGVRQkdiUEI0UWcwTCtHeStBRUFBQT09In0= -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["items"],"name":[1],"type":["chr"],"align":["left"]},{"label":["support"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["count"],"name":[3],"type":["int"],"align":["right"]}],"data":[{"1":"{Almond Twist,Hot Coffee}","2":"0.03092","3":"2319","_rn_":"63"}],"options":{"columns":{"min":{},"max":[10],"total":[3]},"rows":{"min":[10],"max":[10],"total":[1]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Answer: The least frequently purchased item is {Almond Twist,Hot
+Coffee}.</p>
+<!-- rnb-text-end -->
 </div>
 </div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiQ1MgNDIyIEhvbWV3b3JrIDYiCmF1dGhvcjogIlhpbmdsaSBMaSIKb3V0cHV0OgogIGh0bWxfbm90ZWJvb2s6CiAgICB0b2M6IHllcwogICAgdG9jX2Zsb2F0OiB5ZXMKICBodG1sX2RvY3VtZW50OgogICAgdG9jOiB5ZXMKICAgIGRmX3ByaW50OiBwYWdlZAotLS0KCiMjIEhvbWV3b3JrIDYKCiMjIyBQYXJ0IDIKCnNldCB3b3JrIHNwYWNlIGFuZCBpbnN0YWxsIGRlcGVuZGVudCBwYWNrYWdlLgoKYGBge3J9CgpsaWJyYXJ5KHJwYXJ0KSAgI2NsYXNzaWZpY2F0aW9uIGFuZCByZWdyZXNzaW9uIHRyZWVzCmxpYnJhcnkoYXJ1bGVzKQpsaWJyYXJ5KGNhcmV0KQp3b3JrLnBhdGggPC0gZ2V0d2QoKQpzZXR3ZCh3b3JrLnBhdGgpCmBgYAoKIyMjIDIuMS0oYSkKCkxvYWRpbmcgb3JpZ2luIGRhdGEgYW5kIHByb2Nlc3NpbmcgZGF0YS4KCi4uLgoKIyMjIDIuMS0oYikKCkFuYWx5c2lzIGRhdGE6CgpgYGB7cn0KCnRyYW5zYWN0aW9ucyA9IGMoIjFrIiwiNWsiLCIyMGsiLCI3NWsiKQoKZGYgPC0gZGF0YS5mcmFtZShYID0gMCwKICAgICAgICAgICAgICAgICBQMSA9ICIiLAogICAgICAgICAgICAgICAgIFAyID0gIiIsCiAgICAgICAgICAgICAgICAgUDMgPSAiIiwKICAgICAgICAgICAgICAgICBQNCA9ICIiLAogICAgICAgICAgICAgICAgIFA1ID0gIiIsCiAgICAgICAgICAgICAgICAgUDYgPSAiIiwKICAgICAgICAgICAgICAgICBQNyA9ICIiLAogICAgICAgICAgICAgICAgIFA4ID0gIiIpICMgUHJpbWUgdGhlIHJlc3VsdHMgZGF0YSBmcmFtZS4KCmZvciAodHJ4X2lkIGluIHRyYW5zYWN0aW9ucykgewogICBmaWxlbmFtZSA9IHBhc3RlMCgidHItIix0cnhfaWQsIi1jYW5vbmljYWwuY3N2IikKICAgZGYudGVtcCA8LSByZWFkLmNzdihmaWxlID0gZmlsZW5hbWUsIGVuY29kaW5nID0gIlVURi04IikKICAgZGYgPC0gcmJpbmQoZGYsIGRmLnRlbXApCiAgIGRmLnRlbXAgPC0gTlVMTAp9CgpkZiA8LSBkZlstMSxdCgpuYW1lcyhkZikKYGBgCgpmaW5kaW5nIHRoZSBmcmVxdWVudCBpdGVtc2V0cwoKZGlzY292ZXJpbmcgc3Ryb25nIGFzc29jaWF0aW9uIHJ1bGVzIHdpdGhpbiB0aGVtLgoKIyMjIDIuMS0oYykKCkNvbXBhcmUgdGhlIHJ1bGVzIHlvdSBvYnRhaW5lZCBmb3IgZWFjaCBkaWZmZXJlbnQgc3Vic2V0ICgxLDAwMCAtLSA3NSwwMDAgdHJhbnNhY3Rpb25zKS4gSG93IGRvZXMgdGhlIG51bWJlciBvZiB0cmFuc2FjdGlvbnMgYWZmZWN0IHRoZSByZXN1bHRzIHlvdSBvYnNlcnZlZD8gKFdyaXRlIHRoZSBhbnN3ZXIgaW4geW91ciBSIG1hcmt1cCBmaWxlLCBlYXNpbHkgaWRlbnRpZmllZC4pCgojIyMgMi4xLShkKS0oaSkKCmZvciB0aGUgNzUsMDAwIHRyYW5zYWN0aW9ucyBkYXRhc2V0IHVzaW5nIHRoZSBzYW1lIHN1cHBvcnQgbGV2ZWwgYXMgZGV0ZXJtaW5lZCBpbiAoYik6CgpXaGF0IGlzIHRoZSBtb3N0IGZyZXF1ZW50bHkgcHVyY2hhc2VkIGl0ZW0gb3IgaXRlbXNldD8KCiMjIyAyLjEtKGQpLShpaSkKCldoYXQgaXMgdGhlIGxlYXN0IGZyZXF1ZW50bHkgcHVyY2hhc2VkIGl0ZW0gb3IgaXRlbXNldD8K</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiQ1MgNDIyIEhvbWV3b3JrIDYiCmF1dGhvcjogIlhpbmdsaSBMaSIKb3V0cHV0OgogIGh0bWxfbm90ZWJvb2s6IAogICAgdG9jOiB5ZXMKICAgIHRvY19mbG9hdDogeWVzCiAgICB0b2NfZGVwdGg6IDUKICBodG1sX2RvY3VtZW50OgogICAgdG9jOiB5ZXMKICAgIGRmX3ByaW50OiBwYWdlZAotLS0KCiMjIEhvbWV3b3JrIDYKCiMjIyBQYXJ0IDIKCnNldCB3b3JrIHNwYWNlIGFuZCBpbnN0YWxsIGRlcGVuZGVudCBwYWNrYWdlLgoKYGBge3J9CgpsaWJyYXJ5KHJwYXJ0KSAgI2NsYXNzaWZpY2F0aW9uIGFuZCByZWdyZXNzaW9uIHRyZWVzCmxpYnJhcnkoYXJ1bGVzKQpsaWJyYXJ5KGFydWxlc1ZpeikKbGlicmFyeShjYXJldCkKd29yay5wYXRoIDwtIGdldHdkKCkKc2V0d2Qod29yay5wYXRoKQpgYGAKCiMjIyAyLjEtKGEpCgpMb2FkaW5nIG9yaWdpbiBkYXRhIGFuZCBwcm9jZXNzaW5nIGRhdGEuCgojIyMgMi4xLShiKQoKRmluZGluZyB0aGUgZnJlcXVlbnQgaXRlbXNldHM6CgpgYGB7cn0KIyBSZWFkIHRoZSBkYXRhCnRyYW5zIDwtIHJlYWQudHJhbnNhY3Rpb25zKCJ0ci0xay1jYW5vbmljYWwuY3N2Iixmb3JtYXQgPSAiYmFza2V0Iiwgc2VwPSIsIikKc3VtbWFyeSh0cmFucykKCiMjIyBmaW5kaW5nIHRoZSBmcmVxdWVudCBpdGVtc2V0cwpmcmVxdWVudF9pdGVtc2V0cyA8LSBhcHJpb3JpKHRyYW5zLCAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICBwYXJhbWV0ZXI9bGlzdChzdXBwb3J0PTAuMDMsIHRhcmdldD0iZnJlcXVlbnQgaXRlbXNldHMiKSkKaW5zcGVjdChmcmVxdWVudF9pdGVtc2V0cykKCmBgYAoKRGlzY292ZXJpbmcgc3Ryb25nIGFzc29jaWF0aW9uIHJ1bGVzIHdpdGhpbiB0aGVtLgoKYGBge3J9CiMjIyBnZXQgcnVsZXMKcGFyYW1ldGVyIDwtIGxpc3Qoc3VwcG9ydD0wLjAzLGNvbmZpZGVuY2UgPSAwLjksIHRhcmdldD0icnVsZXMiKQpydWxlcyA8LSBhcHJpb3JpKHRyYW5zLCBwYXJhbWV0ZXI9cGFyYW1ldGVyKQojIyMjIExldCdzIGluc3BlY3QgdGhlIHJ1bGVzLCBzb3J0ZWQgYnkgY29uZmlkZW5jZQpydWxlcy5zb3J0ZWRfY29uZmQgPC0gYXJ1bGVzOjpzb3J0KHJ1bGVzLCBkZWNyZWFzaW5nID0gVCxieSA9ICJjb25maWRlbmNlIikKCiMjIyBEaXNjb3ZlcmluZyB0aGUgZmlyc3QgNSBzdHJvbmcgYXNzb2NpYXRpb24gcnVsZXMgd2l0aGluIHRoZW0uCmluc3BlY3QoaGVhZChydWxlcy5zb3J0ZWRfY29uZmRbMTo1XSkpCgpgYGAKCmBgYHtyfQp0cmFucyA8LSByZWFkLnRyYW5zYWN0aW9ucygidHItNWstY2Fub25pY2FsLmNzdiIsc2VwPSIsIikKCiMjIyBnZXQgcnVsZXMKcGFyYW1ldGVyIDwtIGxpc3Qoc3VwcG9ydD0wLjAzLGNvbmZpZGVuY2UgPSAwLjksIHRhcmdldD0icnVsZXMiKQpydWxlcyA8LSBhcHJpb3JpKHRyYW5zLCBwYXJhbWV0ZXI9cGFyYW1ldGVyKQojIyMjIExldCdzIGluc3BlY3QgdGhlIHJ1bGVzLCBzb3J0ZWQgYnkgY29uZmlkZW5jZQpydWxlcy5zb3J0ZWRfY29uZmQgPC0gYXJ1bGVzOjpzb3J0KHJ1bGVzLCBkZWNyZWFzaW5nID0gVCxieSA9ICJjb25maWRlbmNlIikKCiMjIyBEaXNjb3ZlcmluZyB0aGUgZmlyc3QgNSBzdHJvbmcgYXNzb2NpYXRpb24gcnVsZXMgd2l0aGluIHRoZW0uCmluc3BlY3QoaGVhZChydWxlcy5zb3J0ZWRfY29uZmRbMTo1XSkpCgpgYGAKCmBgYHtyfQp0cmFucyA8LSByZWFkLnRyYW5zYWN0aW9ucygidHItMjBrLWNhbm9uaWNhbC5jc3YiLHNlcD0iLCIpCgojIyMgZ2V0IHJ1bGVzCnBhcmFtZXRlciA8LSBsaXN0KHN1cHBvcnQ9MC4wMyxjb25maWRlbmNlID0gMC45LCB0YXJnZXQ9InJ1bGVzIikKcnVsZXMgPC0gYXByaW9yaSh0cmFucywgcGFyYW1ldGVyPXBhcmFtZXRlcikKIyMjIyBMZXQncyBpbnNwZWN0IHRoZSBydWxlcywgc29ydGVkIGJ5IGNvbmZpZGVuY2UKcnVsZXMuc29ydGVkX2NvbmZkIDwtIGFydWxlczo6c29ydChydWxlcywgZGVjcmVhc2luZyA9IFQsYnkgPSAiY29uZmlkZW5jZSIpCgojIyMgRGlzY292ZXJpbmcgdGhlIGZpcnN0IDUgc3Ryb25nIGFzc29jaWF0aW9uIHJ1bGVzIHdpdGhpbiB0aGVtLgppbnNwZWN0KGhlYWQocnVsZXMuc29ydGVkX2NvbmZkWzE6NV0pKQoKYGBgCgoKYGBge3J9CnRyYW5zIDwtIHJlYWQudHJhbnNhY3Rpb25zKCJ0ci0yMGstY2Fub25pY2FsLmNzdiIsc2VwPSIsIikKCiMjIyBnZXQgcnVsZXMKcGFyYW1ldGVyIDwtIGxpc3Qoc3VwcG9ydD0wLjAzLGNvbmZpZGVuY2UgPSAwLjksIHRhcmdldD0icnVsZXMiKQpydWxlcyA8LSBhcHJpb3JpKHRyYW5zLCBwYXJhbWV0ZXI9cGFyYW1ldGVyKQojIyMjIExldCdzIGluc3BlY3QgdGhlIHJ1bGVzLCBzb3J0ZWQgYnkgY29uZmlkZW5jZQpydWxlcy5zb3J0ZWRfY29uZmQgPC0gYXJ1bGVzOjpzb3J0KHJ1bGVzLCBkZWNyZWFzaW5nID0gVCxieSA9ICJjb25maWRlbmNlIikKCiMjIyBEaXNjb3ZlcmluZyB0aGUgZmlyc3QgNSBzdHJvbmcgYXNzb2NpYXRpb24gcnVsZXMgd2l0aGluIHRoZW0uCmluc3BlY3QoaGVhZChydWxlcy5zb3J0ZWRfY29uZmRbMTo1XSkpCgpgYGAKCgojIyMgMi4xLShjKQoKQ29tcGFyZSB0aGUgcnVsZXMgeW91IG9idGFpbmVkIGZvciBlYWNoIGRpZmZlcmVudCBzdWJzZXQgKDEsMDAwIC0tIDc1LDAwMCB0cmFuc2FjdGlvbnMpLiBIb3cgZG9lcyB0aGUgbnVtYmVyIG9mIHRyYW5zYWN0aW9ucyBhZmZlY3QgdGhlIHJlc3VsdHMgeW91IG9ic2VydmVkPyAoV3JpdGUgdGhlIGFuc3dlciBpbiB5b3VyIFIgbWFya3VwIGZpbGUsIGVhc2lseSBpZGVudGlmaWVkLikKCmBgYHtyfQp0cmFucyA8LSByZWFkLnRyYW5zYWN0aW9ucygidHItMWstY2Fub25pY2FsLmNzdiIsc2VwPSIsIikKCiMjIyBnZXQgcnVsZXMKcGFyYW1ldGVyIDwtIGxpc3Qoc3VwcG9ydD0wLjAzLGNvbmZpZGVuY2UgPSAwLjksIHRhcmdldD0icnVsZXMiKQpydWxlcyA8LSBhcHJpb3JpKHRyYW5zLCBwYXJhbWV0ZXI9cGFyYW1ldGVyKQojIyMjIExldCdzIGluc3BlY3QgdGhlIHJ1bGVzLCBzb3J0ZWQgYnkgY29uZmlkZW5jZQpydWxlcy5zb3J0ZWRfY29uZmQgPC0gYXJ1bGVzOjpzb3J0KHJ1bGVzLCBkZWNyZWFzaW5nID0gVCxieSA9ICJjb25maWRlbmNlIikKCiMjIyBEaXNjb3ZlcmluZyB0aGUgZmlyc3QgNSBzdHJvbmcgYXNzb2NpYXRpb24gcnVsZXMgd2l0aGluIHRoZW0uCmluc3BlY3QoaGVhZChydWxlcy5zb3J0ZWRfY29uZmRbMTo1XSkpCmBgYAoKYGBge3J9CnRyYW5zIDwtIHJlYWQudHJhbnNhY3Rpb25zKCJ0ci01ay1jYW5vbmljYWwuY3N2IixzZXA9IiwiKQoKIyMjIGdldCBydWxlcwpwYXJhbWV0ZXIgPC0gbGlzdChzdXBwb3J0PTAuMDMsY29uZmlkZW5jZSA9IDAuOSwgdGFyZ2V0PSJydWxlcyIpCnJ1bGVzIDwtIGFwcmlvcmkodHJhbnMsIHBhcmFtZXRlcj1wYXJhbWV0ZXIpCiMjIyMgTGV0J3MgaW5zcGVjdCB0aGUgcnVsZXMsIHNvcnRlZCBieSBjb25maWRlbmNlCnJ1bGVzLnNvcnRlZF9jb25mZCA8LSBhcnVsZXM6OnNvcnQocnVsZXMsIGRlY3JlYXNpbmcgPSBULGJ5ID0gImNvbmZpZGVuY2UiKQoKIyMjIERpc2NvdmVyaW5nIHRoZSBmaXJzdCA1IHN0cm9uZyBhc3NvY2lhdGlvbiBydWxlcyB3aXRoaW4gdGhlbS4KaW5zcGVjdChoZWFkKHJ1bGVzLnNvcnRlZF9jb25mZFsxOjVdKSkKCmBgYAoKYGBge3J9CnRyYW5zIDwtIHJlYWQudHJhbnNhY3Rpb25zKCJ0ci0yMGstY2Fub25pY2FsLmNzdiIsc2VwPSIsIikKCiMjIyBnZXQgcnVsZXMKcGFyYW1ldGVyIDwtIGxpc3Qoc3VwcG9ydD0wLjAzLGNvbmZpZGVuY2UgPSAwLjksIHRhcmdldD0icnVsZXMiKQpydWxlcyA8LSBhcHJpb3JpKHRyYW5zLCBwYXJhbWV0ZXI9cGFyYW1ldGVyKQojIyMjIExldCdzIGluc3BlY3QgdGhlIHJ1bGVzLCBzb3J0ZWQgYnkgY29uZmlkZW5jZQpydWxlcy5zb3J0ZWRfY29uZmQgPC0gYXJ1bGVzOjpzb3J0KHJ1bGVzLCBkZWNyZWFzaW5nID0gVCxieSA9ICJjb25maWRlbmNlIikKCiMjIyBEaXNjb3ZlcmluZyB0aGUgZmlyc3QgNSBzdHJvbmcgYXNzb2NpYXRpb24gcnVsZXMgd2l0aGluIHRoZW0uCmluc3BlY3QoaGVhZChydWxlcy5zb3J0ZWRfY29uZmRbMTo1XSkpCmBgYAoKYGBge3J9CnRyYW5zIDwtIHJlYWQudHJhbnNhY3Rpb25zKCJ0ci03NWstY2Fub25pY2FsLmNzdiIsc2VwPSIsIikKCiMjIyBnZXQgcnVsZXMKcGFyYW1ldGVyIDwtIGxpc3Qoc3VwcG9ydD0wLjAzLGNvbmZpZGVuY2UgPSAwLjksIHRhcmdldD0icnVsZXMiKQpydWxlcyA8LSBhcHJpb3JpKHRyYW5zLCBwYXJhbWV0ZXI9cGFyYW1ldGVyKQojIyMjIExldCdzIGluc3BlY3QgdGhlIHJ1bGVzLCBzb3J0ZWQgYnkgY29uZmlkZW5jZQpydWxlcy5zb3J0ZWRfY29uZmQgPC0gYXJ1bGVzOjpzb3J0KHJ1bGVzLCBkZWNyZWFzaW5nID0gVCxieSA9ICJjb25maWRlbmNlIikKCiMjIyBEaXNjb3ZlcmluZyB0aGUgZmlyc3QgNSBzdHJvbmcgYXNzb2NpYXRpb24gcnVsZXMgd2l0aGluIHRoZW0uCmluc3BlY3QoaGVhZChydWxlcy5zb3J0ZWRfY29uZmRbMTo1XSkpCmBgYApBbnN3ZXI6CiAgICBXaXRoIHRoZSBpbmNyZWFzZSBvZiB0cmFuc2FjdGlvbiBkYXRhLCB0aGUgY29tcHV0YXRpb24gcHJvY2VzcyB0YWtlcyBtb3JlIGFuZCBtb3JlIHRpbWUuCgojIyMgMi4xLShkKS0oaSkKCkZvciB0aGUgNzUsMDAwIHRyYW5zYWN0aW9ucyBkYXRhc2V0IHVzaW5nIHRoZSBzYW1lIHN1cHBvcnQgbGV2ZWwgYXMgZGV0ZXJtaW5lZCBpbiAoYik6CldoYXQgaXMgdGhlIG1vc3QgZnJlcXVlbnRseSBwdXJjaGFzZWQgaXRlbSBvciBpdGVtc2V0PwoKYGBge3J9CnRyYW5zIDwtIHJlYWQudHJhbnNhY3Rpb25zKCJ0ci03NWstY2Fub25pY2FsLmNzdiIsc2VwPSIsIikKCiMjIyBmaW5kaW5nIHRoZSBmcmVxdWVudCBpdGVtc2V0cwpmcmVxdWVudF9pdGVtc2V0cyA8LSBhcHJpb3JpKHRyYW5zLCAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICBwYXJhbWV0ZXI9bGlzdChzdXBwb3J0PTAuMDMsIHRhcmdldD0iZnJlcXVlbnQgaXRlbXNldHMiKSkKCmluc3BlY3QoZnJlcXVlbnRfaXRlbXNldHMpCgpzdW1tYXJ5KGZyZXF1ZW50X2l0ZW1zZXRzKQoKYGBgCgpBbnN3ZXI6CiAgICBtb3N0IGZyZXF1ZW50IGl0ZW1zOiBIb3QgQ29mZmVlLCBDb2ZmZWUgRWNsYWlyLCBBbG1vbmQgVHdpc3QsIEFwcGxlIFBpZSBBcHJpY290LCBDcm9pc3NhbnQKCiMjIyAyLjEtKGQpLShpaSkKCldoYXQgaXMgdGhlIGxlYXN0IGZyZXF1ZW50bHkgcHVyY2hhc2VkIGl0ZW0gb3IgaXRlbXNldD8KCmBgYHtyfQpkYXRhX2RmIDwtIGFzKGZyZXF1ZW50X2l0ZW1zZXRzLCJkYXRhLmZyYW1lIikKCmRhdGFfZGZbd2hpY2gubWluKGRhdGFfZGYkY291bnQpLF0gCmBgYAoKQW5zd2VyOiAKICAgIFRoZSBsZWFzdCBmcmVxdWVudGx5IHB1cmNoYXNlZCBpdGVtIGlzIHtBbG1vbmQgVHdpc3QsSG90IENvZmZlZX0uCg==</div>
 
 
 </div>
@@ -3055,7 +3413,7 @@ $(document).ready(function ()  {
 
     // establish options
     var options = {
-      selectors: "h1,h2,h3",
+      selectors: "h1,h2,h3,h4,h5",
       theme: "bootstrap3",
       context: '.toc-content',
       hashGenerator: function (text) {
