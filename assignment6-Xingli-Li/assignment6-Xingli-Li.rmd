@@ -89,9 +89,8 @@ inspect(head(rules.sorted_confd[1:5]))
 
 ```
 
-
 ```{r}
-trans <- read.transactions("tr-20k-canonical.csv",sep=",")
+trans <- read.transactions("tr-75k-canonical.csv",sep=",")
 
 ### get rules
 parameter <- list(support=0.03,confidence = 0.9, target="rules")
@@ -103,7 +102,6 @@ rules.sorted_confd <- arules::sort(rules, decreasing = T,by = "confidence")
 inspect(head(rules.sorted_confd[1:5]))
 
 ```
-
 
 ### 2.1-(c)
 
@@ -161,13 +159,12 @@ rules.sorted_confd <- arules::sort(rules, decreasing = T,by = "confidence")
 ### Discovering the first 5 strong association rules within them.
 inspect(head(rules.sorted_confd[1:5]))
 ```
-Answer:
-    With the increase of transaction data, the computation process takes more and more time.
+
+Answer: With the increase of transaction data, the computation process takes more and more time.
 
 ### 2.1-(d)-(i)
 
-For the 75,000 transactions dataset using the same support level as determined in (b):
-What is the most frequently purchased item or itemset?
+For the 75,000 transactions dataset using the same support level as determined in (b): What is the most frequently purchased item or itemset?
 
 ```{r}
 trans <- read.transactions("tr-75k-canonical.csv",sep=",")
@@ -182,8 +179,7 @@ summary(frequent_itemsets)
 
 ```
 
-Answer:
-    most frequent items: Hot Coffee, Coffee Eclair, Almond Twist, Apple Pie Apricot, Croissant
+Answer: most frequent items: Hot Coffee, Coffee Eclair, Almond Twist, Apple Pie Apricot, Croissant
 
 ### 2.1-(d)-(ii)
 
@@ -195,5 +191,4 @@ data_df <- as(frequent_itemsets,"data.frame")
 data_df[which.min(data_df$count),] 
 ```
 
-Answer: 
-    The least frequently purchased item is {Almond Twist,Hot Coffee}.
+Answer: The least frequently purchased itemsets is {Almond Twist,Hot Coffee}.
