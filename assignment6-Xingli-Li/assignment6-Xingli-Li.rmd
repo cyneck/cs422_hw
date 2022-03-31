@@ -43,6 +43,8 @@ summary(trans)
 ### finding the frequent itemsets
 frequent_itemsets <- apriori(trans, 
                              parameter=list(support=0.03, target="frequent itemsets"))
+
+frequent_itemsets <- arules::sort(frequent_itemsets, decreasing = T,by = "count")
 inspect(frequent_itemsets)
 
 ```
@@ -158,9 +160,12 @@ rules.sorted_confd <- arules::sort(rules, decreasing = T,by = "confidence")
 
 ### Discovering the first 5 strong association rules within them.
 inspect(head(rules.sorted_confd[1:5]))
+
 ```
 
-Answer: With the increase of transaction data, the computation process takes more and more time.
+Answer:
+
+      With the increase of transaction data,the absolute minimum support count is increased, the association rules number is decreated, the computation process takes more and more time.
 
 ### 2.1-(d)-(i)
 
@@ -179,7 +184,9 @@ summary(frequent_itemsets)
 
 ```
 
-Answer: most frequent items: Hot Coffee, Coffee Eclair, Almond Twist, Apple Pie Apricot, Croissant
+Answer: 
+ 
+    The most frequent itemsets: {Hot Coffee, Coffee Eclair, Almond Twist, Apple Pie Apricot, Croissant}.
 
 ### 2.1-(d)-(ii)
 
@@ -191,4 +198,6 @@ data_df <- as(frequent_itemsets,"data.frame")
 data_df[which.min(data_df$count),] 
 ```
 
-Answer: The least frequently purchased itemsets is {Almond Twist,Hot Coffee}.
+Answer: 
+
+    The least frequently purchased itemsets : {Almond Twist,Hot Coffee}.
