@@ -21,8 +21,7 @@ set work space and install dependent package.
 library(keras)
 library(dplyr)
 library(caret)
-
-setwd(getwd())
+setwd("/media/eric/Data/IIT/CS422/cs422_hw/assignment7-Xingli-Li")
 ```
 ### 2.1-(a)
 
@@ -59,8 +58,48 @@ rm(label.train)
 rm(indx)
 
 ```
+```{r}
+model <- keras_model_sequential()  # input layer
 
+model %>% layer_dense(units = 128, activation = 'relu', input_shape = c(,3)) %>%  # hidden layer
 
+layer_dropout(rate = 0.3) %>%    # dropout
+
+layer_dense(units = 4, activation = 'softmax')  # output layer
+
+model %>%
+  compile(
+    optimizer = 'adam',
+    loss = 'categorical_crossentropy',
+    metrics = 'accuracy')
+
+summary(model)
+
+```
+ training
+```{r}
+train.X <- c(train.df$xaccel,train.df$yaccel,train.df$zaccel)
+train.y <- train.df$label
+history <- model %>% fit(train.X,train.y,
+                         epochs = 100,
+                         batch_size = 1,
+                         validation_split = 0.2)
+plot(history)
+```
+ evaluate model
+```{r}
+test.X <- c(test.df$xaccel,test.df$yaccel,test.df$zaccel)
+test.y <- test.df$label
+model %>% evaluate(test.X, test.y)
+```
+ confusing matrix
+```{r}
+pred <- model %>% predict(test.X)
+pred_res <-  apply(pred,1,which.max)-1
+test_res <-  test.y
+table(test_res,pred_res)
+
+```
 ### 2.1-(a)-(i)
 
 What is the overall accuracy of your model on the test dataset?
