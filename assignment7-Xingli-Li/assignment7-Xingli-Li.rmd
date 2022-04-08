@@ -18,11 +18,13 @@ output:
 set work space and install dependent package.
 
 ```{r}
+# devtools::install_github("rstudio/keras")
 library(keras)
 library(dplyr)
 library(caret)
 setwd("/media/eric/Data/IIT/CS422/cs422_hw/assignment7-Xingli-Li")
 ```
+
 ### 2.1-(a)
 
 Loading origin data and processing data.
@@ -58,41 +60,45 @@ rm(label.train)
 rm(indx)
 
 ```
+
 ```{r}
 model <- keras_model_sequential()  # input layer
+layer_flatten(model,input_shape = 3 )
+layer_dense(model,units = 128, activation = 'relu')  # hidden layer # dropout
+layer_dense(model, units = 4, activation = 'softmax')     # output layer
 
-model %>% layer_dense(units = 128, activation = 'relu', input_shape = c(,3)) %>%  # hidden layer
-
-layer_dropout(rate = 0.3) %>%    # dropout
-
-layer_dense(units = 4, activation = 'softmax')  # output layer
-
-model %>%
-  compile(
-    optimizer = 'adam',
-    loss = 'categorical_crossentropy',
-    metrics = 'accuracy')
+compile(model,
+  optimizer = 'adam',
+  loss = 'sparse_categorical_crossentropy',
+  metrics = 'accuracy')
 
 summary(model)
 
 ```
- training
+
+training
+
 ```{r}
-train.X <- c(train.df$xaccel,train.df$yaccel,train.df$zaccel)
+train.X <- train.df[,1:3]
 train.y <- train.df$label
-history <- model %>% fit(train.X,train.y,
-                         epochs = 100,
+
+history <-  fit(model,train.X,train.y,
+                         epochs = 10,
                          batch_size = 1,
                          validation_split = 0.2)
 plot(history)
 ```
- evaluate model
+
+evaluate model
+
 ```{r}
-test.X <- c(test.df$xaccel,test.df$yaccel,test.df$zaccel)
+test.X <- test.df[,1:3]
 test.y <- test.df$label
 model %>% evaluate(test.X, test.y)
 ```
- confusing matrix
+
+confusing matrix
+
 ```{r}
 pred <- model %>% predict(test.X)
 pred_res <-  apply(pred,1,which.max)-1
@@ -100,10 +106,10 @@ test_res <-  test.y
 table(test_res,pred_res)
 
 ```
+
 ### 2.1-(a)-(i)
 
 What is the overall accuracy of your model on the test dataset?
-
 
 ### 2.1-(a)-(ii)
 
@@ -111,26 +117,18 @@ What is the per-class sensitivity, specificity, and balanced accuracy on the tes
 
 ### 2.1-(b)
 
-
 ### 2.1-(c)-(i)
 
-Analyze the output from the mini-batch gradient descent.
-Why do you think that the time vary as you increase the batch size?
+Analyze the output from the mini-batch gradient descent. Why do you think that the time vary as you increase the batch size?
 
 ### 2.1-(c)-(ii)
 
-Comment on the output from the mini-batch gradient descent. Does overall accuracy, balanced accuracy and
-per-class statistics remain the same? Change? If change, why?
-
+Comment on the output from the mini-batch gradient descent. Does overall accuracy, balanced accuracy and per-class statistics remain the same? Change? If change, why?
 
 ### 2.1-(d)-(i)
 
 Overall accuracy of your model on the test dataset.
 
-
 ### 2.1-(d)-(ii)
 
-Per-class sensitivity, specificity, and balanced accuracy on the test dataset.
-Pick the construction that had the best performance results and compare that to the performance you observed in
-(a). Comment on the changes you observed by adding a new hidden layer. (Does the performance increase?
-Decrease? Stay the same?)
+Per-class sensitivity, specificity, and balanced accuracy on the test dataset. Pick the construction that had the best performance results and compare that to the performance you observed in (a). Comment on the changes you observed by adding a new hidden layer. (Does the performance increase? Decrease? Stay the same?)
