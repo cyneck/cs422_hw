@@ -21,12 +21,44 @@ set work space and install dependent package.
 library(keras)
 library(dplyr)
 library(caret)
-work.path <- getwd()
-setwd(work.path)
+
+setwd(getwd())
 ```
 ### 2.1-(a)
 
 Loading origin data and processing data.
+
+```{r}
+df <- read.csv("activity-small.csv")
+
+set.seed(1122)
+df <- df[sample(nrow(df)), ] # Shuffle, as all of the data in the .csv file
+                             # is ordered by label!  This will cause problems
+                             # if we do not shuffle as the validation split
+                             # may not include observations of class 3 (the
+                             # class that occurs at the end).  The validation_
+                             # split parameter samples from the end of the
+                             # training set.
+
+
+indx <- sample(1:nrow(df), 0.20*nrow(df))
+test.df  <- df[indx, ]
+train.df <- df[-indx, ]
+
+label.test <- test.df$label
+test.df$label <- NULL
+test.df <- as.data.frame(scale(test.df))
+test.df$label <- label.test
+rm(label.test)
+
+label.train <- train.df$label
+train.df$label <- NULL
+train.df <- as.data.frame(scale(train.df))
+train.df$label <- label.train
+rm(label.train)
+rm(indx)
+
+```
 
 
 ### 2.1-(a)-(i)
