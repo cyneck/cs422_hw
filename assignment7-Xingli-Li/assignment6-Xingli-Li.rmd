@@ -1,0 +1,67 @@
+---
+title: "CS 422 Homework 7"
+author: "Xingli Li"
+output:
+  html_notebook: 
+    toc: yes
+    toc_float: yes
+    toc_depth: 5
+  html_document:
+    toc: yes
+    df_print: paged
+---
+
+## Homework 7
+
+### Part 2
+
+set work space and install dependent package.
+
+```{r}
+
+library(rpart)  #classification and regression trees
+library(arules)
+library(arulesViz)
+library(caret)
+work.path <- getwd()
+setwd(work.path)
+```
+### 2.1-(a)
+
+Loading origin data and processing data.
+
+
+### 2.1-(a)-(i)
+
+What is the overall accuracy of your model on the test dataset?
+
+
+### 2.1-(a)-(ii)
+
+What is the per-class sensitivity, specificity, and balanced accuracy on the test dataset?
+
+### 2.1-(b)
+
+
+### 2.1-(c)-(i)
+
+Analyze the output from the mini-batch gradient descent.
+Why do you think that the time vary as you increase the batch size?
+
+### 2.1-(c)-(ii)
+
+Comment on the output from the mini-batch gradient descent. Does overall accuracy, balanced accuracy and
+per-class statistics remain the same? Change? If change, why?
+
+
+### 2.1-(d)-(i)
+
+Overall accuracy of your model on the test dataset.
+
+
+### 2.1-(d)-(ii)
+
+Per-class sensitivity, specificity, and balanced accuracy on the test dataset.
+Pick the construction that had the best performance results and compare that to the performance you observed in
+(a). Comment on the changes you observed by adding a new hidden layer. (Does the performance increase?
+Decrease? Stay the same?)
