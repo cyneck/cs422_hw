@@ -18,10 +18,8 @@ output:
 set work space and install dependent package.
 
 ```{r}
-
-library(rpart)  #classification and regression trees
-library(arules)
-library(arulesViz)
+library(keras)
+library(dplyr)
 library(caret)
 work.path <- getwd()
 setwd(work.path)
