@@ -51,16 +51,14 @@ Data set (e).
 Zaki, Chapter 8 (Frequent Pattern Mining)
 Questions 1(a), 4
 
-![1(a)](/home/eric/图片/微信图片_20220331182031.png)
+1-(a)
 
-
-
-```
 Answer:
-```
+
+![Answer:](/home/eric/图片/微信图片_20220331235103.jpg)
+
+![images](/home/eric/图片/微信图片_20220331235115.jpg)
 
 ![4](/home/eric/图片/微信图片_20220331182044.png)
 
-```
-Answer:
-```
+![Answer:](/home/eric/图片/微信图片_20220331235842.jpg)
