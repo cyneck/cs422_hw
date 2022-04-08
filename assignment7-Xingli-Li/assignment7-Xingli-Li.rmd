@@ -22,7 +22,7 @@ set work space and install dependent package.
 library(keras)
 library(dplyr)
 library(caret)
-setwd("/media/eric/Data/IIT/CS422/cs422_hw/assignment7-Xingli-Li")
+setwd(getwd())
 ```
 
 ### 2.1-(a)
@@ -62,7 +62,7 @@ rm(indx)
 ```
 
 ```{r}
-
+use_condaenv("r-reticulate")
 model <- keras_model_sequential()  # input layer
 layer_flatten(model,input_shape = c(3) )
 layer_dense(model,units = 128, activation = 'relu')  # hidden layer # dropout

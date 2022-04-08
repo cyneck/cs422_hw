@@ -2589,9 +2589,7 @@ window.initializeCodeFolding = function(show) {
     showCodeButton.append(showCodeText);
     showCodeButton
         .attr('data-toggle', 'collapse')
-        .attr('data-bs-toggle', 'collapse') // BS5
         .attr('data-target', '#' + id)
-        .attr('data-bs-target', '#' + id)   // BS5
         .attr('aria-expanded', showThis)
         .attr('aria-controls', id);
 
@@ -2681,7 +2679,6 @@ if (window.hljs) {
 
 
 
-
 <style type="text/css">
 #rmd-source-code {
   display: none;
@@ -2712,9 +2709,6 @@ button.code-folding-btn:focus {
 }
 summary {
   display: list-item;
-}
-details > summary > p:only-child {
-  display: inline;
 }
 pre code {
   padding: 0;
@@ -2897,7 +2891,7 @@ div.tocify {
 <div id="header">
 
 <div class="btn-group pull-right float-right">
-<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
 <ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
 <li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
 <li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
@@ -2922,12 +2916,12 @@ div.tocify {
 <p>set work space and install dependent package.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBpbnN0YWxsLnBhY2thZ2VzKFwia2VyYXNcIilcbmxpYnJhcnkoa2VyYXMpXG5saWJyYXJ5KGRwbHlyKVxubGlicmFyeShjYXJldClcbnNldHdkKFwiL21lZGlhL2VyaWMvRGF0YS9JSVQvQ1M0MjIvY3M0MjJfaHcvYXNzaWdubWVudDctWGluZ2xpLUxpXCIpXG5gYGAifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBpbnN0YWxsLnBhY2thZ2VzKFwia2VyYXNcIilcbmxpYnJhcnkoa2VyYXMpXG5saWJyYXJ5KGRwbHlyKVxubGlicmFyeShjYXJldClcbnNldHdkKGdldHdkKCkpXG5gYGAifQ== -->
 <pre class="r"><code># install.packages(&quot;keras&quot;)
 library(keras)
 library(dplyr)
 library(caret)
-setwd(&quot;/media/eric/Data/IIT/CS422/cs422_hw/assignment7-Xingli-Li&quot;)</code></pre>
+setwd(getwd())</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
@@ -2972,21 +2966,42 @@ rm(indx)
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG5tb2RlbCA8LSBrZXJhc19tb2RlbF9zZXF1ZW50aWFsKCkgICMgaW5wdXQgbGF5ZXJcbmxheWVyX2ZsYXR0ZW4obW9kZWwsaW5wdXRfc2hhcGUgPSBjKDMpIClcbmxheWVyX2RlbnNlKG1vZGVsLHVuaXRzID0gMTI4LCBhY3RpdmF0aW9uID0gJ3JlbHUnKSAgIyBoaWRkZW4gbGF5ZXIgIyBkcm9wb3V0XG5sYXllcl9kZW5zZShtb2RlbCwgdW5pdHMgPSA0LCBhY3RpdmF0aW9uID0gJ3NvZnRtYXgnKSAgICAgIyBvdXRwdXQgbGF5ZXJcblxuY29tcGlsZShtb2RlbCxcbiAgb3B0aW1pemVyID0gb3B0aW1pemVyX2FkYW0oKSxcbiAgbG9zcyA9ICdzcGFyc2VfY2F0ZWdvcmljYWxfY3Jvc3NlbnRyb3B5JyxcbiAgbWV0cmljcyA9ICdhY2N1cmFjeScpXG5cbnN1bW1hcnkobW9kZWwpXG5cbmBgYCJ9 -->
-<pre class="r"><code>
-model &lt;- keras_model_sequential()  # input layer
-layer_flatten(model,input_shape = c(3) )
-layer_dense(model,units = 128, activation = &#39;relu&#39;)  # hidden layer # dropout
-layer_dense(model, units = 4, activation = &#39;softmax&#39;)     # output layer
-
-compile(model,
-  optimizer = optimizer_adam(),
-  loss = &#39;sparse_categorical_crossentropy&#39;,
-  metrics = &#39;accuracy&#39;)
-
-summary(model)
-</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudXNlX2NvbmRhZW52KFwici1yZXRpY3VsYXRlXCIpXG5tb2RlbCA8LSBrZXJhc19tb2RlbF9zZXF1ZW50aWFsKCkgICMgaW5wdXQgbGF5ZXJcbmBgYCJ9 -->
+<pre class="r"><code>use_condaenv(&quot;r-reticulate&quot;)
+model &lt;- keras_model_sequential()  # input layer</code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiTGlzdCBvZiAyMFxuICQgcHl0aG9uICAgICAgICAgICAgICA6IGNociBcIi9jbG91ZC9ob21lLy5sb2NhbC9zaGFyZS9yLW1pbmljb25kYS9lbnZzL3ItcmV0aWN1bGF0ZS9iaW4vcHl0aG9uXCJcbiAkIGxpYnB5dGhvbiAgICAgICAgICAgOiBjaHIgXCIvaG9tZS9yc3R1ZGlvLXVzZXIvLmxvY2FsL3NoYXJlL3ItbWluaWNvbmRhL2VudnMvci1yZXRpY3VsYXRlL2xpYi9saWJweXRob24zLjguc29cIlxuICQgcHl0aG9uaG9tZSAgICAgICAgICA6IGNociBcIi9jbG91ZC9ob21lLy5sb2NhbC9zaGFyZS9yLW1pbmljb25kYS9lbnZzL3ItcmV0aWN1bGF0ZTovY2xvdWQvaG9tZS8ubG9jYWwvc2hhcmUvci1taW5pY29uZGEvZW52cy9yLXJldGljdWxhdGVcIlxuICQgcHl0aG9ucGF0aCAgICAgICAgICA6IGNociBcIi9jbG91ZC9ob21lLy5sb2NhbC9zaGFyZS9yLW1pbmljb25kYS9lbnZzL3ItcmV0aWN1bGF0ZS9saWIvcHl0aG9uMzguemlwOi9jbG91ZC9ob21lLy5sb2NhbC9zaGFyZS9yLW1pbmljb25kYS9lblwifCBfX3RydW5jYXRlZF9fXG4gJCBwcmVmaXggICAgICAgICAgICAgIDogY2hyIFwiL2Nsb3VkL2hvbWUvLmxvY2FsL3NoYXJlL3ItbWluaWNvbmRhL2VudnMvci1yZXRpY3VsYXRlXCJcbiAkIGV4ZWNfcHJlZml4ICAgICAgICAgOiBjaHIgXCIvY2xvdWQvaG9tZS8ubG9jYWwvc2hhcmUvci1taW5pY29uZGEvZW52cy9yLXJldGljdWxhdGVcIlxuICQgYmFzZV9leGVjX3ByZWZpeCAgICA6IGNociBcIi9jbG91ZC9ob21lLy5sb2NhbC9zaGFyZS9yLW1pbmljb25kYS9lbnZzL3ItcmV0aWN1bGF0ZVwiXG4gJCB2aXJ0dWFsZW52ICAgICAgICAgIDogY2hyIFwiXCJcbiAkIHZpcnR1YWxlbnZfYWN0aXZhdGUgOiBjaHIgXCJcIlxuICQgdmVyc2lvbl9zdHJpbmcgICAgICA6IGNociBcIjMuOC4xMyB8IHBhY2thZ2VkIGJ5IGNvbmRhLWZvcmdlIHwgKGRlZmF1bHQsIE1hciAyNSAyMDIyLCAwNjowNDoxOCkgIFtHQ0MgMTAuMy4wXVwiXG4gJCB2ZXJzaW9uICAgICAgICAgICAgIDogY2hyIFwiMy44XCJcbiAkIGFyY2hpdGVjdHVyZSAgICAgICAgOiBjaHIgXCI2NGJpdFwiXG4gJCBhbmFjb25kYSAgICAgICAgICAgIDogbG9naSBGQUxTRVxuICQgY29uZGEgICAgICAgICAgICAgICA6IGxvZ2kgVFJVRVxuICQgbnVtcHkgICAgICAgICAgICAgICA6TGlzdCBvZiAyXG4gIC4uJCBwYXRoICAgOiBjaHIgXCIvY2xvdWQvaG9tZS8ubG9jYWwvc2hhcmUvci1taW5pY29uZGEvZW52cy9yLXJldGljdWxhdGUvbGliL3B5dGhvbjMuOC9zaXRlLXBhY2thZ2VzL251bXB5XCJcbiAgLi4kIHZlcnNpb246Q2xhc3MgJ251bWVyaWNfdmVyc2lvbicgIGhpZGRlbiBsaXN0IG9mIDFcbiAgLi4gLi4kIDogaW50IFsxOjNdIDEgMjIgM1xuICQgcmVxdWlyZWRfbW9kdWxlICAgICA6IE5VTExcbiAkIHJlcXVpcmVkX21vZHVsZV9wYXRoOiBOVUxMXG4gJCBhdmFpbGFibGUgICAgICAgICAgIDogbG9naSBUUlVFXG4gJCBweXRob25fdmVyc2lvbnMgICAgIDogY2hyIFwiL2Nsb3VkL2hvbWUvLmxvY2FsL3NoYXJlL3ItbWluaWNvbmRhL2VudnMvci1yZXRpY3VsYXRlL2Jpbi9weXRob25cIlxuICQgZm9yY2VkICAgICAgICAgICAgICA6IE5VTExcbiAtIGF0dHIoKiwgXCJjbGFzc1wiKT0gY2hyIFwicHlfY29uZmlnXCJcbiJ9 -->
+<pre><code>List of 20
+ $ python              : chr &quot;/cloud/home/.local/share/r-miniconda/envs/r-reticulate/bin/python&quot;
+ $ libpython           : chr &quot;/home/rstudio-user/.local/share/r-miniconda/envs/r-reticulate/lib/libpython3.8.so&quot;
+ $ pythonhome          : chr &quot;/cloud/home/.local/share/r-miniconda/envs/r-reticulate:/cloud/home/.local/share/r-miniconda/envs/r-reticulate&quot;
+ $ pythonpath          : chr &quot;/cloud/home/.local/share/r-miniconda/envs/r-reticulate/lib/python38.zip:/cloud/home/.local/share/r-miniconda/en&quot;| __truncated__
+ $ prefix              : chr &quot;/cloud/home/.local/share/r-miniconda/envs/r-reticulate&quot;
+ $ exec_prefix         : chr &quot;/cloud/home/.local/share/r-miniconda/envs/r-reticulate&quot;
+ $ base_exec_prefix    : chr &quot;/cloud/home/.local/share/r-miniconda/envs/r-reticulate&quot;
+ $ virtualenv          : chr &quot;&quot;
+ $ virtualenv_activate : chr &quot;&quot;
+ $ version_string      : chr &quot;3.8.13 | packaged by conda-forge | (default, Mar 25 2022, 06:04:18)  [GCC 10.3.0]&quot;
+ $ version             : chr &quot;3.8&quot;
+ $ architecture        : chr &quot;64bit&quot;
+ $ anaconda            : logi FALSE
+ $ conda               : logi TRUE
+ $ numpy               :List of 2
+  ..$ path   : chr &quot;/cloud/home/.local/share/r-miniconda/envs/r-reticulate/lib/python3.8/site-packages/numpy&quot;
+  ..$ version:Class &#39;numeric_version&#39;  hidden list of 1
+  .. ..$ : int [1:3] 1 22 3
+ $ required_module     : NULL
+ $ required_module_path: NULL
+ $ available           : logi TRUE
+ $ python_versions     : chr &quot;/cloud/home/.local/share/r-miniconda/envs/r-reticulate/bin/python&quot;
+ $ forced              : NULL
+ - attr(*, &quot;class&quot;)= chr &quot;py_config&quot;</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiRXJyb3I6IFB5dGhvbiBtb2R1bGUgdGVuc29yZmxvdy5rZXJhcyB3YXMgbm90IGZvdW5kLlxuXG5EZXRlY3RlZCBQeXRob24gY29uZmlndXJhdGlvbjpcbiJ9 -->
+<pre><code>Error: Python module tensorflow.keras was not found.
+
+Detected Python configuration:</code></pre>
+<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>training</p>
@@ -3067,7 +3082,7 @@ increase? Decrease? Stay the same?)</p>
 </div>
 </div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiQ1MgNDIyIEhvbWV3b3JrIDciCmF1dGhvcjogIlhpbmdsaSBMaSIKb3V0cHV0OgogIGh0bWxfbm90ZWJvb2s6IAogICAgdG9jOiB5ZXMKICAgIHRvY19mbG9hdDogeWVzCiAgICB0b2NfZGVwdGg6IDUKICBodG1sX2RvY3VtZW50OgogICAgdG9jOiB5ZXMKICAgIGRmX3ByaW50OiBwYWdlZAotLS0KCiMjIEhvbWV3b3JrIDcKCiMjIyBQYXJ0IDIKCnNldCB3b3JrIHNwYWNlIGFuZCBpbnN0YWxsIGRlcGVuZGVudCBwYWNrYWdlLgoKYGBge3J9CiMgaW5zdGFsbC5wYWNrYWdlcygia2VyYXMiKQpsaWJyYXJ5KGtlcmFzKQpsaWJyYXJ5KGRwbHlyKQpsaWJyYXJ5KGNhcmV0KQpzZXR3ZCgiL21lZGlhL2VyaWMvRGF0YS9JSVQvQ1M0MjIvY3M0MjJfaHcvYXNzaWdubWVudDctWGluZ2xpLUxpIikKYGBgCgojIyMgMi4xLShhKQoKTG9hZGluZyBvcmlnaW4gZGF0YSBhbmQgcHJvY2Vzc2luZyBkYXRhLgoKYGBge3J9CmRmIDwtIHJlYWQuY3N2KCJhY3Rpdml0eS1zbWFsbC5jc3YiKQoKc2V0LnNlZWQoMTEyMikKZGYgPC0gZGZbc2FtcGxlKG5yb3coZGYpKSwgXSAjIFNodWZmbGUsIGFzIGFsbCBvZiB0aGUgZGF0YSBpbiB0aGUgLmNzdiBmaWxlCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIyBpcyBvcmRlcmVkIGJ5IGxhYmVsISAgVGhpcyB3aWxsIGNhdXNlIHByb2JsZW1zCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIyBpZiB3ZSBkbyBub3Qgc2h1ZmZsZSBhcyB0aGUgdmFsaWRhdGlvbiBzcGxpdAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICMgbWF5IG5vdCBpbmNsdWRlIG9ic2VydmF0aW9ucyBvZiBjbGFzcyAzICh0aGUKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAjIGNsYXNzIHRoYXQgb2NjdXJzIGF0IHRoZSBlbmQpLiAgVGhlIHZhbGlkYXRpb25fCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIyBzcGxpdCBwYXJhbWV0ZXIgc2FtcGxlcyBmcm9tIHRoZSBlbmQgb2YgdGhlCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIyB0cmFpbmluZyBzZXQuCgoKaW5keCA8LSBzYW1wbGUoMTpucm93KGRmKSwgMC4yMCpucm93KGRmKSkKdGVzdC5kZiAgPC0gZGZbaW5keCwgXQp0cmFpbi5kZiA8LSBkZlstaW5keCwgXQoKbGFiZWwudGVzdCA8LSB0ZXN0LmRmJGxhYmVsCnRlc3QuZGYkbGFiZWwgPC0gTlVMTAp0ZXN0LmRmIDwtIGFzLmRhdGEuZnJhbWUoc2NhbGUodGVzdC5kZikpCnRlc3QuZGYkbGFiZWwgPC0gbGFiZWwudGVzdApybShsYWJlbC50ZXN0KQoKbGFiZWwudHJhaW4gPC0gdHJhaW4uZGYkbGFiZWwKdHJhaW4uZGYkbGFiZWwgPC0gTlVMTAp0cmFpbi5kZiA8LSBhcy5kYXRhLmZyYW1lKHNjYWxlKHRyYWluLmRmKSkKdHJhaW4uZGYkbGFiZWwgPC0gbGFiZWwudHJhaW4Kcm0obGFiZWwudHJhaW4pCnJtKGluZHgpCgpgYGAKCmBgYHtyfQoKbW9kZWwgPC0ga2VyYXNfbW9kZWxfc2VxdWVudGlhbCgpICAjIGlucHV0IGxheWVyCmxheWVyX2ZsYXR0ZW4obW9kZWwsaW5wdXRfc2hhcGUgPSBjKDMpICkKbGF5ZXJfZGVuc2UobW9kZWwsdW5pdHMgPSAxMjgsIGFjdGl2YXRpb24gPSAncmVsdScpICAjIGhpZGRlbiBsYXllciAjIGRyb3BvdXQKbGF5ZXJfZGVuc2UobW9kZWwsIHVuaXRzID0gNCwgYWN0aXZhdGlvbiA9ICdzb2Z0bWF4JykgICAgICMgb3V0cHV0IGxheWVyCgpjb21waWxlKG1vZGVsLAogIG9wdGltaXplciA9IG9wdGltaXplcl9hZGFtKCksCiAgbG9zcyA9ICdzcGFyc2VfY2F0ZWdvcmljYWxfY3Jvc3NlbnRyb3B5JywKICBtZXRyaWNzID0gJ2FjY3VyYWN5JykKCnN1bW1hcnkobW9kZWwpCgpgYGAKCnRyYWluaW5nCgpgYGB7cn0KCnRyYWluX1ggPC0gYXMubWF0cml4KHRyYWluLmRmWywxOjNdKQp0cmFpbl95IDwtIHRyYWluLmRmJGxhYmVsCgpoaXN0b3J5IDwtIG1vZGVsICU+JSBmaXQodHJhaW5fWCwKICAgICAgICAgICAgICAgICAgICAgICAgIHRyYWluX3ksCiAgICAgICAgICAgICAgICAgICAgICAgICBlcG9jaHMgPSAxMCwKICAgICAgICAgICAgICAgICAgICAgICAgIGJhdGNoX3NpemUgPSAxLAogICAgICAgICAgICAgICAgICAgICAgICAgdmFsaWRhdGlvbl9zcGxpdCA9IDAuMikKcGxvdChoaXN0b3J5KQpgYGAKCmV2YWx1YXRlIG1vZGVsCgpgYGB7cn0KdGVzdF9YIDwtIGFzLm1hdHJpeCh0ZXN0LmRmWywxOjNdKQp0ZXN0X3kgPC0gdGVzdC5kZiRsYWJlbAptb2RlbCAlPiUgZXZhbHVhdGUodGVzdF9YLCB0ZXN0X3kpCmBgYAoKY29uZnVzaW5nIG1hdHJpeAoKYGBge3J9CnByZWQgPC0gbW9kZWwgJT4lIHByZWRpY3QodGVzdF9YKQpwcmVkX3JlcyA8LSAgYXBwbHkocHJlZCwxLHdoaWNoLm1heCktMQp0ZXN0X3JlcyA8LSAgdGVzdF95CnRhYmxlKHRlc3RfcmVzLHByZWRfcmVzKQoKYGBgCgojIyMgMi4xLShhKS0oaSkKCldoYXQgaXMgdGhlIG92ZXJhbGwgYWNjdXJhY3kgb2YgeW91ciBtb2RlbCBvbiB0aGUgdGVzdCBkYXRhc2V0PwoKIyMjIDIuMS0oYSktKGlpKQoKV2hhdCBpcyB0aGUgcGVyLWNsYXNzIHNlbnNpdGl2aXR5LCBzcGVjaWZpY2l0eSwgYW5kIGJhbGFuY2VkIGFjY3VyYWN5IG9uIHRoZSB0ZXN0IGRhdGFzZXQ/CgojIyMgMi4xLShiKQoKIyMjIDIuMS0oYyktKGkpCgpBbmFseXplIHRoZSBvdXRwdXQgZnJvbSB0aGUgbWluaS1iYXRjaCBncmFkaWVudCBkZXNjZW50LiBXaHkgZG8geW91IHRoaW5rIHRoYXQgdGhlIHRpbWUgdmFyeSBhcyB5b3UgaW5jcmVhc2UgdGhlIGJhdGNoIHNpemU/CgojIyMgMi4xLShjKS0oaWkpCgpDb21tZW50IG9uIHRoZSBvdXRwdXQgZnJvbSB0aGUgbWluaS1iYXRjaCBncmFkaWVudCBkZXNjZW50LiBEb2VzIG92ZXJhbGwgYWNjdXJhY3ksIGJhbGFuY2VkIGFjY3VyYWN5IGFuZCBwZXItY2xhc3Mgc3RhdGlzdGljcyByZW1haW4gdGhlIHNhbWU/IENoYW5nZT8gSWYgY2hhbmdlLCB3aHk/CgojIyMgMi4xLShkKS0oaSkKCk92ZXJhbGwgYWNjdXJhY3kgb2YgeW91ciBtb2RlbCBvbiB0aGUgdGVzdCBkYXRhc2V0LgoKIyMjIDIuMS0oZCktKGlpKQoKUGVyLWNsYXNzIHNlbnNpdGl2aXR5LCBzcGVjaWZpY2l0eSwgYW5kIGJhbGFuY2VkIGFjY3VyYWN5IG9uIHRoZSB0ZXN0IGRhdGFzZXQuIFBpY2sgdGhlIGNvbnN0cnVjdGlvbiB0aGF0IGhhZCB0aGUgYmVzdCBwZXJmb3JtYW5jZSByZXN1bHRzIGFuZCBjb21wYXJlIHRoYXQgdG8gdGhlIHBlcmZvcm1hbmNlIHlvdSBvYnNlcnZlZCBpbiAoYSkuIENvbW1lbnQgb24gdGhlIGNoYW5nZXMgeW91IG9ic2VydmVkIGJ5IGFkZGluZyBhIG5ldyBoaWRkZW4gbGF5ZXIuIChEb2VzIHRoZSBwZXJmb3JtYW5jZSBpbmNyZWFzZT8gRGVjcmVhc2U/IFN0YXkgdGhlIHNhbWU/KQo=</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiQ1MgNDIyIEhvbWV3b3JrIDciCmF1dGhvcjogIlhpbmdsaSBMaSIKb3V0cHV0OgogIGh0bWxfbm90ZWJvb2s6IAogICAgdG9jOiB5ZXMKICAgIHRvY19mbG9hdDogeWVzCiAgICB0b2NfZGVwdGg6IDUKICBodG1sX2RvY3VtZW50OgogICAgdG9jOiB5ZXMKICAgIGRmX3ByaW50OiBwYWdlZAotLS0KCiMjIEhvbWV3b3JrIDcKCiMjIyBQYXJ0IDIKCnNldCB3b3JrIHNwYWNlIGFuZCBpbnN0YWxsIGRlcGVuZGVudCBwYWNrYWdlLgoKYGBge3J9CiMgaW5zdGFsbC5wYWNrYWdlcygia2VyYXMiKQpsaWJyYXJ5KGtlcmFzKQpsaWJyYXJ5KGRwbHlyKQpsaWJyYXJ5KGNhcmV0KQpzZXR3ZChnZXR3ZCgpKQpgYGAKCiMjIyAyLjEtKGEpCgpMb2FkaW5nIG9yaWdpbiBkYXRhIGFuZCBwcm9jZXNzaW5nIGRhdGEuCgpgYGB7cn0KZGYgPC0gcmVhZC5jc3YoImFjdGl2aXR5LXNtYWxsLmNzdiIpCgpzZXQuc2VlZCgxMTIyKQpkZiA8LSBkZltzYW1wbGUobnJvdyhkZikpLCBdICMgU2h1ZmZsZSwgYXMgYWxsIG9mIHRoZSBkYXRhIGluIHRoZSAuY3N2IGZpbGUKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAjIGlzIG9yZGVyZWQgYnkgbGFiZWwhICBUaGlzIHdpbGwgY2F1c2UgcHJvYmxlbXMKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAjIGlmIHdlIGRvIG5vdCBzaHVmZmxlIGFzIHRoZSB2YWxpZGF0aW9uIHNwbGl0CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIyBtYXkgbm90IGluY2x1ZGUgb2JzZXJ2YXRpb25zIG9mIGNsYXNzIDMgKHRoZQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICMgY2xhc3MgdGhhdCBvY2N1cnMgYXQgdGhlIGVuZCkuICBUaGUgdmFsaWRhdGlvbl8KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAjIHNwbGl0IHBhcmFtZXRlciBzYW1wbGVzIGZyb20gdGhlIGVuZCBvZiB0aGUKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAjIHRyYWluaW5nIHNldC4KCgppbmR4IDwtIHNhbXBsZSgxOm5yb3coZGYpLCAwLjIwKm5yb3coZGYpKQp0ZXN0LmRmICA8LSBkZltpbmR4LCBdCnRyYWluLmRmIDwtIGRmWy1pbmR4LCBdCgpsYWJlbC50ZXN0IDwtIHRlc3QuZGYkbGFiZWwKdGVzdC5kZiRsYWJlbCA8LSBOVUxMCnRlc3QuZGYgPC0gYXMuZGF0YS5mcmFtZShzY2FsZSh0ZXN0LmRmKSkKdGVzdC5kZiRsYWJlbCA8LSBsYWJlbC50ZXN0CnJtKGxhYmVsLnRlc3QpCgpsYWJlbC50cmFpbiA8LSB0cmFpbi5kZiRsYWJlbAp0cmFpbi5kZiRsYWJlbCA8LSBOVUxMCnRyYWluLmRmIDwtIGFzLmRhdGEuZnJhbWUoc2NhbGUodHJhaW4uZGYpKQp0cmFpbi5kZiRsYWJlbCA8LSBsYWJlbC50cmFpbgpybShsYWJlbC50cmFpbikKcm0oaW5keCkKCmBgYAoKYGBge3J9CnVzZV9jb25kYWVudigici1yZXRpY3VsYXRlIikKbW9kZWwgPC0ga2VyYXNfbW9kZWxfc2VxdWVudGlhbCgpICAjIGlucHV0IGxheWVyCmxheWVyX2ZsYXR0ZW4obW9kZWwsaW5wdXRfc2hhcGUgPSBjKDMpICkKbGF5ZXJfZGVuc2UobW9kZWwsdW5pdHMgPSAxMjgsIGFjdGl2YXRpb24gPSAncmVsdScpICAjIGhpZGRlbiBsYXllciAjIGRyb3BvdXQKbGF5ZXJfZGVuc2UobW9kZWwsIHVuaXRzID0gNCwgYWN0aXZhdGlvbiA9ICdzb2Z0bWF4JykgICAgICMgb3V0cHV0IGxheWVyCgpjb21waWxlKG1vZGVsLAogIG9wdGltaXplciA9IG9wdGltaXplcl9hZGFtKCksCiAgbG9zcyA9ICdzcGFyc2VfY2F0ZWdvcmljYWxfY3Jvc3NlbnRyb3B5JywKICBtZXRyaWNzID0gJ2FjY3VyYWN5JykKCnN1bW1hcnkobW9kZWwpCgpgYGAKCnRyYWluaW5nCgpgYGB7cn0KCnRyYWluX1ggPC0gYXMubWF0cml4KHRyYWluLmRmWywxOjNdKQp0cmFpbl95IDwtIHRyYWluLmRmJGxhYmVsCgpoaXN0b3J5IDwtIG1vZGVsICU+JSBmaXQodHJhaW5fWCwKICAgICAgICAgICAgICAgICAgICAgICAgIHRyYWluX3ksCiAgICAgICAgICAgICAgICAgICAgICAgICBlcG9jaHMgPSAxMCwKICAgICAgICAgICAgICAgICAgICAgICAgIGJhdGNoX3NpemUgPSAxLAogICAgICAgICAgICAgICAgICAgICAgICAgdmFsaWRhdGlvbl9zcGxpdCA9IDAuMikKcGxvdChoaXN0b3J5KQpgYGAKCmV2YWx1YXRlIG1vZGVsCgpgYGB7cn0KdGVzdF9YIDwtIGFzLm1hdHJpeCh0ZXN0LmRmWywxOjNdKQp0ZXN0X3kgPC0gdGVzdC5kZiRsYWJlbAptb2RlbCAlPiUgZXZhbHVhdGUodGVzdF9YLCB0ZXN0X3kpCmBgYAoKY29uZnVzaW5nIG1hdHJpeAoKYGBge3J9CnByZWQgPC0gbW9kZWwgJT4lIHByZWRpY3QodGVzdF9YKQpwcmVkX3JlcyA8LSAgYXBwbHkocHJlZCwxLHdoaWNoLm1heCktMQp0ZXN0X3JlcyA8LSAgdGVzdF95CnRhYmxlKHRlc3RfcmVzLHByZWRfcmVzKQoKYGBgCgojIyMgMi4xLShhKS0oaSkKCldoYXQgaXMgdGhlIG92ZXJhbGwgYWNjdXJhY3kgb2YgeW91ciBtb2RlbCBvbiB0aGUgdGVzdCBkYXRhc2V0PwoKIyMjIDIuMS0oYSktKGlpKQoKV2hhdCBpcyB0aGUgcGVyLWNsYXNzIHNlbnNpdGl2aXR5LCBzcGVjaWZpY2l0eSwgYW5kIGJhbGFuY2VkIGFjY3VyYWN5IG9uIHRoZSB0ZXN0IGRhdGFzZXQ/CgojIyMgMi4xLShiKQoKIyMjIDIuMS0oYyktKGkpCgpBbmFseXplIHRoZSBvdXRwdXQgZnJvbSB0aGUgbWluaS1iYXRjaCBncmFkaWVudCBkZXNjZW50LiBXaHkgZG8geW91IHRoaW5rIHRoYXQgdGhlIHRpbWUgdmFyeSBhcyB5b3UgaW5jcmVhc2UgdGhlIGJhdGNoIHNpemU/CgojIyMgMi4xLShjKS0oaWkpCgpDb21tZW50IG9uIHRoZSBvdXRwdXQgZnJvbSB0aGUgbWluaS1iYXRjaCBncmFkaWVudCBkZXNjZW50LiBEb2VzIG92ZXJhbGwgYWNjdXJhY3ksIGJhbGFuY2VkIGFjY3VyYWN5IGFuZCBwZXItY2xhc3Mgc3RhdGlzdGljcyByZW1haW4gdGhlIHNhbWU/IENoYW5nZT8gSWYgY2hhbmdlLCB3aHk/CgojIyMgMi4xLShkKS0oaSkKCk92ZXJhbGwgYWNjdXJhY3kgb2YgeW91ciBtb2RlbCBvbiB0aGUgdGVzdCBkYXRhc2V0LgoKIyMjIDIuMS0oZCktKGlpKQoKUGVyLWNsYXNzIHNlbnNpdGl2aXR5LCBzcGVjaWZpY2l0eSwgYW5kIGJhbGFuY2VkIGFjY3VyYWN5IG9uIHRoZSB0ZXN0IGRhdGFzZXQuIFBpY2sgdGhlIGNvbnN0cnVjdGlvbiB0aGF0IGhhZCB0aGUgYmVzdCBwZXJmb3JtYW5jZSByZXN1bHRzIGFuZCBjb21wYXJlIHRoYXQgdG8gdGhlIHBlcmZvcm1hbmNlIHlvdSBvYnNlcnZlZCBpbiAoYSkuIENvbW1lbnQgb24gdGhlIGNoYW5nZXMgeW91IG9ic2VydmVkIGJ5IGFkZGluZyBhIG5ldyBoaWRkZW4gbGF5ZXIuIChEb2VzIHRoZSBwZXJmb3JtYW5jZSBpbmNyZWFzZT8gRGVjcmVhc2U/IFN0YXkgdGhlIHNhbWU/KQo=</div>
 
 
 </div>
