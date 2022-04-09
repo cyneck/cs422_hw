@@ -222,7 +222,7 @@ for (batch_size in batch_size_range){
                            batch_size = batch_size,
                            validation_split = 0.2)
   end <- Sys.time()
-  time <- end-begin
+  time <- difftime(end, begin, units="secs")
 
   pred <- model %>% predict(test_X)
   pred_res <-  apply(pred,1,which.max)-1
