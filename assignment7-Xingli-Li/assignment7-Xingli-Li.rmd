@@ -232,19 +232,26 @@ for (batch_size in batch_size_range){
 
 ### 2.1-(c)-(i)
 
-Analyze the output from the mini-batch gradient descent. Why do you think that the time vary as you increase the batch size?
+Analyze the output from the mini-batch gradient descent. Why do you think that the time vary as you increase the batch
+size?
 
 Answer:
 
-     Time decreases as batch size increase. Because stochastic gradient descent is continuous, batch size is the number of samples selected for a training, using a larger batch size allows computer to parallelize the computation more, at the same time, the size of the batch size affects convergence speed of the model.
+       Time decreases as batch size increase. Because stochastic gradient descent is continuous,batch size is the number
+    of samples selected for a training, using a larger batch size allows computer to parallelize the computation more,
+    at the same time, the size of the batch size affects convergence speed of the model.
 
 ### 2.1-(c)-(ii)
 
-Comment on the output from the mini-batch gradient descent. Does overall accuracy, balanced accuracy and per-class statistics remain the same? Change? If change, why?
+Comment on the output from the mini-batch gradient descent. Does overall accuracy, balanced accuracy and
+per-class statistics remain the same? Change? If change, why?
 
 Answer:
 
-     These metrics is all changed almost, but they remain stable level. When the network is trained, one mini-batch samples is input into the network at one time, and then their gradient is calculated for back propagation. Because one mini-batch samples is used in calculating the gradient, the calculated gradient direction is more accurate. In this case, the gradient value is very different.
+      These metrics is all changed almost, but they remain stable level. When the network is trained, one mini-batch
+    samples is input into the network at one time, and then their gradient is calculated for back propagation. Because
+    one mini-batch samples is used in calculating the gradient, the calculated gradient direction is more accurate.
+    In this case, the gradient value is very different.
 
 ### 2.1-(d)
 
@@ -296,7 +303,9 @@ print(paste("Overall accuracy of your model on the test dataset:",acc))
 
 ### 2.1-(d)-(ii)
 
-Per-class sensitivity, specificity, and balanced accuracy on the test dataset. Pick the construction that had the best performance results and compare that to the performance you observed in (a). Comment on the changes you observed by adding a new hidden layer. (Does the performance increase? Decrease? Stay the same?)
+Per-class sensitivity, specificity, and balanced accuracy on the test dataset. Pick the construction that had the best
+performance results and compare that to the performance you observed in (a). Comment on the changes you observed by
+adding a new hidden layer. (Does the performance increase? Decrease? Stay the same?)
 
 ```{r}
 metrics2 <- xtable$byClass[,c("Balanced Accuracy","Specificity","Sensitivity")]
@@ -309,4 +318,5 @@ metrics
 
 Answer:
 
-      The performance stay the same. Although a hidden layer is added, the training mini-batch of the (a) model is 1, the training mini-batch of the (d) model is 128, and the training time of the (b) model is faster.
+      The performance stay the same. Although a hidden layer is added, the training mini-batch of the (a) model is 1,
+      the training mini-batch of the (d) model is 128, and the training time of the (b) model is faster.
