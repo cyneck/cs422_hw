@@ -92,14 +92,13 @@ history <- model %>% fit(train_X,
 plot(history)
 ```
 
-
 evaluate model
 
 ```{r}
 options(digits = 3)
 test_X <- as.matrix(test.df[,1:3])
 test_y <- to_categorical(test.df$label,4, dtype = "int32")
-model %>% evaluate(test_X, test_y)
+eval <- evaluate(model,test_X,test_y)
 ```
 
 confusing matrix
@@ -116,8 +115,10 @@ table(pred_res,test_res)
 
 What is the overall accuracy of your model on the test dataset?
 
-Answer:
-      The overall accuracy of the model: 0.825
+```{r}
+print(paste("The overall accuracy of the model:",round(eval["accuracy"],3)))
+
+```
 
 ### 2.1-(a)-(ii)
 
@@ -161,7 +162,6 @@ get_metrics <- function (pred_res,test_res){
 metrics <- get_metrics(pred_res,test_res)
 
 ```
-
 
 ### 2.1-(b)
 
@@ -236,9 +236,7 @@ Analyze the output from the mini-batch gradient descent. Why do you think that t
 
 Answer:
 
-     Time decreases as batch size increase. Because stochastic gradient descent is continuous, batch size is the number of samples
-selected for a training, using a larger batch size allows computer to parallelize the computation more, at the same time, the size of the batch size
-affects convergence speed of the model.
+     Time decreases as batch size increase. Because stochastic gradient descent is continuous, batch size is the number of samples selected for a training, using a larger batch size allows computer to parallelize the computation more, at the same time, the size of the batch size affects convergence speed of the model.
 
 ### 2.1-(c)-(ii)
 
@@ -246,13 +244,12 @@ Comment on the output from the mini-batch gradient descent. Does overall accurac
 
 Answer:
 
-     These metrics is all changed almost, but they remain stable level.
-     When the network is trained, one mini-batch samples is input into the network at one time, and then their gradient is calculated for back propagation.
-Because one mini-batch samples is used in calculating the gradient, the calculated gradient direction is more accurate. In this case, the gradient value is very different.
+     These metrics is all changed almost, but they remain stable level. When the network is trained, one mini-batch samples is input into the network at one time, and then their gradient is calculated for back propagation. Because one mini-batch samples is used in calculating the gradient, the calculated gradient direction is more accurate. In this case, the gradient value is very different.
 
 ### 2.1-(d)
 
 Add one hidden layer, re-train, observing.
+
 ```{r}
 
 create_model2 <- function (){
@@ -280,7 +277,6 @@ history2 <- model2 %>% fit(train_X,
 plot(history2)
 ```
 
-
 ### 2.1-(d)-(i)
 
 Overall accuracy of your model on the test dataset.
@@ -288,14 +284,14 @@ Overall accuracy of your model on the test dataset.
 ```{r}
 # predicting
 pred2 <- model2 %>% predict(test_X)
-pred2_res <-  apply(pred2,1,which.max)-1
+pred2_res <- apply(pred2,1,which.max)-1
 
 # confuse matrix
 xtable <- confusionMatrix(table(pred2_res,test_res))
 acc <- xtable$overall["Accuracy"]
 
-print("Overall accuracy of your model on the test dataset:")
-acc
+print(paste("Overall accuracy of your model on the test dataset:",acc))
+
 ```
 
 ### 2.1-(d)-(ii)
@@ -306,10 +302,11 @@ Per-class sensitivity, specificity, and balanced accuracy on the test dataset. P
 metrics2 <- xtable$byClass[,c("Balanced Accuracy","Specificity","Sensitivity")]
 metrics2
 ```
+
 ```{r}
 metrics
 ```
+
 Answer:
 
-      The performance stay the same. Although a hidden layer is added, the training mini-batch of the (a) model is 1,
-the training mini-batch of the (d) model is 128, and the training time of the (b) model is faster.
+      The performance stay the same. Although a hidden layer is added, the training mini-batch of the (a) model is 1, the training mini-batch of the (d) model is 128, and the training time of the (b) model is faster.
