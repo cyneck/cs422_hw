@@ -67,8 +67,8 @@ use_condaenv("base")
 create_model <- function (){
   model <- keras_model_sequential()  # input layer
   layer_flatten(model,input_shape = c(3) )
-  layer_dense(model,units = 128, activation = 'relu')  # hidden layer # dropout
-  layer_dense(model, units = 4, activation = 'softmax')     # output layer
+  layer_dense(model,units = 128, activation = 'relu')     # hidden layer
+  layer_dense(model, units = 4, activation = 'softmax')   # output layer
 
   compile(model,
           optimizer = optimizer_adam(),
@@ -238,14 +238,81 @@ for (batch_size in batch_size_range){
 
 Analyze the output from the mini-batch gradient descent. Why do you think that the time vary as you increase the batch size?
 
+Answer:
+
+     Time decreases as batch size increase. Because stochastic gradient descent is continuous, batch size is the number of samples
+selected for a training, using a larger batch size allows computer to parallelize the computation more, at the same time, the size of the batch size
+affects convergence speed of the model.
+
 ### 2.1-(c)-(ii)
 
 Comment on the output from the mini-batch gradient descent. Does overall accuracy, balanced accuracy and per-class statistics remain the same? Change? If change, why?
+
+Answer:
+
+     These metrics is all changed almost, but they remain stable level.
+     When the network is trained, one mini-batch samples is input into the network at one time, and then their gradient is calculated for back propagation.
+Because one mini-batch samples is used in calculating the gradient, the calculated gradient direction is more accurate. In this case, the gradient value is very different.
+
+### 2.1-(d)
+
+Add one hidden layer, re-train, observing.
+```{r}
+
+create_model2 <- function (){
+  model2 <- keras_model_sequential()  # input layer
+  layer_flatten(model2,input_shape = c(3) )
+  layer_dense(model2,units = 128, activation = 'relu')  # hidden layer
+  layer_dense(model2,units = 64, activation = 'relu')  # hidden layer
+  layer_dense(model2, units = 4, activation = 'softmax')     # output layer
+
+  compile(model2,
+          optimizer = optimizer_adam(),
+          loss = 'categorical_crossentropy',
+          metrics = 'accuracy')
+  model2
+}
+
+model2 <- create_model2()
+summary(model2)
+
+# trainning
+history2 <- model2 %>% fit(train_X,
+                         train_y,
+                         epochs = 100,
+                         batch_size = 128,
+                         validation_split = 0.2)
+
+plot(history2)
+
+```
+
 
 ### 2.1-(d)-(i)
 
 Overall accuracy of your model on the test dataset.
 
+```{r}
+# predicting
+pred2 <- model2 %>% predict(test_X)
+pred2_res <-  apply(pred2,1,which.max)-1
+
+# confuse matrix
+xtable <- confusionMatrix(table(pred2_res,test_res))
+acc <- xtable$overall["Accuracy"]
+
+print("Overall accuracy of your model on the test dataset:")
+acc
+```
+
 ### 2.1-(d)-(ii)
 
 Per-class sensitivity, specificity, and balanced accuracy on the test dataset. Pick the construction that had the best performance results and compare that to the performance you observed in (a). Comment on the changes you observed by adding a new hidden layer. (Does the performance increase? Decrease? Stay the same?)
+
+```{r}
+main_metrics <- xtable$byClass[,c("Balanced Accuracy","Specificity","Sensitivity")]
+main_metrics
+```
+
+Answer:
+      The performance stay the same.
