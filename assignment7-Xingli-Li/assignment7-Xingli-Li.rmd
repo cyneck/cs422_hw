@@ -318,5 +318,5 @@ metrics
 
 Answer:
 
-      The performance stay the same. Although a hidden layer is added, the training mini-batch of the (a) model is 1,
-      the training mini-batch of the (d) model is 128, and the training time of the (b) model is faster.
+        The performance stay the same. Although a hidden layer is added, the training mini-batch of the (a) model is 1,
+    he training mini-batch of the (d) model is 128, and the training time of the (b) model is faster.
