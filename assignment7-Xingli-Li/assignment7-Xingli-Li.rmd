@@ -63,16 +63,21 @@ rm(indx)
 
 ```{r}
 use_condaenv("base")
-model <- keras_model_sequential()  # input layer
-layer_flatten(model,input_shape = c(3) )
-layer_dense(model,units = 128, activation = 'relu')  # hidden layer # dropout
-layer_dense(model, units = 4, activation = 'softmax')     # output layer
 
-compile(model,
-  optimizer = optimizer_adam(),
-  loss = 'sparse_categorical_crossentropy',
-  metrics = 'accuracy')
+create_model <- function (){
+  model <- keras_model_sequential()  # input layer
+  layer_flatten(model,input_shape = c(3) )
+  layer_dense(model,units = 128, activation = 'relu')  # hidden layer # dropout
+  layer_dense(model, units = 4, activation = 'softmax')     # output layer
 
+  compile(model,
+          optimizer = optimizer_adam(),
+          loss = 'sparse_categorical_crossentropy',
+          metrics = 'accuracy')
+  model
+}
+
+model <- create_model()
 summary(model)
 
 ```
@@ -86,7 +91,7 @@ train_y <- train.df$label
 
 history <- model %>% fit(train_X,
                          train_y,
-                         epochs = 10,
+                         epochs = 100,
                          batch_size = 1,
                          validation_split = 0.2)
 plot(history)
@@ -95,6 +100,7 @@ plot(history)
 evaluate model
 
 ```{r}
+options(digits = 3)
 test_X <- as.matrix(test.df[,1:3])
 test_y <- test.df$label
 model %>% evaluate(test_X, test_y)
@@ -106,7 +112,7 @@ confusing matrix
 pred <- model %>% predict(test_X)
 pred_res <-  apply(pred,1,which.max)-1
 test_res <-  test_y
-table(test_res,pred_res)
+table(pred_res,test_res)
 
 ```
 
@@ -114,11 +120,94 @@ table(test_res,pred_res)
 
 What is the overall accuracy of your model on the test dataset?
 
+Answer:
+      The overall accuracy of the model: 0.810
+
 ### 2.1-(a)-(ii)
 
 What is the per-class sensitivity, specificity, and balanced accuracy on the test dataset?
 
+```{r}
+
+get_metrics <- function (pred_res,test_res){
+
+  xtable <- confusionMatrix(table(pred_res,test_res))
+
+  # Extract acc, bal.acc, error, spec, sens, and prec from the variable a.
+  acc <- xtable$overall["Accuracy"]
+  bal.acc <- xtable$byClass[,"Balanced Accuracy"]
+  spec <- xtable$byClass[,"Specificity"]
+  sens <- xtable$byClass[,"Sensitivity"]
+  prec <- xtable$byClass[,"Precision"]
+
+  results.df <- data.frame(sens = sens,
+                           spec = spec,
+                           bal.acc = bal.acc,
+                           prec = prec)
+
+  print("Batch gradient descent")
+  print(paste0("Overall accuarcy:",acc))
+
+  class_range <- c(0,1,2,3)
+
+  for (i in class_range){
+    class <- paste0("Class: ",i)
+    print(paste(class,
+                ": Sens. =",round(results.df$sens[i+1], 3),
+                ", Spec. =",round(results.df$spec[i+1],3),
+                ", Bal.Acc. =",round(results.df$bal.acc[i+1],3)
+    ))
+  }
+
+  c(acc,results.df)
+}
+
+metrics <- get_metrics(pred_res,test_res)
+
+```
+
+
 ### 2.1-(b)
+
+```{r}
+options(digits = 3)
+
+test_X <- as.matrix(test.df[,1:3])
+test_y <- test.df$label
+
+batch_size_range <- c(1,32,64,128,256)
+
+for (batch_size in batch_size_range){
+  begin <- Sys.time()
+  train_X <- as.matrix(train.df[,1:3])
+  train_y <- train.df$label
+
+  model <- NULL
+  model <- create_model()
+
+  history <- model %>% fit(train_X,
+                         train_y,
+                         epochs = 100,
+                         batch_size = batch_size,
+                         validation_split = 0.2)
+  end <- Sys.time()
+
+
+  pred <- model %>% predict(test_X)
+  pred_res <-  apply(pred,1,which.max)-1
+  test_res <-  test_y
+
+  metrics <- get_metrics(pred_res,test_res)
+
+  print(paste("Batch size:",batch_size))
+  print(paste("Time taken to train neural network:",end-begin,"(seconds)"))
+  print(paste("Overall accuarcy:",metrics$Accuracy))
+  print("\n")
+
+}
+
+
+```
 
 ### 2.1-(c)-(i)
 
