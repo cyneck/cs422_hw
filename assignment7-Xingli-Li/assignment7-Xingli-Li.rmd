@@ -72,7 +72,7 @@ create_model <- function (){
 
   compile(model,
           optimizer = optimizer_adam(),
-          loss = 'sparse_categorical_crossentropy',
+          loss = 'categorical_crossentropy',
           metrics = 'accuracy')
   model
 }
@@ -87,7 +87,7 @@ training
 ```{r}
 
 train_X <- as.matrix(train.df[,1:3])
-train_y <- train.df$label
+train_y <- to_categorical(train.df$label,4, dtype = "int32")
 
 history <- model %>% fit(train_X,
                          train_y,
@@ -102,7 +102,7 @@ evaluate model
 ```{r}
 options(digits = 3)
 test_X <- as.matrix(test.df[,1:3])
-test_y <- test.df$label
+test_y <- to_categorical(test.df$label,4, dtype = "int32")
 model %>% evaluate(test_X, test_y)
 ```
 
@@ -111,7 +111,7 @@ confusing matrix
 ```{r}
 pred <- model %>% predict(test_X)
 pred_res <-  apply(pred,1,which.max)-1
-test_res <-  test_y
+test_res <-  test.df$label
 table(pred_res,test_res)
 
 ```
@@ -121,7 +121,7 @@ table(pred_res,test_res)
 What is the overall accuracy of your model on the test dataset?
 
 Answer:
-      The overall accuracy of the model: 0.810
+      The overall accuracy of the model: 0.815
 
 ### 2.1-(a)-(ii)
 
@@ -170,39 +170,64 @@ metrics <- get_metrics(pred_res,test_res)
 ### 2.1-(b)
 
 ```{r}
-options(digits = 3)
 
-test_X <- as.matrix(test.df[,1:3])
-test_y <- test.df$label
+print_metrics2 <- function (batch_size, time, pred_res, test_res){
+
+  xtable <- confusionMatrix(table(pred_res,test_res))
+
+  acc <- xtable$overall["Accuracy"]
+  bal.acc <- xtable$byClass[,"Balanced Accuracy"]
+  spec <- xtable$byClass[,"Specificity"]
+  sens <- xtable$byClass[,"Sensitivity"]
+  prec <- xtable$byClass[,"Precision"]
+
+  results.df <- data.frame(sens = sens,
+                           spec = spec,
+                           bal.acc = bal.acc,
+                           prec = prec)
+
+  print(paste("Batch size:",batch_size))
+  print(paste0("Time taken to train neural network: ",round(time,3)," (seconds)"))
+  print(paste0("Overall accuarcy: ",acc))
+
+  class_range <- c(0,1,2,3)
+  for (i in class_range){
+    class <- paste0("Class: ",i)
+
+    print(paste(class,
+                ": Sens. =",round(results.df$sens[i+1], 3),
+                ", Spec. =",round(results.df$spec[i+1],3),
+                ", Bal.Acc. =",round(results.df$bal.acc[i+1],3)
+    ))
+  }
+  print("")
+
+  c(acc,results.df)
+}
+
+
+options(digits = 3)
 
 batch_size_range <- c(1,32,64,128,256)
 
 for (batch_size in batch_size_range){
   begin <- Sys.time()
-  train_X <- as.matrix(train.df[,1:3])
-  train_y <- train.df$label
 
   model <- NULL
   model <- create_model()
 
   history <- model %>% fit(train_X,
-                         train_y,
-                         epochs = 100,
-                         batch_size = batch_size,
-                         validation_split = 0.2)
+                           train_y,
+                           epochs = 100,
+                           batch_size = batch_size,
+                           validation_split = 0.2)
   end <- Sys.time()
-
+  time <- end-begin
 
   pred <- model %>% predict(test_X)
   pred_res <-  apply(pred,1,which.max)-1
-  test_res <-  test_y
 
-  metrics <- get_metrics(pred_res,test_res)
-
-  print(paste("Batch size:",batch_size))
-  print(paste("Time taken to train neural network:",end-begin,"(seconds)"))
-  print(paste("Overall accuarcy:",metrics$Accuracy))
-  print("\n")
+  print_metrics2(batch_size, time, pred_res, test_res)
 
 }
 
