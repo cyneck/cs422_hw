@@ -257,15 +257,14 @@ Add one hidden layer, re-train, observing.
 
 create_model2 <- function (){
   model2 <- keras_model_sequential()  # input layer
-  layer_flatten(model2,input_shape = c(3) )
-  layer_dense(model2,units = 256, activation = 'relu')  # hidden layer
-  layer_dense(model2,units = 512, activation = 'relu')  # hidden layer
-  layer_dense(model2, units = 4, activation = 'softmax')     # output layer
+  model2 %>% layer_flatten(input_shape = c(3) ) %>%
+          layer_dense(units = 256, activation = 'relu') %>%
+          layer_dense(units = 512, activation = 'relu') %>%
+          layer_dense(units = 4, activation = 'softmax')
 
-  compile(model2,
-          optimizer = optimizer_adam(),
-          loss = 'categorical_crossentropy',
-          metrics = 'accuracy')
+  model2 %>% compile(optimizer = optimizer_adam(),
+                     loss = 'categorical_crossentropy',
+                     metrics = 'accuracy')
   model2
 }
 
