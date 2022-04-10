@@ -6,17 +6,30 @@ Xingli Li, Illinois Institute of Technology
 
 ![Question:](2022-04-08_14-33.png)
 
-### 1.1-(a) 
+### 1.1-(a)
+
 Answer:
 
-### 1.1-(b) 
+### 1.1-(b)
+
+$sigmod = \frac{1}{1+e^{-x}}$
+
 Answer:
 
-### 1.1-(c) 
+loss:    $(y-\hat{y}) ^{2} $  = 0.941
+
+### 1.1-(c)
+
 Answer:
 
-### 1.1-(d) 
+### 1.1-(d)
+
 Answer:
 
-### 1.1-(e) 
+loss :
+
+### 1.1-(e)
+
 Answer:
+
+In (b) and (d), the difference between the loss values represent  gradient update.

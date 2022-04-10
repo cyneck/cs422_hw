@@ -9,6 +9,9 @@ output:
   html_document:
     toc: yes
     df_print: paged
+editor_oprions:
+  markdown:
+    wrap: 100
 ---
 
 ## Homework 7
