@@ -25,5 +25,5 @@ set work space and install dependent package.
 library(keras)
 library(dplyr)
 library(caret)
-setwd("/media/eric/Data/IIT/CS422/cs422_hw/assignment7-Xingli-Li")
+setwd("/media/eric/Data/IIT/CS422/cs422_hw/assignment8-Xingli-Li")
 ```
