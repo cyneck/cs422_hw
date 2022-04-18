@@ -23,7 +23,7 @@ set work space and install dependent package.
 ```{r}
 library(cluster)
 library(factoextra)
-setwd("/media/eric/Data/IIT/CS422/cs422_hw/assignment8-Xingli-Li")
+setwd(getwd())
 ```
 
 ```{r}
