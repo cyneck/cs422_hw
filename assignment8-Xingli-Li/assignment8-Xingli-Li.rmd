@@ -38,7 +38,10 @@ y <- iris$Species
 # Scale the data
 scaled_x <- scale(x)
 
-kc <- kmeans(x, 3)
+# The nstart paramater attemps to run
+# multiple initial configurations and reports on the best one.  Here, it will
+# run 25 configurations.
+kc <- kmeans(x, centers =3, nstart = 25)
 
 kc
 ```
@@ -55,9 +58,11 @@ points(kc$centers[, c("Sepal.Length", "Sepal.Width")], col = 1:3, pch = 23, cex 
 #  "I", "i", "C", "c", "P", "p", "M", "m", is the tooth pattern, the 
 #  number of top incisors, bottom incisors, top canines, bottom canines, 
 #  top premolars, bottom premolars, top molars, and bottom molars.
-setwd("/media/eric/Data/IIT/CS422/cs422_hw/assignment8-Xingli-Li")
-a <- read.csv("file19.csv", encoding = 'UTF-8')
+# 上门牙、下门牙、上犬齿、下犬齿、上前臼齿、下前臼齿、上臼齿和下臼齿。
+setwd(getwd())
+df <- read.csv("file19.csv", encoding = 'UTF-8')
 
+x <- df[,2:9]
 ```
 
 Think of what attributes, if any, you may want to omit from the dataset when you do the clustering. Indicate all of the attributes you removed before doing the clustering.
@@ -67,7 +72,7 @@ Think of what attributes, if any, you may want to omit from the dataset when you
 ```{r}
 
 
-
+# 删除name,
 ```
 
 ### 2.1-(a)-(ii)
@@ -78,6 +83,7 @@ Does the data need to be standardized? (Briefly, using 1-2 sentences, support yo
 
 ```{r}
 
+# 不需要，因为都是牙齿计数，计量单位是一样的，这种情况下标准化没有意义。
 ```
 
 ### 2.1-(a)-(iii)
@@ -97,7 +103,9 @@ Determine how many clusters are needed by running the WSS or Silhouette graph. P
 通过运行WSS或轮廓图确定需要多少簇。使用fviz_nbclust（）绘制图形。
 
 ```{r}
-
+# How many clusters?  A couple of means to visuzalize it.
+fviz_nbclust(iris[1:4], kmeans, method="wss") # Elbow method minimizes total
+# within-cluster sum of squares (wss).  Also called a "Scree" plot.
 ```
 
 ### 2.1-(b)-(ii)
@@ -108,7 +116,7 @@ Once you have determined the number of clusters, run k-means clustering on the d
 
 ```{r}
 
-
+fviz_cluster(kmeans(iris[1:4], centers=4, nstart=25), data=iris[1:4])
 ```
 
 ### 2.1-(b)-(iii)
