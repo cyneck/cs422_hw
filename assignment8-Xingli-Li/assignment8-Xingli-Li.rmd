@@ -37,7 +37,7 @@ x <- iris[,1:4]
 y <- iris$Species
 
 # Scale the data
-d <- scale(iris[,1:4])
+scaled_x <- scale(x)
 
 kc <- kmeans(x,3)
 
@@ -46,32 +46,109 @@ kc
 
 ```{r}
 table(y,kc$cluster)
-```
-
-```{r}
 plot(x[c("Sepal.Length", "Sepal.Width")], col=kc$cluster)
 points(kc$centers[,c("Sepal.Length", "Sepal.Width")], col=1:3, pch=23, cex=3)
 ```
 
+### 2.1-(a)-(i)
+
+```{r}
+#  "I", "i", "C", "c", "P", "p", "M", "m", is the tooth pattern, the 
+#  number of top incisors, bottom incisors, top canines, bottom canines, 
+#  top premolars, bottom premolars, top molars, and bottom molars.
+
+
+```
+
+Think of what attributes, if any, you may want to omit from the dataset when you do the clustering. Indicate all of the attributes you removed before doing the clustering.
+
+考虑一下在进行聚类时，您可能希望从数据集中忽略哪些属性（如果有的话）。指出在进行聚类之前删除的所有属性。
+
 ```{r}
 
-hc.complete <- hclust(dist(d), method="complete")
 
-# A colorful plot
-fviz_dend(hc.complete, show_labels=T, palette = "jco",
-          main="HCLUST (Complete Linkage)", k=3)
 
-# Default plot --- utilitarian, but serves the purpose.
-plot(hc.complete)
+```
 
-# Cut at around Height = 5 to get 3 clusters, or
-clusters.3 <- cutree(hc.complete, 3)
-table(clusters.3)
-table(iris$Species)
-# Clearly, one can improve the clustering to get better classification.
+### 2.1-(a)-(ii)
 
-hc.single <- hclust(dist(d), method="single")
-fviz_dend(hc.single, show_labels=T, palette = "jco",
-          main="HCLUST (Single Linkage)", k=3)
-# Not quite sure where to cut to get 3 clusters.
+Does the data need to be standardized? (Briefly, using 1-2 sentences, support your answer.)
+
+数据需要标准化吗？（简单地说，用1-2句话支持你的答案。）
+
+```{r}
+
+```
+
+### 2.1-(a)-(iii)
+
+You will have to clean the data to remove multiple spaces and make the comma character the delimiter. Please make sure you include your cleaned dataset in the archive file you upload.
+
+必须清除数据以删除多个空格，并将逗号字符作为分隔符。请确保在上载的存档文件中包含已清理的数据集。
+
+```{r}
+
+```
+
+### 2.1-(b)-(i)
+
+Determine how many clusters are needed by running the WSS or Silhouette graph. Plot the graph using fviz_nbclust().
+
+通过运行WSS或轮廓图确定需要多少簇。使用fviz_nbclust（）绘制图形。
+
+```{r}
+
+```
+
+### 2.1-(b)-(ii)
+
+Once you have determined the number of clusters, run k-means clustering on the dataset to create that many clusters. Plot the clusters using fviz_cluster().
+
+一旦确定了集群的数量，在数据集上运行k-means集群来创建那么多集群。使用fviz_cluster（）绘制簇。
+
+```{r}
+
+
+```
+
+### 2.1-(b)-(iii)
+
+How many observations are in each cluster?
+
+每个簇中有多少个观测值？
+
+```{r}
+
+```
+
+### 2.1-(b)-(iv)
+
+What is the total SSE of the clusters?
+
+集群的总SSE是多少？
+
+```{r}
+
+```
+
+### 2.1-(b)-(v)
+
+What is the SSE of each cluster?
+
+每个集群的SSE是多少？
+
+```{r}
+
+```
+
+### 2.1-(b)-(vi)
+
+Perform an analysis of each cluster to determine how the mammals are grouped in each cluster, and whether that makes sense? Act as the domain expert here; clustering has produced what you asked it to. Examine the results based on your knowledge of the animal kingdom and see whether the results meet expectations. Provide me a summary of your observations.
+
+对每个集群进行分析，以确定哺乳动物如何在每个集群中分组，以及这是否有意义？在这里担任领域专家；集群已经产生了您所要求的结果。根据你对动物王国的了解来检查结果，看看结果是否符合预期。请给我一份你观察结果的摘要。
+
+```{r}
+
+
+
 ```
