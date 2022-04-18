@@ -2,16 +2,16 @@
 title: "CS 422 Homework 8"
 author: "Xingli Li"
 output:
-  html_notebook: 
-    toc: yes
-    toc_float: yes
-    toc_depth: 5
-  html_document:
-    toc: yes
-    df_print: paged
+html_notebook:
+toc: yes
+toc_float: yes
+toc_depth: 5
+html_document:
+toc: yes
+df_print: paged
 editor_oprions:
-  markdown:
-    wrap: 100
+markdown:
+wrap: 100
 ---
 
 ## Homework 8
@@ -22,32 +22,31 @@ set work space and install dependent package.
 
 ```{r}
 library(cluster)
-library(factoextra)
 setwd(getwd())
 ```
 
 ```{r}
-rm(list=ls())
+rm(list = ls())
 
 data(iris)
 
 names(iris)
 
-x <- iris[,1:4]
+x <- iris[, 1:4]
 y <- iris$Species
 
 # Scale the data
 scaled_x <- scale(x)
 
-kc <- kmeans(x,3)
+kc <- kmeans(x, 3)
 
 kc
 ```
 
 ```{r}
-table(y,kc$cluster)
-plot(x[c("Sepal.Length", "Sepal.Width")], col=kc$cluster)
-points(kc$centers[,c("Sepal.Length", "Sepal.Width")], col=1:3, pch=23, cex=3)
+table(y, kc$cluster)
+plot(x[c("Sepal.Length", "Sepal.Width")], col = kc$cluster)
+points(kc$centers[, c("Sepal.Length", "Sepal.Width")], col = 1:3, pch = 23, cex = 3)
 ```
 
 ### 2.1-(a)-(i)
@@ -56,7 +55,8 @@ points(kc$centers[,c("Sepal.Length", "Sepal.Width")], col=1:3, pch=23, cex=3)
 #  "I", "i", "C", "c", "P", "p", "M", "m", is the tooth pattern, the 
 #  number of top incisors, bottom incisors, top canines, bottom canines, 
 #  top premolars, bottom premolars, top molars, and bottom molars.
-
+setwd("/media/eric/Data/IIT/CS422/cs422_hw/assignment8-Xingli-Li")
+a <- read.csv("file19.csv", encoding = 'UTF-8')
 
 ```
 
