@@ -2,16 +2,16 @@
 title: "CS 422 Homework 8"
 author: "Xingli Li"
 output:
-html_notebook:
-toc: yes
-toc_float: yes
-toc_depth: 5
-html_document:
-toc: yes
-df_print: paged
+  html_notebook: 
+    toc: yes
+    toc_float: yes
+    toc_depth: 5
+  html_document:
+    toc: yes
+    df_print: paged
 editor_oprions:
-markdown:
-wrap: 100
+  markdown:
+    wrap: 100
 ---
 
 ## Homework 8
@@ -44,6 +44,16 @@ scaled_x <- scale(x)
 kc <- kmeans(x, centers =3, nstart = 25)
 
 kc
+
+# cluster，每个点的分组
+# centers，聚类的中心点坐标
+# totss，总平方和
+# withinss，每个分组内的平方和
+# tot.withinss，分组总和，sum(withinss)
+# betweenss，组间的平方和，totss – tot.withinss
+# size，每个组中的数据点数量
+# iter，迭代次数。
+# ifault，可能有问题的指标
 ```
 
 ```{r}
@@ -58,84 +68,73 @@ points(kc$centers[, c("Sepal.Length", "Sepal.Width")], col = 1:3, pch = 23, cex 
 #  "I", "i", "C", "c", "P", "p", "M", "m", is the tooth pattern, the 
 #  number of top incisors, bottom incisors, top canines, bottom canines, 
 #  top premolars, bottom premolars, top molars, and bottom molars.
-# 上门牙、下门牙、上犬齿、下犬齿、上前臼齿、下前臼齿、上臼齿和下臼齿。
 setwd(getwd())
 df <- read.csv("file19.csv", encoding = 'UTF-8')
-
 x <- df[,2:9]
 ```
 
 Think of what attributes, if any, you may want to omit from the dataset when you do the clustering. Indicate all of the attributes you removed before doing the clustering.
 
-考虑一下在进行聚类时，您可能希望从数据集中忽略哪些属性（如果有的话）。指出在进行聚类之前删除的所有属性。
+Answer:
 
-```{r}
-
-
-# 删除name,
-```
+remove name of the attributes.
 
 ### 2.1-(a)-(ii)
 
 Does the data need to be standardized? (Briefly, using 1-2 sentences, support your answer.)
 
-数据需要标准化吗？（简单地说，用1-2句话支持你的答案。）
+Answer:
 
-```{r}
-
-# 不需要，因为都是牙齿计数，计量单位是一样的，这种情况下标准化没有意义。
-```
+No, because they are all the teeth counts of the animals, and the unit of measurement is the same. In this case, standardization is meaningless.
 
 ### 2.1-(a)-(iii)
 
 You will have to clean the data to remove multiple spaces and make the comma character the delimiter. Please make sure you include your cleaned dataset in the archive file you upload.
 
-必须清除数据以删除多个空格，并将逗号字符作为分隔符。请确保在上载的存档文件中包含已清理的数据集。
+Answer:
 
-```{r}
-
-```
+See the file "file9.csv".
 
 ### 2.1-(b)-(i)
 
 Determine how many clusters are needed by running the WSS or Silhouette graph. Plot the graph using fviz_nbclust().
 
-通过运行WSS或轮廓图确定需要多少簇。使用fviz_nbclust（）绘制图形。
-
 ```{r}
 # How many clusters?  A couple of means to visuzalize it.
-fviz_nbclust(iris[1:4], kmeans, method="wss") # Elbow method minimizes total
+fviz_nbclust(x, kmeans, method="wss") # Elbow method minimizes total
 # within-cluster sum of squares (wss).  Also called a "Scree" plot.
 ```
+
+Answer:
+
+We can know that the polyline trend changes the most when k = 3. So, there are 3 clusters.
 
 ### 2.1-(b)-(ii)
 
 Once you have determined the number of clusters, run k-means clustering on the dataset to create that many clusters. Plot the clusters using fviz_cluster().
 
-一旦确定了集群的数量，在数据集上运行k-means集群来创建那么多集群。使用fviz_cluster（）绘制簇。
-
 ```{r}
-
-fviz_cluster(kmeans(iris[1:4], centers=4, nstart=25), data=iris[1:4])
+km <- kmeans(x, centers=3, nstart=9) 
+fviz_cluster(km, data=x)
 ```
 
 ### 2.1-(b)-(iii)
 
 How many observations are in each cluster?
 
-每个簇中有多少个观测值？
-
 ```{r}
-
+print(paste("cluster 1 are",km$size[1],"observations"))
+print(paste("cluster 2 are",km$size[2],"observations"))
+print(paste("cluster 3 are",km$size[3],"observations"))
 ```
 
 ### 2.1-(b)-(iv)
 
 What is the total SSE of the clusters?
 
-集群的总SSE是多少？
-
 ```{r}
+
+print(paste("The total SSE of the clusters is", round(km$totss,digits = 3)))
 
 ```
 
@@ -147,16 +146,30 @@ What is the SSE of each cluster?
 
 ```{r}
 
+print(paste("The SSE of the cluster 1 is", round(km$withinss[1],digits = 3)))
+print(paste("The SSE of the cluster 2 is", round(km$withinss[2],digits = 3)))
+print(paste("The SSE of the cluster 3 is", round(km$withinss[3],digits = 3)))
 ```
 
 ### 2.1-(b)-(vi)
 
 Perform an analysis of each cluster to determine how the mammals are grouped in each cluster, and whether that makes sense? Act as the domain expert here; clustering has produced what you asked it to. Examine the results based on your knowledge of the animal kingdom and see whether the results meet expectations. Provide me a summary of your observations.
 
-对每个集群进行分析，以确定哺乳动物如何在每个集群中分组，以及这是否有意义？在这里担任领域专家；集群已经产生了您所要求的结果。根据你对动物王国的了解来检查结果，看看结果是否符合预期。请给我一份你观察结果的摘要。
+```{r}
+# cluster 1:
+df[which(km$cluster == 1),]
+```
 
 ```{r}
-
-
-
+# cluster 2:
+df[which(km$cluster == 2),]
 ```
+
+```{r}
+# cluster 3:
+df[which(km$cluster == 3),]
+```
+
+Answer:
+
+it is meaningful.
