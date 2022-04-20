@@ -34,7 +34,8 @@ setwd(getwd())
 #  top premolars, bottom premolars, top molars, and bottom molars.
 
 df <- read.csv("file19.csv", encoding = 'UTF-8')
-x <- df[,2:9]
+x <- df[,-1]
+x.scaled <- scale(df[,-1])
 ```
 
 Think of what attributes, if any, you may want to omit from the dataset when you do the clustering. Indicate all of the attributes you removed before doing the clustering.
