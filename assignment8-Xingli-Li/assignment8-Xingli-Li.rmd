@@ -34,8 +34,8 @@ setwd(getwd())
 #  top premolars, bottom premolars, top molars, and bottom molars.
 
 df <- read.csv("file19.csv", encoding = 'UTF-8')
-x <- df[,-1]
-x.scaled <- scale(df[,-1])
+X <- df[,-1]
+X.scaled <- scale(X)
 ```
 
 Think of what attributes, if any, you may want to omit from the dataset when you do the clustering. Indicate all of the attributes you removed before doing the clustering.
@@ -69,22 +69,25 @@ head(df)
 Determine how many clusters are needed by running the WSS or Silhouette graph. Plot the graph using fviz_nbclust().
 
 ```{r}
-# How many clusters?  A couple of means to visuzalize it.
-fviz_nbclust(x, kmeans, method="wss") # Elbow method minimizes total
-# within-cluster sum of squares (wss).  Also called a "Scree" plot.
+
+# Elbow method minimizes total within-cluster sum of squares (wss).
+fviz_nbclust(X.scaled, kmeans, method="wss")
 ```
 
 Answer:
 
-We can know that the polyline trend changes the most when k = 3. So, there are 3 clusters.
+We can know that the polyline trend changes the most when k = 8. So, there are 8 clusters.
 
 ### 2.1-(b)-(ii)
 
 Once you have determined the number of clusters, run k-means clustering on the dataset to create that many clusters. Plot the clusters using fviz_cluster().
 
 ```{r}
-km <- kmeans(x, centers=3, nstart=9) 
-fviz_cluster(km, data=x)
+km <- kmeans(X.scaled, centers=2, nstart = 10) 
+km
+
+fviz_cluster(km, data=X.scaled)
+
 ```
 
 ### 2.1-(b)-(iii)
@@ -94,7 +97,6 @@ How many observations are in each cluster?
 ```{r}
 print(paste("cluster 1 are",km$size[1],"observations"))
 print(paste("cluster 2 are",km$size[2],"observations"))
-print(paste("cluster 3 are",km$size[3],"observations"))
 ```
 
 ### 2.1-(b)-(iv)
@@ -111,13 +113,10 @@ print(paste("The total SSE of the clusters is", round(km$totss,digits = 3)))
 
 What is the SSE of each cluster?
 
-每个集群的SSE是多少？
-
 ```{r}
 
 print(paste("The SSE of the cluster 1 is", round(km$withinss[1],digits = 3)))
 print(paste("The SSE of the cluster 2 is", round(km$withinss[2],digits = 3)))
-print(paste("The SSE of the cluster 3 is", round(km$withinss[3],digits = 3)))
 ```
 
 ### 2.1-(b)-(vi)
@@ -132,11 +131,6 @@ df[which(km$cluster == 1),]
 ```{r}
 # cluster 2:
 df[which(km$cluster == 2),]
-```
-
-```{r}
-# cluster 3:
-df[which(km$cluster == 3),]
 ```
 
 Answer:
