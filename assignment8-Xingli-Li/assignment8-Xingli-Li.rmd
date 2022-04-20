@@ -35,14 +35,14 @@ setwd(getwd())
 
 df <- read.csv("file19.csv", encoding = 'UTF-8')
 X <- df[,-1]
-X.scaled <- scale(X)
+X.scaled <- scale(X,center = FALSE)
 ```
 
 Think of what attributes, if any, you may want to omit from the dataset when you do the clustering. Indicate all of the attributes you removed before doing the clustering.
 
 Answer:
 
-remove name of the attributes.
+    remove "name" of the attributes.
 
 ### 2.1-(a)-(ii)
 
@@ -50,7 +50,7 @@ Does the data need to be standardized? (Briefly, using 1-2 sentences, support yo
 
 Answer:
 
-No, because they are all the teeth counts of the animals, and the unit of measurement is the same. In this case, standardization is meaningless.
+    Yes, although they are all the teeth counts of the animals ,and the unit of measurement is the same, standardization can compress each attribute value into a smooth range, make the data distribution smoother and more natural.
 
 ### 2.1-(a)-(iii)
 
@@ -58,7 +58,7 @@ You will have to clean the data to remove multiple spaces and make the comma cha
 
 Answer:
 
-See the file "file9.csv".
+    See the file "file9.csv".
 
 ```{r}
 head(df)
@@ -83,7 +83,7 @@ We can know that the polyline trend changes the most when k = 8. So, there are 8
 Once you have determined the number of clusters, run k-means clustering on the dataset to create that many clusters. Plot the clusters using fviz_cluster().
 
 ```{r}
-km <- kmeans(X.scaled, centers=2, nstart = 10) 
+km <- kmeans(X.scaled, centers=4, nstart = 8) 
 km
 
 fviz_cluster(km, data=X.scaled)
@@ -97,6 +97,8 @@ How many observations are in each cluster?
 ```{r}
 print(paste("cluster 1 are",km$size[1],"observations"))
 print(paste("cluster 2 are",km$size[2],"observations"))
+print(paste("cluster 3 are",km$size[3],"observations"))
+print(paste("cluster 4 are",km$size[4],"observations"))
 ```
 
 ### 2.1-(b)-(iv)
@@ -114,9 +116,11 @@ print(paste("The total SSE of the clusters is", round(km$totss,digits = 3)))
 What is the SSE of each cluster?
 
 ```{r}
+clusters <- c(1,2,3,4)
 
-print(paste("The SSE of the cluster 1 is", round(km$withinss[1],digits = 3)))
-print(paste("The SSE of the cluster 2 is", round(km$withinss[2],digits = 3)))
+for (no in clusters){
+  print(paste("The SSE of the cluster ", no,"is", round(km$withinss[no],digits = 3)))
+}
 ```
 
 ### 2.1-(b)-(vi)
@@ -124,15 +128,18 @@ print(paste("The SSE of the cluster 2 is", round(km$withinss[2],digits = 3)))
 Perform an analysis of each cluster to determine how the mammals are grouped in each cluster, and whether that makes sense? Act as the domain expert here; clustering has produced what you asked it to. Examine the results based on your knowledge of the animal kingdom and see whether the results meet expectations. Provide me a summary of your observations.
 
 ```{r}
-# cluster 1:
-df[which(km$cluster == 1),]
-```
+# clusters:
 
-```{r}
-# cluster 2:
-df[which(km$cluster == 2),]
+clusters <- c(1,2,3,4)
+
+for (no in clusters) {
+  print(df[which(km$cluster == no),])
+}
 ```
 
 Answer:
 
-it is meaningful.
+    cluster 1: few incisors, no canines, less premolars, and more molars. Armadillos are special, with only molars.
+    cluster 2: more incisors, less canines, premolars and molars is more, they are mostly bats.
+    cluster 3: more incisors, less canines, more premolars, less molars,they are mostly carnivorous animals.
+    cluster 4: no top incisors, more bottom incisors, and fewer canines, premolars and molars is more, they are basically plant-eating animal.
