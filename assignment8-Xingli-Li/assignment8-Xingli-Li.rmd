@@ -95,10 +95,12 @@ fviz_cluster(km, data=X.scaled)
 How many observations are in each cluster?
 
 ```{r}
-print(paste("cluster 1 are",km$size[1],"observations"))
-print(paste("cluster 2 are",km$size[2],"observations"))
-print(paste("cluster 3 are",km$size[3],"observations"))
-print(paste("cluster 4 are",km$size[4],"observations"))
+clusters <- c(1,2,3,4)
+
+for (no in clusters){
+  print(paste("cluster",no,"are",km$size[no],"observations"))
+}
+
 ```
 
 ### 2.1-(b)-(iv)
@@ -119,7 +121,7 @@ What is the SSE of each cluster?
 clusters <- c(1,2,3,4)
 
 for (no in clusters){
-  print(paste("The SSE of the cluster ", no,"is", round(km$withinss[no],digits = 3)))
+  print(paste("The SSE of the cluster", no,"is", round(km$withinss[no],digits = 3)))
 }
 ```
 
