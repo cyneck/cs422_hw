@@ -24,4 +24,121 @@ set work space and install dependent package.
 setwd(getwd())
 ```
 
-### 2.1-(a)-(i)
+### 2.1-(a)
+Do you think it is necessary to standardize the dataset? Justify your answer.
+```
+
+```
+
+### 2.1-(b)
+Plot the dataset and describe in 1-2 sentences what you observe (visually) in the plot: how many
+clusters do you see? Are they well-separated?
+```
+
+```
+
+### 2.1-(c)-(i)
+Using the “wss” method, draw the scree plot for the optimal number of clusters
+```
+
+```
+
+### 2.1-(c)-(ii)
+Using the “silhouette” method, draw the scree plot for the optimal number of clusters.
+```
+
+```
+
+### 2.1-(c)-(iii)
+What do you think is the appropriate number of clusters if we were to use K-Means clustering on this
+dataset?
+```
+
+```
+
+### 2.1-(d)-(i)
+Using the answer to (c)(iii), perform K-Means clustering on the dataset and plot the results.
+```
+
+```
+
+### 2.1-(d)-(ii)
+Comment on how K-Means has clustered the dataset. (1-2 sentences.)
+```
+
+```
+
+### 2.1-(e)-(i)
+What is the value of MinPts that you think is reasonable for this dataset? Why?
+```
+
+```
+
+### 2.1-(e)-(ii)
+In order to find the value of ɛ (eps), we need to calculate the average distance of every point to its k nearest
+neighbors. Set the value of k to be the result you obtained in (e)(i). Then, using this value determine what the
+correct value for ɛ should be. (Hint: Look at the online manual page for the function kNNdistplot()).
+```
+
+```
+
+
+### 2.2-(a)-(i)
+Print a summary of all of the attributes in the dataset to become familiar with their values and ranges.
+```
+
+```
+
+### 2.2-(a)-(ii)
+Plot a boxplot of all of the attributes. There are two outliers associated with the Pop boxplot. What do you think they represent?
+```
+
+```
+
+### 2.2-(b)-(i)
+Print the summary of the PCA object. How many components explain at least 90% of the variance?
+```
+
+```
+
+### 2.2-(b)-(ii)
+Draw a screeplot of the PCA object.
+```
+
+```
+
+### 2.2-(b)-(iii)
+Based on the screeplot, how many principal components would you use for modeling?
+```
+
+```
+
+### 2.2-(c)-(i)
+Print the PCA components (the “rotation” field of the PCA object). Let’s focus on PC1 and PC2.
+Which attributes is PC1 positively correlated with, and which attributes is it negatively correlated
+with? Based on this, what is your expectation of PC1?
+```
+
+```
+
+### 2.2-(c)-(ii)
+Which attributes is PC2 positively correlated with, and which attributes is it negatively correlated
+with? Based on this, what is your expectation of PC2?
+```
+
+```
+
+### 2.2-(d)-(i)
+Draw a biplot with the first and second components.
+Examine the rotated variables (the “x” field of the PCA object) for the first and second component for Brazil,
+UK, and Japan. Print these two columns out.
+```
+
+```
+
+### 2.2-(d)-(ii)
+Using the information in (d)(i)(ii), provide reasons whether the values for PC1 and PC2 for Brazil, UK, and
+Japan make sense.
+```
+
+```
