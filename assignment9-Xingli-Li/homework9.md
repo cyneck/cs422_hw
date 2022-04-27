@@ -6,11 +6,18 @@ Xingli Li, Illinois Institute of Technology
 
 ### 1.1-7
 
-![Q7](/media/eric/Data/IIT/CS422/cs422_hw/assignment9-Xingli-Li/image/Q7.png)
-
 Answer:
+
+$SSE = \sum^{k}_{i=1}\sum_{x\in C_{i}}(c_{i}-x)^2$
+
+$C_i$ is the i-th cluster.
+
+$c_i$ is the mean value of the i-th cluster.
+
+$x$  is the point in the i-th cluster.
+
 ```
-The correct answer is (c). Less dense regions require more centroids if the squared error is to be minimized.
+(c) is correct. According to the above formula, less dense regions means greater distance between adjacent points in the area，if the squared error is to be minimized, suppose the ci becomes smaller, (ci-x)^2 will change smaller and K will increase linearly. Less dense regions means need to reduce these points distance, and will need more centroids. Centroids cannot be evenly distributed.
 ```
 
 
