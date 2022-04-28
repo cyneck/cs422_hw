@@ -21,124 +21,196 @@ editor_oprions:
 set work space and install dependent package.
 
 ```{r}
+library(cluster)
+library(ggplot2)
+library(factoextra)
+library(fpc)
+library(dbscan)
+
 setwd(getwd())
 ```
 
 ### 2.1-(a)
-Do you think it is necessary to standardize the dataset? Justify your answer.
-```
 
+Do you think it is necessary to standardize the dataset? Justify your answer.
+
+Answer:
+
+    I think it is not necessary to standardize the dataset.  Moreover, after normalization, the values are all floating-point decimals, and the efficiency of floating-point operations is lower.
+
+```{r}
+
+df <- read.csv("s1.csv", encoding = 'UTF-8')
+df.standardized <- scale(df)
+
+plot(df, main="Raw points")
+
+plot(df.standardized, main="Standardized points")
 ```
 
 ### 2.1-(b)
-Plot the dataset and describe in 1-2 sentences what you observe (visually) in the plot: how many
-clusters do you see? Are they well-separated?
-```
 
+Plot the dataset and describe in 1-2 sentences what you observe (visually) in the plot: how many clusters do you see? Are they well-separated?
+
+Answer:
+
+    There are 15 clusters in the plot. They are all clustered based on density and are well-separated, some are circular, rectangular, and some are long strips.
+
+```{r}
+
+plot(df, main="The dataset points")
 ```
 
 ### 2.1-(c)-(i)
-Using the “wss” method, draw the scree plot for the optimal number of clusters
-```
 
+Using the "wss" method, draw the scree plot for the optimal number of clusters
+
+```{r}
+
+set.seed(123)
+
+indx <- sample(1:nrow(df), 0.20*nrow(df))
+
+df_sample <- df[indx,]
+
+fviz_nbclust(df_sample, kmeans, method="wss",k.max=20)
 ```
 
 ### 2.1-(c)-(ii)
-Using the “silhouette” method, draw the scree plot for the optimal number of clusters.
-```
 
+Using the "silhouette" method, draw the scree plot for the optimal number of clusters.
+
+```{r}
+
+fviz_nbclust(df_sample, kmeans, method="silhouette", k.max=20)
 ```
 
 ### 2.1-(c)-(iii)
-What do you think is the appropriate number of clusters if we were to use K-Means clustering on this
-dataset?
-```
 
-```
+What do you think is the appropriate number of clusters if we were to use K-Means clustering on this dataset?\
+Answer:
+
+    I think the appropriate number of clusters is 16.
 
 ### 2.1-(d)-(i)
-Using the answer to (c)(iii), perform K-Means clustering on the dataset and plot the results.
-```
 
+Using the answer to (c)(iii), perform K-Means clustering on the dataset and plot the results.
+
+```{r}
+km <- kmeans(df, centers=16,nstart=25)
+
+fviz_cluster(km, df)
 ```
 
 ### 2.1-(d)-(ii)
-Comment on how K-Means has clustered the dataset. (1-2 sentences.)
-```
 
-```
+Comment on how K-Means has clustered the dataset. (1-2 sentences.)\
+Answer:
 
 ### 2.1-(e)-(i)
+
 What is the value of MinPts that you think is reasonable for this dataset? Why?
-```
+
+```{r}
+MinPts <- 5
+
+db <- fpc::dbscan(df, eps = 0.15, MinPts = MinPts)
+plot(db, df, main = "DBSCAN", frame = FALSE)
 
 ```
 
 ### 2.1-(e)-(ii)
-In order to find the value of ɛ (eps), we need to calculate the average distance of every point to its k nearest
-neighbors. Set the value of k to be the result you obtained in (e)(i). Then, using this value determine what the
-correct value for ɛ should be. (Hint: Look at the online manual page for the function kNNdistplot()).
+
+In order to find the value of ɛ (eps), we need to calculate the average distance of every point to its k nearest neighbors. Set the value of k to be the result you obtained in (e)(i). Then, using this value determine what the correct value for ɛ should be. (Hint: Look at the online manual page for the function kNNdistplot()).
+
+```{r}
+# find the best value of ɛ that clusters by  kNNdistplot()
+
+k <- 500
+dbscan::kNNdistplot(df, k)
+abline(h = 0.15, lty = 2)
+
+MinPts <- 15
+eps <- 0.15
+n <- 15
+print(paste("At minPts =",MinPts,", eps = ",eps,", there are", n ,"clusters."))
 ```
 
-```
+### 2.2-(a)
 
+The dataset is available in Blackboard in the file countries.csv. Read in the dataset in a data frame taking care to allocate the first column to the name of the row instead of an attribute; this will allow the row name to be displayed in a PCA biplot. (Hint: See row.names parameter for the read.csv(...) method.)
 
 ### 2.2-(a)-(i)
-Print a summary of all of the attributes in the dataset to become familiar with their values and ranges.
-```
 
+Print a summary of all of the attributes in the dataset to become familiar with their values and ranges.
+
+```{r}
+X <- read.csv("countries.csv", encoding = 'UTF-8',row.names = 1)
+summary(X)
 ```
 
 ### 2.2-(a)-(ii)
-Plot a boxplot of all of the attributes. There are two outliers associated with the Pop boxplot. What do you think they represent?
-```
 
+Plot a boxplot of all of the attributes. There are two outliers associated with the Pop boxplot. What do you think they represent?
+
+Answer:
+
+    That two outliers are the population of China and the population of India. The data is real, not real outliers.
+
+```{r}
+
+X.standardized <- scale(X)
+
+boxplot(X.standardized)
 ```
 
 ### 2.2-(b)-(i)
+
 Print the summary of the PCA object. How many components explain at least 90% of the variance?
-```
+
+Answer:
+
+       Three components.
+
+```{r}
+
+pca <- prcomp(X, scale.=T)
+summary(pca)
+
+# which components explain at least 90% of the variance.
+pca$sdev[which(pca$sdev>=sqrt(0.9))]
 
 ```
 
 ### 2.2-(b)-(ii)
-Draw a screeplot of the PCA object.
-```
 
+Draw a screeplot of the PCA object.
+
+```{r}
+plot(pca$x[, 1:2], pch=15)
+biplot(pca)
 ```
 
 ### 2.2-(b)-(iii)
-Based on the screeplot, how many principal components would you use for modeling?
-```
 
-```
+Based on the screeplot, how many principal components would you use for modeling?
+
+Answer:
+
+      
 
 ### 2.2-(c)-(i)
-Print the PCA components (the “rotation” field of the PCA object). Let’s focus on PC1 and PC2.
-Which attributes is PC1 positively correlated with, and which attributes is it negatively correlated
-with? Based on this, what is your expectation of PC1?
-```
 
-```
+Print the PCA components (the "rotation" field of the PCA object). Let's focus on PC1 and PC2. Which attributes is PC1 positively correlated with, and which attributes is it negatively correlated with? Based on this, what is your expectation of PC1?
 
 ### 2.2-(c)-(ii)
-Which attributes is PC2 positively correlated with, and which attributes is it negatively correlated
-with? Based on this, what is your expectation of PC2?
-```
 
-```
+Which attributes is PC2 positively correlated with, and which attributes is it negatively correlated with? Based on this, what is your expectation of PC2?
 
 ### 2.2-(d)-(i)
-Draw a biplot with the first and second components.
-Examine the rotated variables (the “x” field of the PCA object) for the first and second component for Brazil,
-UK, and Japan. Print these two columns out.
-```
 
-```
+Draw a biplot with the first and second components. Examine the rotated variables (the "x" field of the PCA object) for the first and second component for Brazil, UK, and Japan. Print these two columns out.
 
 ### 2.2-(d)-(ii)
-Using the information in (d)(i)(ii), provide reasons whether the values for PC1 and PC2 for Brazil, UK, and
-Japan make sense.
-```
 
-```
+Using the information in (d)(i)(ii), provide reasons whether the values for PC1 and PC2 for Brazil, UK, and Japan make sense.
