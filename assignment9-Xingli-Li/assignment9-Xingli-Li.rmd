@@ -197,8 +197,6 @@ Based on the screeplot, how many principal components would you use for modeling
 
 Answer:
 
-      
-
 ### 2.2-(c)-(i)
 
 Print the PCA components (the "rotation" field of the PCA object). Let's focus on PC1 and PC2. Which attributes is PC1 positively correlated with, and which attributes is it negatively correlated with? Based on this, what is your expectation of PC1?
