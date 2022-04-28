@@ -17,7 +17,7 @@ $c_i$ is the mean value of the i-th cluster.
 $x$  is the point in the i-th cluster.
 
 ```
-(b) is correct. According to the above formula, less dense regions means greater distance between adjacent points in the area，if the squared error is to be minimized, suppose the ci becomes smaller, (ci-x)^2 will change smaller and K will increase linearly. Less dense regions means need to reduce these points distance, and will need more centroids.
+(b) is correct. According to the above formula, less dense regions means greater distance between adjacent points in the area，if the squared error is to be minimized, suppose (ci-x)^2 change smaller, K will increase linearly. Less dense regions means need to reduce these points distance, and will need more centroids.
 ```
 
 ### 1.1-12
@@ -29,8 +29,8 @@ a. What are the advantages and disadvantages of the leader algorithm as compared
 Answer:
 
 ```
-The leader algorithm requires only a single scan of the data and is thus more computationally efficient since each object is compared to the final set of centroids at most once. Although the leader algorithm is order dependent, for a fixed ordering of the objects, it always produces the same set of clusters. 
-However, unlike K-means, it is not possible to set the number of resulting clusters for the leader algorithm, except indirectly. Also, the K-means algorithm almost always produces better quality clusters as measured by SSE.
+The leader algorithm only needs to traverse the data once, and each object is compared with the final centroid set at most once, which is more computationally efficient. Although the leader algorithm is order dependent, it does not affect the centroids of the final clusters, it always produces the same set of clusters.
+However, unlike K-means, the leader algorithm cannot set the number of resulting clusters, except indirectly. Additionally, the K-means algorithm produces better quality clusters as measured by SSE.
 ```
 
 b. Suggest ways in which the leader algorithm might be improved.
@@ -38,7 +38,7 @@ b. Suggest ways in which the leader algorithm might be improved.
 Answer:
 
 ```
-Use a sample to determine the distribution of distances between the points. The knowledge gained from this process can be used to more intelligently set the value of the threshold. The leader algorithm could be modified to cluster for several thresholds during a single pass.
+Don't use the entire dataset, just use the sample data to determine the distribution of distances between points. The key information obtained in the sample data, better set the threshold, clustering.
 ```
 
 ### 1.1-16
