@@ -35,7 +35,7 @@ setwd(getwd())
 
 df <- read.csv("file19.csv", encoding = 'UTF-8')
 X <- df[,-1]
-X.scaled <- scale(X,center = FALSE)
+X.scaled <- scale(X)
 ```
 
 Think of what attributes, if any, you may want to omit from the dataset when you do the clustering. Indicate all of the attributes you removed before doing the clustering.
