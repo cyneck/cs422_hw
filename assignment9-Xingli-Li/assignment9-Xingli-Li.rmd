@@ -58,7 +58,7 @@ Answer:
 
 ```{r}
 
-plot(df, main="The dataset points")
+plot(df.standardized, main="The dataset points")
 ```
 
 ### 2.1-(c)-(i)
@@ -73,7 +73,7 @@ Using the "wss" method, draw the scree plot for the optimal number of clusters
 
 # df_sample <- df[indx,]
 
-fviz_nbclust(df, kmeans, method="wss",k.max=20)
+fviz_nbclust(df.standardized, kmeans, method="wss",k.max=20)
 ```
 
 ### 2.1-(c)-(ii)
@@ -82,7 +82,7 @@ Using the "silhouette" method, draw the scree plot for the optimal number of clu
 
 ```{r}
 
-fviz_nbclust(df, kmeans, method="silhouette", k.max=20)
+fviz_nbclust(df.standardized, kmeans, method="silhouette", k.max=20)
 ```
 
 ### 2.1-(c)-(iii)
@@ -92,16 +92,16 @@ What do you think is the appropriate number of clusters if we were to use K-Mean
 \
 Answer:
 
-    I think the appropriate number of clusters is 16.
+    I think the appropriate number of clusters is 15.
 
 ### 2.1-(d)-(i)
 
 Using the answer to (c)(iii), perform K-Means clustering on the dataset and plot the results.
 
 ```{r}
-km <- kmeans(df, centers=16,nstart=16)
+km <- kmeans(df.standardized, centers=15,nstart=25)
 
-fviz_cluster(km, df)
+fviz_cluster(km, df.standardized)
 ```
 
 ### 2.1-(d)-(ii)
@@ -130,17 +130,25 @@ In order to find the value of ɛ (eps), we need to calculate the average distanc
 ```{r}
 # find the best value of ɛ that clusters by  kNNdistplot()
 
-k <- 100
-dbscan::kNNdistplot(df, k)
-abline(h = 0.15, lty = 2)
+# k=dim + 1
+
+k <- 3
+dbscan::kNNdistplot(df.standardized, k)
+abline(h=0.06,col = "red",lty=2)
 ```
 
 ```{r}
+# minPts = 2*dim
 minPts <- 4
-eps <- 0.15
+eps <- 0.06
 n <- 15
-print(paste("At minPts =",minPts,", eps = ",eps,", there are", n ,"clusters."))
+
+dbscan(df.standardized,eps,minPts)
 ```
+
+Answer:
+
+    At minPts = 4, eps = 0.06, there are 29 clusters.
 
 ### 2.2-(a)
 
