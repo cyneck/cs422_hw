@@ -67,13 +67,13 @@ Using the "wss" method, draw the scree plot for the optimal number of clusters
 
 ```{r}
 
-set.seed(123)
+# set.seed(123)
 
-indx <- sample(1:nrow(df), 0.20*nrow(df))
+# indx <- sample(1:nrow(df), 0.20*nrow(df))
 
-df_sample <- df[indx,]
+# df_sample <- df[indx,]
 
-fviz_nbclust(df_sample, kmeans, method="wss",k.max=20)
+fviz_nbclust(df, kmeans, method="wss",k.max=20)
 ```
 
 ### 2.1-(c)-(ii)
@@ -82,12 +82,14 @@ Using the "silhouette" method, draw the scree plot for the optimal number of clu
 
 ```{r}
 
-fviz_nbclust(df_sample, kmeans, method="silhouette", k.max=20)
+fviz_nbclust(df, kmeans, method="silhouette", k.max=20)
 ```
 
 ### 2.1-(c)-(iii)
 
-What do you think is the appropriate number of clusters if we were to use K-Means clustering on this dataset?\
+What do you think is the appropriate number of clusters if we were to use K-Means clustering on this dataset?
+
+\
 Answer:
 
     I think the appropriate number of clusters is 16.
@@ -97,43 +99,47 @@ Answer:
 Using the answer to (c)(iii), perform K-Means clustering on the dataset and plot the results.
 
 ```{r}
-km <- kmeans(df, centers=16,nstart=25)
+km <- kmeans(df, centers=16,nstart=16)
 
 fviz_cluster(km, df)
 ```
 
 ### 2.1-(d)-(ii)
 
-Comment on how K-Means has clustered the dataset. (1-2 sentences.)\
+Comment on how K-Means has clustered the dataset. (1-2 sentences.)
+
+\
 Answer:
+
+    效果不好
 
 ### 2.1-(e)-(i)
 
 What is the value of MinPts that you think is reasonable for this dataset? Why?
 
-```{r}
-MinPts <- 5
+Answer:
 
-db <- fpc::dbscan(df, eps = 0.15, MinPts = MinPts)
-plot(db, df, main = "DBSCAN", frame = FALSE)
-
-```
+    I think that the value of MinPts is 4 for this dataset. Because this is 2 dimensions. MinPts usually equal 2*dimensions.
 
 ### 2.1-(e)-(ii)
 
 In order to find the value of ɛ (eps), we need to calculate the average distance of every point to its k nearest neighbors. Set the value of k to be the result you obtained in (e)(i). Then, using this value determine what the correct value for ɛ should be. (Hint: Look at the online manual page for the function kNNdistplot()).
 
+为了找到 ɛ (eps) 的值，我们需要计算每个点到它的 k 个最近邻居的平均距离。 将 k 的值设置为您在 (e)(i) 中获得的结果。 然后，使用该值确定 ɛ 的正确值应该是多少。 （提示：查看函数 kNNdistplot() 的在线手册页）。
+
 ```{r}
 # find the best value of ɛ that clusters by  kNNdistplot()
 
-k <- 500
+k <- 100
 dbscan::kNNdistplot(df, k)
 abline(h = 0.15, lty = 2)
+```
 
-MinPts <- 15
+```{r}
+minPts <- 4
 eps <- 0.15
 n <- 15
-print(paste("At minPts =",MinPts,", eps = ",eps,", there are", n ,"clusters."))
+print(paste("At minPts =",minPts,", eps = ",eps,", there are", n ,"clusters."))
 ```
 
 ### 2.2-(a)
