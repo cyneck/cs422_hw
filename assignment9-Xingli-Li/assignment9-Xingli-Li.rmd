@@ -36,7 +36,7 @@ Do you think it is necessary to standardize the dataset? Justify your answer.
 
 Answer:
 
-    I think it is not necessary to standardize the dataset.  Moreover, after normalization, the values are all floating-point decimals, and the efficiency of floating-point operations is lower.
+      I think it is necessary to standardize the dataset. From the figure below, although we can see that there is no obvious change before and after standardization, standardization of data is the scaling of data to the same data interval and range to reduce the impact of scale, characteristics, distribution differences, etc. on the model. In addition to model calculation, the standardized data also has the meaning of directly calculating and generating composite indicators, which is a necessary step for weighting indicators.
 
 ```{r}
 
@@ -54,7 +54,7 @@ Plot the dataset and describe in 1-2 sentences what you observe (visually) in th
 
 Answer:
 
-    There are 15 clusters in the plot. They are all clustered based on density and are well-separated, some are circular, rectangular, and some are long strips.
+      There are 15 clusters in the plot. They are all clustered based on density and  they are well-separated, some are circular, rectangular, and some are long strips.
 
 ```{r}
 
@@ -62,6 +62,8 @@ plot(df.standardized, main="The dataset points")
 ```
 
 ### 2.1-(c)-(i)
+
+Let's see how many clusters K-Means finds.
 
 Using the "wss" method, draw the scree plot for the optimal number of clusters
 
@@ -89,17 +91,16 @@ fviz_nbclust(df.standardized, kmeans, method="silhouette", k.max=20)
 
 What do you think is the appropriate number of clusters if we were to use K-Means clustering on this dataset?
 
-\
 Answer:
 
-    I think the appropriate number of clusters is 15.
+      I think the appropriate number of clusters is 16.
 
 ### 2.1-(d)-(i)
 
 Using the answer to (c)(iii), perform K-Means clustering on the dataset and plot the results.
 
 ```{r}
-km <- kmeans(df.standardized, centers=15,nstart=25)
+km <- kmeans(df.standardized, centers=16,nstart=16)
 
 fviz_cluster(km, df.standardized)
 ```
@@ -108,47 +109,44 @@ fviz_cluster(km, df.standardized)
 
 Comment on how K-Means has clustered the dataset. (1-2 sentences.)
 
-\
 Answer:
 
-    效果不好
+      The K-Means algorithm does not cluster well in this dataset. There are clusters were merged, clearly different from what we observed.
 
 ### 2.1-(e)-(i)
+
+We will now perform dbscan on this dataset.
 
 What is the value of MinPts that you think is reasonable for this dataset? Why?
 
 Answer:
 
-    I think that the value of MinPts is 4 for this dataset. Because this is 2 dimensions. MinPts usually equal 2*dimensions.
+      I think that the value of MinPts is 4 for this dataset. 
+      minPts: The minimum number of points (a threshold) clustered together for a region to be considered dense. 
+      According to Schubert, E., Sander, J., Ester, M., Kriegel, H. P., & Xu, X. (2017). DBSCAN revisited. For two-dimensional data: use default value of minPts=4 (Ester et al., 1996). For more than 2 dimensions: minPts=2*dim (Sander et al., 1998). A low minPts means it will build more clusters from noise, so don't choose it too small. larger minPts values are usually better for data sets with noise. As a rule of thumb, minPts = 2·dim can be used.
 
 ### 2.1-(e)-(ii)
 
 In order to find the value of ɛ (eps), we need to calculate the average distance of every point to its k nearest neighbors. Set the value of k to be the result you obtained in (e)(i). Then, using this value determine what the correct value for ɛ should be. (Hint: Look at the online manual page for the function kNNdistplot()).
 
-为了找到 ɛ (eps) 的值，我们需要计算每个点到它的 k 个最近邻居的平均距离。 将 k 的值设置为您在 (e)(i) 中获得的结果。 然后，使用该值确定 ɛ 的正确值应该是多少。 （提示：查看函数 kNNdistplot() 的在线手册页）。
-
 ```{r}
-# find the best value of ɛ that clusters by  kNNdistplot()
+# find the best value of ɛ that clusters by kNNdistplot()
+# Find the 'elbow' in the graph.
 
-# k=dim + 1
+k <- 4
+eps <- 0.087
 
-k <- 3
 dbscan::kNNdistplot(df.standardized, k)
-abline(h=0.06,col = "red",lty=2)
+abline(h = eps, col = "red",lty=2)
 ```
 
 ```{r}
-# minPts = 2*dim
-minPts <- 4
-eps <- 0.06
-n <- 15
-
-dbscan(df.standardized,eps,minPts)
+dbscan(df.standardized, eps, minPts = k)
 ```
 
 Answer:
 
-    At minPts = 4, eps = 0.06, there are 29 clusters.
+      At minPts = 4, eps = 0.087, there are 15 clusters.
 
 ### 2.2-(a)
 
@@ -159,6 +157,8 @@ The dataset is available in Blackboard in the file countries.csv. Read in the da
 Print a summary of all of the attributes in the dataset to become familiar with their values and ranges.
 
 ```{r}
+options(digits = 3)
+
 X <- read.csv("countries.csv", encoding = 'UTF-8',row.names = 1)
 summary(X)
 ```
@@ -169,7 +169,7 @@ Plot a boxplot of all of the attributes. There are two outliers associated with 
 
 Answer:
 
-    That two outliers are the population of China and the population of India. The data is real, not real outliers.
+      That two outliers are the population of China and the population of India. That two outliers are real, not noise.
 
 ```{r}
 
@@ -184,16 +184,12 @@ Print the summary of the PCA object. How many components explain at least 90% of
 
 Answer:
 
-       Three components.
+      4 components.
 
 ```{r}
 
 pca <- prcomp(X, scale.=T)
 summary(pca)
-
-# which components explain at least 90% of the variance.
-pca$sdev[which(pca$sdev>=sqrt(0.9))]
-
 ```
 
 ### 2.2-(b)-(ii)
@@ -201,8 +197,7 @@ pca$sdev[which(pca$sdev>=sqrt(0.9))]
 Draw a screeplot of the PCA object.
 
 ```{r}
-plot(pca$x[, 1:2], pch=15)
-biplot(pca)
+screeplot(pca,type="l",main="Proportion of Variance in model")
 ```
 
 ### 2.2-(b)-(iii)
@@ -211,18 +206,53 @@ Based on the screeplot, how many principal components would you use for modeling
 
 Answer:
 
+      I will use first 3 principal components for modeling. The first 3 principal components have effect for more than 80%.
+
 ### 2.2-(c)-(i)
 
-Print the PCA components (the "rotation" field of the PCA object). Let's focus on PC1 and PC2. Which attributes is PC1 positively correlated with, and which attributes is it negatively correlated with? Based on this, what is your expectation of PC1?
+Print the PCA components (the "rotation" field of the PCA object). Let's focus on PC1 and PC2.
+
+Which attributes is PC1 positively correlated with, and which attributes is it negatively correlated with? Based on this, what is your expectation of PC1?
+
+Answer:
+
+      PC1 positively is correlated with GDP, Lifeexp, Oilcons and Tel attributes.
+      PC1 negatively is correlated with HIV, Mil, Pop, Unempl attributes.
+
+```{r}
+
+pca$rotation
+
+pca$rotation[,1:2]
+
+```
 
 ### 2.2-(c)-(ii)
 
 Which attributes is PC2 positively correlated with, and which attributes is it negatively correlated with? Based on this, what is your expectation of PC2?
 
+Answer:
+
+      PC2 positively is correlated with GDP, Lifeexp, Mil, Oilcons, Pop and Tel attributes.
+      PC2 negatively is correlated with HIV, Unempl attributes.
+
 ### 2.2-(d)-(i)
 
 Draw a biplot with the first and second components. Examine the rotated variables (the "x" field of the PCA object) for the first and second component for Brazil, UK, and Japan. Print these two columns out.
 
+```{r}
+
+biplot(pca)
+
+print(pca$x[c("Brazil","UK","Japan"), 1:2])
+```
+
 ### 2.2-(d)-(ii)
 
 Using the information in (d)(i)(ii), provide reasons whether the values for PC1 and PC2 for Brazil, UK, and Japan make sense.
+
+Answer:
+
+      Brazil is a rapidly developing country. Compared with other countries, Brazil has more prominent problems in terms of HIV population ratio, military spending ratio, population size, and population unemployment rate.
+      As a developed country, the UK is inferior to Japan in terms of GDP, life expectancy, oil consumption per capita, and fixed telephone numbers per capita.
+      However, Japan does not perform well in terms of HIV population ratio and population unemployment rate.
