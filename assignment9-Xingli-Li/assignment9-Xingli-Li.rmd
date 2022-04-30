@@ -57,7 +57,6 @@ Answer:
       There are 15 clusters in the plot. They are all clustered based on density and  they are well-separated, some are circular, rectangular, and some are long strips.
 
 ```{r}
-
 plot(df.standardized, main="The dataset points")
 ```
 
@@ -160,7 +159,10 @@ Print a summary of all of the attributes in the dataset to become familiar with 
 options(digits = 3)
 
 X <- read.csv("countries.csv", encoding = 'UTF-8',row.names = 1)
+
 summary(X)
+
+row.names(X)
 ```
 
 ### 2.2-(a)-(ii)
