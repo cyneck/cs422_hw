@@ -20,7 +20,7 @@ set work space and install dependent package.
 
 ```{r}
 library(lsa)
-setwd("/media/eric/Data/IIT/CS422/cs422_hw/assignment10-XIngli-Li")
+setwd("D:\IIT\CS422\cs422_hw\assignment10-XIngli-Li")
 ```
 
 ```{r}
@@ -87,9 +87,28 @@ user_profile_vector_func <- function(user_profile) {
 
 ```{r}
 # build movie profile
-build_movie_profile <- function(user_profile, movieId) {
-  items <- as.vector(t(user_profile[user_profile$movieId == movieId, 2:ncol(user_profile)]))
-  items
+build_movie_profile <- function(movieId) {
+  movie_profile <- data.frame(matrix(ncol = 20, nrow = 1))
+  colnames(movie_profile) <- colnames
+  movie_profile <- cbind(movieId = movieId, movie_profile)
+
+  tmp_movies_df <- movies_df[which(movies_df$movieId == movieId),]
+  tmp_movies_genres <- strsplit(tmp_movies_df$genres, split = "|", fixed = TRUE)
+
+  if (length(tmp_movies_genres) == 1) {
+    tmp_movies_genres <- tmp_movies_genres[[1]]
+    for (tmp_colname in  tmp_movies_genres) {
+      if (tmp_colname %in% colnames) {
+        movie_profile[1, tmp_colname] <- 1
+      }else {
+        movie_profile[1, "(no genres listed)"] <- 1
+      }
+    }
+  }
+
+  movie_profile[is.na(movie_profile)] <- 0
+  movie_profile_vector <- as.vector(t(movie_profile[2:ncol(movie_profile)]))
+  movie_profile_vector
 }
 ```
 
@@ -99,12 +118,14 @@ user_profile <- build_user_profile(userId)
 moviesId <- user_profile[3, 1]
 user_vector <- user_profile_vector_func(user_profile)
 user_vector
-movie_profile_vector <- build_movie_profile(user_profile, moviesId)
+movie_profile_vector <- build_movie_profile(moviesId)
 movie_profile_vector
 ```
+
 ```{r}
 cosine(user_vector, movie_profile_vector)
 ```
+
 ```{r}
 main <- function(userId, movie_ids) {
   user_profile <- build_user_profile(userId)
@@ -114,7 +135,7 @@ main <- function(userId, movie_ids) {
   movie_ids_length <- length(movie_ids)
   for (i in 1:movie_ids_length) {
     tmp_movieId <- movie_ids[i]
-    tmp_movie_vector <- build_movie_profile(user_profile, tmp_movieId);
+    tmp_movie_vector <- build_movie_profile(tmp_movieId)
     similarity <- cosine(user_vector, tmp_movie_vector)
 
     title <- movies_df$title[movies_df$movieId == tmp_movieId]
@@ -126,16 +147,17 @@ main <- function(userId, movie_ids) {
     movies_str <- ifelse(i != movie_ids_length, paste0(movies_str, ","), movies_str)
   }
 
-  print(paste("User ID", userId, "chose the following 10 movies:", movies_str, "of these, the following 5 movies are recommended:"))
+  print(paste("User ID", userId, "chose the following 10 movies:",
+              movies_str, "of these, the following 5 movies are recommended:"))
 
   resultes_df <- resultes_df[-1,]
   resultes_sorted <- resultes_df[order(resultes_df$Similarity, decreasing = TRUE),]
   resultes_sorted[1:5,]
 }
 
-userId <- 317
+userId <- 550
 user_profile <- build_user_profile(userId)
-sampele_movie_ids <- as.vector(t(sample(user_profile$movieId, 10)))
-# sampele_movie_ids <- c(5612, 943, 7358, 25, 2108, 8371, 2699, 8923, 2487, 102800)
+# sampele_movie_ids <- as.vector(t(sample(user_profile$movieId, 10)))
+sampele_movie_ids <- c(5612, 943, 7358, 25, 2108, 8371, 2699, 8923, 2487, 102800)
 main(userId, sampele_movie_ids)
 ```
