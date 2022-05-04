@@ -2,16 +2,16 @@
 title: "CS 422 Homework 10"
 author: "Xingli Li"
 output:
-html_notebook:
-toc: yes
-toc_float: yes
-toc_depth: 5
-html_document:
-toc: yes
-df_print: paged
+  html_notebook:
+    toc: yes
+    toc_float: yes
+    toc_depth: 5
+  html_document:
+    toc: yes
+    df_print: paged
 editor_oprions:
-markdown:
-wrap: 100
+  markdown:
+    wrap: 100
 ---
 
 ## Homework 10
