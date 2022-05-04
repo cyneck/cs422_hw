@@ -16,13 +16,10 @@ wrap: 100
 
 ## Homework 10
 
-### Part 2
-
 set work space and install dependent package.
 
 ```{r}
 library(lsa)
-library(data.table)
 setwd("/media/eric/Data/IIT/CS422/cs422_hw/assignment10-XIngli-Li")
 ```
 
@@ -30,45 +27,115 @@ setwd("/media/eric/Data/IIT/CS422/cs422_hw/assignment10-XIngli-Li")
 movies_df <- read.csv("./ml-latest-small/movies.csv")
 ratings_df <- read.csv("./ml-latest-small/ratings.csv")
 ```
+
+```{r}
+options(digits = 3)
+
+# build user profile
+
+colnames <- c("Action", "Adventure", "Animation", "Children", "Comedy", "Crime", "Documentary", "Drama", "Fantasy", "Film-Noir", "Horror", "IMAX", "Musical", "Mystery", "Romance", "Sci-Fi", "Thriller", "War", "Wester", "(no genres listed)")
+
+build_user_profile <- function(userId) {
+  user_ratings_df <- ratings_df[ratings_df$userId == userId,]
+  user_profile <- data.frame(matrix(ncol = 20, nrow = nrow(user_ratings_df)))
+  colnames(user_profile) <- colnames
+  user_profile <- cbind(movieId = user_ratings_df$movieId, user_profile)
+
+  row_number <- nrow(user_profile)
+  for (i in 1:row_number) {
+    tmp_movieId <- user_profile[i, 1]
+    tmp_movies_df <- movies_df[which(movies_df$movieId == tmp_movieId),]
+    tmp_movies_genres <- strsplit(tmp_movies_df$genres, split = "|", fixed = TRUE)
+    if (length(tmp_movies_genres) == 1) {
+      tmp_movies_genres <- tmp_movies_genres[[1]]
+      for (tmp_colname in  tmp_movies_genres) {
+        if (tmp_colname %in% colnames) {
+          user_profile[i, tmp_colname] <- 1
+        }else {
+          user_profile[i, "(no genres listed)"] <- 1
+        }
+      }
+    }
+
+  }
+
+  user_profile[is.na(user_profile)] <- 0
+
+  rm(tmp_movieId)
+  rm(tmp_movies_df)
+  rm(tmp_movies_genres)
+  rm(tmp_colname)
+  rm(row_number)
+
+  user_profile
+}
+
+# build user profile vector
+user_profile_vector_func <- function(user_profile) {
+  user_profile[is.na(user_profile)] <- 0
+  avg <- data.frame(matrix(ncol = 20, nrow = 1))
+  colnames(avg) <- colnames
+  for (j in 2:ncol(user_profile)) {
+    avg[1, j - 1] <- mean(user_profile[1:nrow(user_profile), j])
+    user_profile_vector <- as.vector(t(avg))
+  }
+  rm(avg)
+  user_profile_vector
+}
+
+```
+
+```{r}
+# build movie profile
+build_movie_profile <- function(user_profile, movieId) {
+  items <- as.vector(t(user_profile[user_profile$movieId == movieId, 2:ncol(user_profile)]))
+  items
+}
+```
+
 ```{r}
 userId <- 317
-user_ratings_df <- ratings_df[ratings_df$userId == userId,]
-movies_genres <- strsplit(movies_df$genres, split = "|", fixed = TRUE)
-user_movieIds <- user_ratings_df$movieId
+user_profile <- build_user_profile(userId)
+moviesId <- user_profile[3, 1]
+user_vector <- user_profile_vector_func(user_profile)
+user_vector
+movie_profile_vector <- build_movie_profile(user_profile, moviesId)
+movie_profile_vector
 ```
 ```{r}
-colnames <- c("Action", "Adventure", "Animation", "Children", "Comedy", "Crime", "Documentary", "Drama", "Fantasy", "Film-Noir", "Horror", "IMAX", "Musical", "Mystery", "Romance", "Sci-Fi", "Thriller", "War", "Wester", "(no genres listed)")
-user_profile <- data.frame(matrix(ncol = 20, nrow = nrow(user_ratings_df)))
-colnames(user_profile) <- colnames
+cosine(user_vector, movie_profile_vector)
+```
+```{r}
+main <- function(userId, movie_ids) {
+  user_profile <- build_user_profile(userId)
+  user_vector <- user_profile_vector_func(user_profile)
+  movies_str <- ""
+  resultes_df <- data.frame(MovieId = 0, MovieName = "", Similarity = 0)
+  movie_ids_length <- length(movie_ids)
+  for (i in 1:movie_ids_length) {
+    tmp_movieId <- movie_ids[i]
+    tmp_movie_vector <- build_movie_profile(user_profile, tmp_movieId);
+    similarity <- cosine(user_vector, tmp_movie_vector)
 
-user_profile <- cbind(movieId = user_ratings_df$movieId, user_profile)
-row_number <- nrow(user_profile)
-```
-```{r}
-for (i in 1:row_number) {
-  tmp_movieId <- user_profile[i, 1]
-  tmp_movies_df <- movies_df[which(movies_df$movieId == tmp_movieId),]
-  tmp_movies_genres <- strsplit(tmp_movies_df$genres, split = "|", fixed = TRUE)[[1]]
-  for (tmp_colname in  tmp_movies_genres) {
-    if (tmp_colname %in% colnames) {
-      user_profile[i, tmp_colname] <- 1
-    }else {
-      user_profile[i, "(no genres listed)"] <- 1
-    }
+    title <- movies_df$title[movies_df$movieId == tmp_movieId]
+    movieId <- movies_df$movieId[movies_df$movieId == tmp_movieId]
+    row <- data.frame(MovieId = movieId, MovieName = title, Similarity = similarity)
+    resultes_df <- rbind(resultes_df, row)
+
+    movies_str <- paste0(movies_str, movieId)
+    movies_str <- ifelse(i != movie_ids_length, paste0(movies_str, ","), movies_str)
   }
-}
-user_profile[is.na(user_profile)] <- 0
 
-```
-```{r}
-avg <- data.frame(matrix(ncol = 20, nrow = 1))
-colnames(avg) <- colnames
-avg <- cbind(movieId = "AVG", avg)
+  print(paste("User ID", userId, "chose the following 10 movies:", movies_str, "of these, the following 5 movies are recommended:"))
 
-for (j in 2:ncol(user_profile)) {
-  avg[1, j] <- mean(user_profile[1:nrow(user_profile), j])
+  resultes_df <- resultes_df[-1,]
+  resultes_sorted <- resultes_df[order(resultes_df$Similarity, decreasing = TRUE),]
+  resultes_sorted[1:5,]
 }
-```
-```{r}
-user_profile_result <- rbind(user_profile, avg)
+
+userId <- 317
+user_profile <- build_user_profile(userId)
+sampele_movie_ids <- as.vector(t(sample(user_profile$movieId, 10)))
+# sampele_movie_ids <- c(5612, 943, 7358, 25, 2108, 8371, 2699, 8923, 2487, 102800)
+main(userId, sampele_movie_ids)
 ```
