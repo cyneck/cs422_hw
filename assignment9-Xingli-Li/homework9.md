@@ -45,5 +45,4 @@ Answer:
 
 Answer:
 
-<img src="./image/Q16-1.jpg" alt="Q16-1" style="zoom: 25%;" /> <img src="./image/Q16-2.jpg" alt="Q16-1" style="zoom:25%;" />   
-
+<img src="./image/Q16-1.jpg" alt="Q16-1" style="zoom: 25%;" /> <img src="./image/Q16-2.jpg" alt="Q16-1" style="zoom:25%;" />

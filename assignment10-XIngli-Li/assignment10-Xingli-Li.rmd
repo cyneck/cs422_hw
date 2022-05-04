@@ -1,0 +1,74 @@
+---
+title: "CS 422 Homework 10"
+author: "Xingli Li"
+output:
+html_notebook:
+toc: yes
+toc_float: yes
+toc_depth: 5
+html_document:
+toc: yes
+df_print: paged
+editor_oprions:
+markdown:
+wrap: 100
+---
+
+## Homework 10
+
+### Part 2
+
+set work space and install dependent package.
+
+```{r}
+library(lsa)
+library(data.table)
+setwd("/media/eric/Data/IIT/CS422/cs422_hw/assignment10-XIngli-Li")
+```
+
+```{r}
+movies_df <- read.csv("./ml-latest-small/movies.csv")
+ratings_df <- read.csv("./ml-latest-small/ratings.csv")
+```
+```{r}
+userId <- 317
+user_ratings_df <- ratings_df[ratings_df$userId == userId,]
+movies_genres <- strsplit(movies_df$genres, split = "|", fixed = TRUE)
+user_movieIds <- user_ratings_df$movieId
+```
+```{r}
+colnames <- c("Action", "Adventure", "Animation", "Children", "Comedy", "Crime", "Documentary", "Drama", "Fantasy", "Film-Noir", "Horror", "IMAX", "Musical", "Mystery", "Romance", "Sci-Fi", "Thriller", "War", "Wester", "(no genres listed)")
+user_profile <- data.frame(matrix(ncol = 20, nrow = nrow(user_ratings_df)))
+colnames(user_profile) <- colnames
+
+user_profile <- cbind(movieId = user_ratings_df$movieId, user_profile)
+row_number <- nrow(user_profile)
+```
+```{r}
+for (i in 1:row_number) {
+  tmp_movieId <- user_profile[i, 1]
+  tmp_movies_df <- movies_df[which(movies_df$movieId == tmp_movieId),]
+  tmp_movies_genres <- strsplit(tmp_movies_df$genres, split = "|", fixed = TRUE)[[1]]
+  for (tmp_colname in  tmp_movies_genres) {
+    if (tmp_colname %in% colnames) {
+      user_profile[i, tmp_colname] <- 1
+    }else {
+      user_profile[i, "(no genres listed)"] <- 1
+    }
+  }
+}
+user_profile[is.na(user_profile)] <- 0
+
+```
+```{r}
+avg <- data.frame(matrix(ncol = 20, nrow = 1))
+colnames(avg) <- colnames
+avg <- cbind(movieId = "AVG", avg)
+
+for (j in 2:ncol(user_profile)) {
+  avg[1, j] <- mean(user_profile[1:nrow(user_profile), j])
+}
+```
+```{r}
+user_profile_result <- rbind(user_profile, avg)
+```
