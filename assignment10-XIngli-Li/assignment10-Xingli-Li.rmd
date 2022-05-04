@@ -20,7 +20,7 @@ set work space and install dependent package.
 
 ```{r}
 library(lsa)
-setwd("D:\IIT\CS422\cs422_hw\assignment10-XIngli-Li")
+setwd(getwd())
 ```
 
 ```{r}
@@ -113,6 +113,7 @@ build_movie_profile <- function(movieId) {
 ```
 
 ```{r}
+# test
 userId <- 317
 user_profile <- build_user_profile(userId)
 moviesId <- user_profile[3, 1]
@@ -123,10 +124,12 @@ movie_profile_vector
 ```
 
 ```{r}
+# test
 cosine(user_vector, movie_profile_vector)
 ```
 
 ```{r}
+# main program
 main <- function(userId, movie_ids) {
   user_profile <- build_user_profile(userId)
   user_vector <- user_profile_vector_func(user_profile)
@@ -155,9 +158,14 @@ main <- function(userId, movie_ids) {
   resultes_sorted[1:5,]
 }
 
-userId <- 550
-user_profile <- build_user_profile(userId)
-# sampele_movie_ids <- as.vector(t(sample(user_profile$movieId, 10)))
-sampele_movie_ids <- c(5612, 943, 7358, 25, 2108, 8371, 2699, 8923, 2487, 102800)
+```
+
+```{r}
+# test 
+userId <- 317
+sampele_movie_ids <- as.vector(t(sample(movies_df$movieId, 10)))
+
+# main(550, c(5612, 943, 7358, 25, 2108, 8371, 2699, 8923, 2487, 102800))
+
 main(userId, sampele_movie_ids)
 ```
